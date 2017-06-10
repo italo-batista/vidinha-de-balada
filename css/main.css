@@ -13,3 +13,8 @@ body {
   margin-top: 50px;
   margin-bottom: 50px;
 }
+
+.headline {
+  background-color: #ff4e81;
+  padding: 20px;
+}
