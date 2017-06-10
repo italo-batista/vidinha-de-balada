@@ -8,7 +8,7 @@ app.directive('lineChart', function ($parse, $window) {
         link: function (scope, element, attrs) {
           var width = 1000,
 			        height = 500;
-          var chart = d3.select("#barchart")
+          var chart = d3.select("#line-chart")
             .append("svg")
               .attr('version', '1.1')
               .attr('viewBox', '0 0 '+width+' '+height)
@@ -37,17 +37,13 @@ app.directive('lineChart', function ($parse, $window) {
             .rollup(function(d) {
               return d3.sum(d, function(g) {return +g.total; });
             }).entries(data);
-            data.forEach(function(d) {
-             d.date = d.key;
-             d.value = d.values;
-            });
 
-            gastoTotal.forEach(function(d) {
-             d.date = d.key.split(" ").slice(-1)[0];
-             d.nome = d.key.replace(d.date, "").trim();
-             d.total = d.value;
-            });
-          console.log('%%%%%%%', gastoTotal)
+          gastoTotal.forEach(function(d) {
+            d.date = d.key.split(" ").slice(-1)[0];
+            d.nome = d.key.replace(d.date, "").trim();
+            d.total = +d.value;
+          });
+          console.log('****', gastoTotal)
           x.domain(d3.extent(gastoTotal, function(d) { return d.date; }));
 
           y.domain([
@@ -56,12 +52,12 @@ app.directive('lineChart', function ($parse, $window) {
           ]);
 
           z.domain(gastoTotal.map(function(c) { return c.nome; }));
-          console.log('&&&&&&&&&');
+
           g.append("g")
               .attr("class", "axis axis--x")
               .attr("transform", "translate(0," + height + ")")
               .call(d3.axisBottom(x));
-          console.log('%%%%%%%%%%%%');
+
           g.append("g")
               .attr("class", "axis axis--y")
               .call(d3.axisLeft(y))
@@ -71,7 +67,7 @@ app.directive('lineChart', function ($parse, $window) {
               .attr("dy", "0.71em")
               .attr("fill", "#000")
               .text("Gasto total, R$");
-          console.log('***********')
+
           var city = g.selectAll(".city")
             .data(gastoTotal)
             .enter().append("g")
@@ -79,16 +75,16 @@ app.directive('lineChart', function ($parse, $window) {
 
           city.append("path")
               .attr("class", "line")
-              .attr("d", function(d) { return line({"total": d.total, "date":d.date}); })
+              .attr("d", function(d) { return line({total: d.total, date: d.date}); })
               .style("stroke", function(d) { return z(d.nome); });
-
-          city.append("text")
-              .datum(function(d) { return {nome: d.nome, total: d.total}; })
-              .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.total) + ")"; })
-              .attr("x", 3)
-              .attr("dy", "0.35em")
-              .style("font", "10px sans-serif")
-              .text(function(d) { return d.nome; });
+          // 
+          // city.append("text")
+          //     .datum(function(d) { return {id: d.nome, total: d.total, date: d.date}; })
+          //     .attr("transform", function(d) { console.log(d); return "translate(" + x(d.date) + "," + y(d.total) + ")"; })
+          //     .attr("x", 3)
+          //     .attr("dy", "0.35em")
+          //     .style("font", "10px sans-serif")
+          //     .text(function(d) { return d.nome; });
         });
 
         function type(d, _, columns) {
