@@ -18,70 +18,67 @@ app.directive('lineChart', function ($parse, $window) {
           var height = height - margin.top - margin.bottom;
           var g = chart.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        var parseTime = d3.timeParse("%m/%Y");
+          var x = d3.scaleTime().range([0, width]),
+              y = d3.scaleLinear().range([height, 0]),
+              z = d3.scaleOrdinal(d3.schemeCategory10);
 
-        var x = d3.scaleTime().range([0, width]),
-            y = d3.scaleLinear().range([height, 0]),
-            z = d3.scaleOrdinal(d3.schemeCategory20);
+          var line = d3.line()
+              .x(function(d) { return x(d.date); })
+              .y(function(d) { return y(+d.total); })
 
-        var line = d3.line()
-            .curve(d3.curveBasis)
-            .x(function(d) { return x(d.date); })
-            .y(function(d) { return y(d.total); });
+          d3.csv("data/gasto_mensal_por_depoutado.csv", function(error, data) {
+            if (error) throw error;
 
-        d3.csv("data/gasto_mensal_por_depoutado.csv", function(error, data) {
-          if (error) throw error;
+            var parseTime = d3.timeParse("%m %Y");
+            data.forEach(function(d) {
+              d.date = parseTime(d.mes + " " + d.ano);
+            });
+            data = data.splice(0, 100);
 
-          var parseTime = d3.timeParse("%m %Y");
-          data.forEach(function(d) {
-            d.date = parseTime(d.mes + " " + d.ano);
+            x.domain(d3.extent(data, function(d) { return d.date; }));
+
+            y.domain([
+              d3.min(data, function(c) { return +c.total; }),
+              d3.max(data, function(c) { return +c.total; })
+            ]);
+
+            z.domain(data.map(function(c) { return c.txNomeParlamentar; }));
+
+            g.append("g")
+                .attr("class", "axis axis--x")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x));
+
+            g.append("g")
+                .attr("class", "axis axis--y")
+                .call(d3.axisLeft(y))
+              .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", "0.71em")
+                .attr("fill", "#000")
+                .text("Gasto total, R$");
+
+            var city = g.selectAll(".city")
+              .data(data)
+              .enter().append("g")
+                .attr("class", "city");
+
+            city.append("path")
+              .datum(data)
+                .attr("class", "line")
+                .attr("d", line)
+                .style("stroke", function(d) { return z(d.txNomeParlamentar); });
+
+            city.append("text")
+                .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(+d.total) + ")"; })
+                .attr("x", 3)
+                .attr("dy", "0.35em")
+                .style("font", "10px sans-serif")
+                .text(function(d) { return d.txNomeParlamentar; });
           });
 
-          x.domain(d3.extent(data, function(d) { return d.date; }));
-
-          y.domain([
-            d3.min(data, function(c) { return c.total; }),
-            d3.max(data, function(c) { return c.total; })
-          ]);
-
-          z.domain(data.map(function(c) { return c.txNomeParlamentar; }));
-
-          g.append("g")
-              .attr("class", "axis axis--x")
-              .attr("transform", "translate(0," + height + ")")
-              .call(d3.axisBottom(x));
-
-          g.append("g")
-              .attr("class", "axis axis--y")
-              .call(d3.axisLeft(y))
-            .append("text")
-              .attr("transform", "rotate(-90)")
-              .attr("y", 6)
-              .attr("dy", "0.71em")
-              .attr("fill", "#000")
-              .text("Gasto total, R$");
-
-
-          var city = g.selectAll(".city")
-            .data(data)
-            .enter().append("g")
-              .attr("class", "city");
-
-          city.append("path")
-              .attr("class", "line")
-              .attr("d", function(d) { return line(d); })
-              .style("stroke", function(d) { return z(d.txNomeParlamentar); });
-
-          city.append("text")
-              .datum(function(d) { return {id: d.txNomeParlamentar, total: d.total, date: d.date}; })
-              .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.total) + ")"; })
-              .attr("x", 3)
-              .attr("dy", "0.35em")
-              .style("font", "10px sans-serif")
-              .text(function(d) { return d.txNomeParlamentar; });
-        });
-
-      }
-     };
+        }
+       };
      return directiveDefinitionObject;
   });
