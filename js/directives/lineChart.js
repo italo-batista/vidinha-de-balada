@@ -29,29 +29,22 @@ app.directive('lineChart', function ($parse, $window) {
             .x(function(d) { return x(d.date); })
             .y(function(d) { return y(d.total); });
 
-        d3.csv("data/gasto_mensal_por_depoutado_por_categoria.csv", type, function(error, data) {
+        d3.csv("data/gasto_mensal_por_depoutado.csv", function(error, data) {
           if (error) throw error;
 
-          var gastoTotal = d3.nest()
-            .key(function(d) {return (d.txNomeParlamentar + " " + d.mes + "/" + d.ano);})
-            .rollup(function(d) {
-              return d3.sum(d, function(g) {return +g.total; });
-            }).entries(data);
-
-          gastoTotal.forEach(function(d) {
-            d.date = d.key.split(" ").slice(-1)[0];
-            d.nome = d.key.replace(d.date, "").trim();
-            d.total = +d.value;
+          var parseTime = d3.timeParse("%m %Y");
+          data.forEach(function(d) {
+            d.date = parseTime(d.mes + " " + d.ano);
           });
-          console.log('****', gastoTotal)
-          x.domain(d3.extent(gastoTotal, function(d) { return d.date; }));
+
+          x.domain(d3.extent(data, function(d) { return d.date; }));
 
           y.domain([
-            d3.min(gastoTotal, function(c) { return c.total; }),
-            d3.max(gastoTotal, function(c) { return c.total; })
+            d3.min(data, function(c) { return c.total; }),
+            d3.max(data, function(c) { return c.total; })
           ]);
 
-          z.domain(gastoTotal.map(function(c) { return c.nome; }));
+          z.domain(data.map(function(c) { return c.txNomeParlamentar; }));
 
           g.append("g")
               .attr("class", "axis axis--x")
@@ -68,30 +61,26 @@ app.directive('lineChart', function ($parse, $window) {
               .attr("fill", "#000")
               .text("Gasto total, R$");
 
+
           var city = g.selectAll(".city")
-            .data(gastoTotal)
+            .data(data)
             .enter().append("g")
               .attr("class", "city");
 
           city.append("path")
               .attr("class", "line")
-              .attr("d", function(d) { return line({total: d.total, date: d.date}); })
-              .style("stroke", function(d) { return z(d.nome); });
-          // 
-          // city.append("text")
-          //     .datum(function(d) { return {id: d.nome, total: d.total, date: d.date}; })
-          //     .attr("transform", function(d) { console.log(d); return "translate(" + x(d.date) + "," + y(d.total) + ")"; })
-          //     .attr("x", 3)
-          //     .attr("dy", "0.35em")
-          //     .style("font", "10px sans-serif")
-          //     .text(function(d) { return d.nome; });
+              .attr("d", function(d) { return line(d); })
+              .style("stroke", function(d) { return z(d.txNomeParlamentar); });
+
+          city.append("text")
+              .datum(function(d) { return {id: d.txNomeParlamentar, total: d.total, date: d.date}; })
+              .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.total) + ")"; })
+              .attr("x", 3)
+              .attr("dy", "0.35em")
+              .style("font", "10px sans-serif")
+              .text(function(d) { return d.txNomeParlamentar; });
         });
 
-        function type(d, _, columns) {
-          d.date = parseTime(d.date);
-          for (var i = 1, n = columns.length, c; i < n; ++i) d[c = columns[i]] = +d[c];
-          return d;
-        }
       }
      };
      return directiveDefinitionObject;
