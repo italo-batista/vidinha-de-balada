@@ -1,4 +1,12 @@
-.header {
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #463066;
+  color: #ffffff;
+}
+
+.nav-main {
+  margin-top: 20px;
+  margin-right: 20px;
 }
 
 .logo  {
