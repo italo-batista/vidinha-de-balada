@@ -21,10 +21,16 @@
       <p>{{1 + 1}}</p>
     </div>
 
+    <a ui-sref="home" ui-sref-active="active">Home</a>
+    <a ui-sref="perfil" ui-sref-active="active">Perfil</a>
+
+    <ui-view></ui-view>
+
     <!-- libs -->
     <script src="lib/jquery.min.js"></script>
     <script src="lib/bootstrap.min.js"></script>
     <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
     <!-- js -->
     <script src="js/app.js"></script>
   </body>
