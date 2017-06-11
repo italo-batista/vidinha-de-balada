@@ -41,8 +41,6 @@ app.directive('lineChart', function ($parse, $window) {
               d3.max(data, function(c) { return +c.total; })
             ]);
 
-            z.domain(data.map(function(c) { return c.txNomeParlamentar; }));
-
             g.append("g")
                 .attr("class", "axis axis--x")
                 .attr("transform", "translate(0," + height + ")")
@@ -69,11 +67,6 @@ app.directive('lineChart', function ($parse, $window) {
                 .attr("d", line)
                 .style("stroke", function(d) { return z(d.txNomeParlamentar); });
 
-              city.append("text")
-                  .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(+d.total) + ")"; })
-                  .attr("x", 3)
-                  .attr("dy", "0.35em")
-                  .style("font", "10px sans-serif");
           });
 
         }
