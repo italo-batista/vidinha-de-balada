@@ -5,8 +5,11 @@ app.directive('radarChart', function ($parse) {
   var directiveDefinitionObject = {
       restrict: 'E',
       replace: false,
+      scope: {
+        deputado: '='
+      },
       link: function (scope, element, attrs) {
-
+        var id = scope.deputado;
         var width = 900,
             height = 900;
 
@@ -23,7 +26,7 @@ app.directive('radarChart', function ($parse) {
             .attr('viewBox', '0 0 '+width+' '+height)
             .attr('width', '100%');
 
-        d3.json("data/data.json", function(error, data) {
+        d3.json("data/todos.json", function(error, data) {
           if (error) throw error;
            var cfg = {
              radius: 5,
@@ -51,9 +54,13 @@ app.directive('radarChart', function ($parse) {
             }
           }
 
+          data = data[id];
+
           cfg.maxValue = 100;
 
-          var allAxis = (data[0].map(function(i, j){return i.area}));
+          var allAxis = Object.keys(data);
+          allAxis.splice(allAxis.indexOf("nome"), 1);
+          allAxis.splice(allAxis.indexOf("total"), 1);
           var total = allAxis.length;
           var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
           var Format = d3.format('%');
@@ -114,32 +121,33 @@ app.directive('radarChart', function ($parse) {
           .attr("transform", function(d, i){return "translate(0, -10)"})
           .attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
           .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
+
         var dataValues = [];
-
-        data.forEach(function(y, x){
-
-          g.selectAll(".nodes")
-          .data(y, function(j, i){
+        console.log(data);
+        g.selectAll(".nodes").data(
+          allAxis, function(x, y) {
+            console.log(x, y)
             dataValues.push([
-            cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
-            cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
+              cfg.w/2*(1-(parseFloat(Math.max((data[x]/data['total'])*300, 0))/cfg.maxValue)*cfg.factor*Math.sin(y*cfg.radians/total)),
+              cfg.h/2*(1-(parseFloat(Math.max((data[x]/data['total'])*300, 0))/cfg.maxValue)*cfg.factor*Math.cos(y*cfg.radians/total))
             ]);
-          });
-          dataValues.push(dataValues[0]);
-          g.selectAll(".area")
-                 .data([dataValues])
-                 .enter()
-                 .append("polygon")
-                 .attr("class", "radar-chart-serie"+series)
-                 .style("stroke-width", "2px")
-                 .style("stroke", cfg.color(series))
-                 .attr("points",function(d) {
-                   var str="";
-                   for(var pti=0;pti<d.length;pti++){
-                     str=str+d[pti][0]+","+d[pti][1]+" ";
-                   }
-                   return str;
-                  })
+          }
+        )
+        dataValues.push(dataValues[0]);
+        g.selectAll(".area")
+          .data([dataValues])
+            .enter()
+            .append("polygon")
+            .attr("class", "radar-chart-serie"+series)
+              .style("stroke-width", "2px")
+              .style("stroke", cfg.color(series))
+                .attr("points",function(d) {
+                  var str="";
+                  for(var pti=0;pti<d.length;pti++){
+                    str=str+d[pti][0]+","+d[pti][1]+" ";
+                  }
+                  return str;
+                })
                  .style("fill", function(j, i){return cfg.color(series)})
                  .style("fill-opacity", cfg.opacityArea)
                  .on('mouseover', function (d){
@@ -156,45 +164,37 @@ app.directive('radarChart', function ($parse) {
                            .transition(200)
                            .style("fill-opacity", cfg.opacityArea);
                  });
-          series++;
-        });
-        series=0;
-        var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-          data.forEach(function(y, x){
-            g.selectAll(".nodes")
-            .data(y).enter()
-            .append("svg:circle")
-            .attr("class", "radar-chart-serie"+series)
-            .attr('r', cfg.radius)
-            .attr("alt", function(j){return Math.max(j.value, 0)})
-            .attr("cx", function(j, i){
-              dataValues.push([
-              cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
-              cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
-            ]);
-            return cfg.w/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total));
-            })
-            .attr("cy", function(j, i){
-              return cfg.h/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
-            })
-            .attr("data-id", function(j){return j.area})
-            .style("fill", "#fff")
-            .style("stroke-width", "2px")
-            .style("stroke", cfg.color(series)).style("fill-opacity", .9)
-            .on('mouseover', function (d){
-                  tooltip
-                    .style("left", d3.event.pageX - 40 + "px")
-                    .style("top", d3.event.pageY - 40 + "px")
-                    .style("display", "inline-block")
-                    .html((d.area) + "<br><span>" + (d.value) + "</span>")
-                    .style("font-size", "10px");
-                  })
-              .on("mouseout", function(d){ tooltip.style("display", "none");});
+          var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+          g.selectAll(".nodes")
+              .data(allAxis).enter()
+              .append("svg:circle")
+              .attr("class", "radar-chart-serie"+series)
+              .attr('r', cfg.radius)
+              .attr("alt", function(j){return Math.max((data[j]/data['total'])*300, 0)})
+              .attr("cx", function(j, i){
+                return cfg.w/2*(1-(Math.max((data[j]/data["total"])*300, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total));
+              })
+              .attr("cy", function(j, i){
+                return cfg.h/2*(1-(Math.max((data[j]/data["total"])*300, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
+              })
+              .attr("data-id", function(j){return j.area})
+              .style("fill", "#fff")
+              .style("stroke-width", "2px")
+              .style("stroke", cfg.color(series)).style("fill-opacity", .9)
+              .on('mouseover', function (d){
+                    console.log(d)
+                    tooltip
+                      .style("left", d3.event.pageX - 40 + "px")
+                      .style("top", d3.event.pageY - 40 + "px")
+                      .style("display", "inline-block")
+                      .html(("R$ " + data[d]))
+                      .style("font-size", "10px");
+                    })
+                .on("mouseout", function(d){ tooltip.style("display", "none");});
 
-            series++;
-          });
+              series++;
         });
       }
-   };
+    };
    return directiveDefinitionObject;
 });
