@@ -57,6 +57,10 @@ a:hover {
   margin-bottom: 50px;
 }
 
+.content-inverse {
+  background-color: #563B7F;
+}
+
 .axis--x path {
   display: none;
 }
@@ -81,7 +85,7 @@ a:hover {
 .toolTip {
   pointer-events: none;
   position: absolute;
-    display: none;
+  display: none;
   min-width: 50px;
   height: auto;
   background: none repeat scroll 0 0 #ffffff;
@@ -134,4 +138,15 @@ a:hover {
   padding-left: 20px;
   padding-top: 16px;
   padding-bottom: 60px;
+}
+
+.tick > line,
+.axis > line {
+  stroke: #fff;
+}
+
+.tick > text,
+.axis > text {
+  stroke: none;
+  fill: #fff;
 }

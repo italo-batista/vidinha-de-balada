@@ -10,8 +10,16 @@ app.directive('radarChart', function ($parse) {
       },
       link: function (scope, element, attrs) {
         var id = scope.deputado;
-        var width = 900,
-            height = 900;
+        var dictCategoria = {
+          'alimentacao': 'Alimentação',
+          'locacao': 'Locação',
+          'divulgacao': 'Divulgação',
+          'passagem': 'Passagem',
+          'combustivel': 'Combustível',
+          'escritorio': 'Escritório',
+        }
+        var width = 700,
+            height = 700;
 
         var config = {
             w: width,
@@ -30,8 +38,8 @@ app.directive('radarChart', function ($parse) {
           if (error) throw error;
            var cfg = {
              radius: 5,
-             w: 600,
-             h: 600,
+             w: 500,
+             h: 500,
              factor: 1,
              factorLegend: 1,
              levels: 3,
@@ -43,7 +51,7 @@ app.directive('radarChart', function ($parse) {
              TranslateY: 30,
              ExtraWidthX: 50,
              ExtraWidthY: 50,
-             color: d3.scaleOrdinal().range(["#6F257F", "#CA0D59"])
+             color: d3.scaleOrdinal().range(["#ff4e81", "#ff4e81"])
             };
 
           if('undefined' !== typeof options){
@@ -113,12 +121,12 @@ app.directive('radarChart', function ($parse) {
 
         axis.append("text")
           .attr("class", "legend")
-          .text(function(d){return d})
+          .text(function(d){return dictCategoria[d]})
           .style("font-family", "sans-serif")
           .style("font-size", "24px")
           .attr("text-anchor", "middle")
           .attr("dy", "1em")
-          .attr("transform", function(d, i){return "translate(0, -10)"})
+          .attr("transform", function(d, i){return "translate(5, -15)"})
           .attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
           .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
 
