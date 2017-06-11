@@ -11,6 +11,8 @@
       function init() {
         $http.get(RESTAPI+"deputado?id="+vm.id).then(function(res) {
           vm.deputado = res.data;
+          vm.deputado.nome = vm.deputado.nome.replace('"', '').replace('\"', '');
+          vm.deputado.urlfoto = vm.deputado.urlfoto.replace('"', '').replace('\"', '');
         });
       }
       init();

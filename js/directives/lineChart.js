@@ -9,7 +9,7 @@ app.directive('lineChart', function ($parse) {
 
             var width = 600,
                 height = 300;
-            var margin = {top: 20, right: 80, bottom: 30, left: 50};
+            var margin = {top: 20, right: 80, bottom: 30, left: 100};
 
             var chart = d3.select("#line-chart")
                 .append("svg")

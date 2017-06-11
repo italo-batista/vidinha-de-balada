@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="card">
+  <div class="card" ng-show="ctrl.deputado.nome">
     <div class="card-head">
       {{ ctrl.deputado.nome }}
     </div>
@@ -10,7 +10,7 @@
         </a>
       </div>
       <div class="card-subtitle">
-        {{ ctrl.deputado.partido }}
+        {{ ctrl.deputado.uf }}
       </div>
     </div>
     <div class="card-body">

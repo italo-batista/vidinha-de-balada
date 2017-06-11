@@ -17,7 +17,12 @@
           vm.salariosMinimos = Math.round( vm.total / 937000);
         });
         $http.get(RESTAPI+"top10").then(function(res) {
-          vm.deputados = res.data;
+          res.data.forEach(function(d) {
+            d.urlfoto = d.urlfoto.replace('"', '').replace('\"', '');
+            d.nome = d.nome.replace('"', '').replace('\"', '');
+            d.uf = d.uf.replace('"', '').replace('\"', '');
+            vm.deputados.push(d);
+          })
         });
       }
       init();

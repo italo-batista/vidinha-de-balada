@@ -131,10 +131,8 @@ app.directive('radarChart', function ($parse) {
           .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
 
         var dataValues = [];
-        console.log(data);
         g.selectAll(".nodes").data(
           allAxis, function(x, y) {
-            console.log(x, y)
             dataValues.push([
               cfg.w/2*(1-(parseFloat(Math.max((data[x]/data['total'])*100, 0))/cfg.maxValue)*cfg.factor*Math.sin(y*cfg.radians/total)),
               cfg.h/2*(1-(parseFloat(Math.max((data[x]/data['total'])*100, 0))/cfg.maxValue)*cfg.factor*Math.cos(y*cfg.radians/total))
@@ -190,7 +188,6 @@ app.directive('radarChart', function ($parse) {
               .style("stroke-width", "2px")
               .style("stroke", cfg.color(series)).style("fill-opacity", .9)
               .on('mouseover', function (d){
-                    console.log(d)
                     tooltip
                       .style("left", d3.event.pageX - 40 + "px")
                       .style("top", d3.event.pageY - 40 + "px")
