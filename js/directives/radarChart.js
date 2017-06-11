@@ -7,8 +7,8 @@ app.directive('radarChart', function ($parse) {
       replace: false,
       link: function (scope, element, attrs) {
 
-        var width = 1500,
-            height = 1500;
+        var width = 1200,
+            height = 1200;
 
         var config = {
             w: width,
@@ -27,10 +27,10 @@ app.directive('radarChart', function ($parse) {
           if (error) throw error;
            var cfg = {
              radius: 5,
-             w: 600,
-             h: 600,
+             w: 500,
+             h: 500,
              factor: 1,
-             factorLegend: .85,
+             factorLegend: 1,
              levels: 3,
              maxValue: 0,
              radians: 2 * Math.PI,
@@ -38,8 +38,8 @@ app.directive('radarChart', function ($parse) {
              ToRight: 5,
              TranslateX: 80,
              TranslateY: 30,
-             ExtraWidthX: 100,
-             ExtraWidthY: 100,
+             ExtraWidthX: 50,
+             ExtraWidthY: 50,
              color: d3.scaleOrdinal().range(["#6F257F", "#CA0D59"])
             };
 
@@ -87,23 +87,6 @@ app.directive('radarChart', function ($parse) {
               .attr("transform", "translate(" + (cfg.w/2-levelFactor) + ", " + (cfg.h/2-levelFactor) + ")");
            }
 
-                 //Text indicating at what % each level is
-        for(var j=0; j<cfg.levels; j++){
-          var levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
-          g.selectAll(".levels")
-           .data([1]) //dummy data
-           .enter()
-           .append("svg:text")
-           .attr("x", function(d){return levelFactor*(1-cfg.factor*Math.sin(0));})
-           .attr("y", function(d){return levelFactor*(1-cfg.factor*Math.cos(0));})
-           .attr("class", "legend")
-           .style("font-family", "sans-serif")
-           .style("font-size", "10px")
-           .attr("transform", "translate(" + (cfg.w/2-levelFactor + cfg.ToRight) + ", " + (cfg.h/2-levelFactor) + ")")
-           .attr("fill", "#737373")
-           .text((j+1)*100/cfg.levels);
-        }
-
         var series = 0;
 
         var axis = g.selectAll(".axis")
@@ -125,9 +108,9 @@ app.directive('radarChart', function ($parse) {
           .attr("class", "legend")
           .text(function(d){return d})
           .style("font-family", "sans-serif")
-          .style("font-size", "11px")
+          .style("font-size", "20px")
           .attr("text-anchor", "middle")
-          .attr("dy", "1.5em")
+          .attr("dy", "1em")
           .attr("transform", function(d, i){return "translate(0, -10)"})
           .attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
           .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
@@ -201,9 +184,10 @@ app.directive('radarChart', function ($parse) {
             .on('mouseover', function (d){
                   tooltip
                     .style("left", d3.event.pageX - 40 + "px")
-                    .style("top", d3.event.pageY - 80 + "px")
+                    .style("top", d3.event.pageY - 40 + "px")
                     .style("display", "inline-block")
-                    .html((d.area) + "<br><span>" + (d.value) + "</span>");
+                    .html((d.area) + "<br><span>" + (d.value) + "</span>")
+                    .style("font-size", "10px");
                   })
               .on("mouseout", function(d){ tooltip.style("display", "none");});
 
