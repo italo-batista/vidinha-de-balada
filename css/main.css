@@ -10,7 +10,7 @@ a {
 
 a:active,
 a:hover {
-  outline: 0;
+  color: #fff;
 }
 
 .nav-main {
@@ -146,7 +146,6 @@ a:hover {
   padding-bottom: 60px;
 }
 
-<<<<<<< HEAD
 .categorias {
   display: flex;
   justify-content: space-between;
@@ -168,5 +167,7 @@ a:hover {
   stroke: none;
   fill: #fff;
 }
-=======
->>>>>>> d1ccf19755c2aba9e00aa7fc0724ee876c59422a
+
+.estouro {
+  font-size: 2em;
+}

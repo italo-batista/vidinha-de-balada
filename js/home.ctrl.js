@@ -7,28 +7,63 @@
       var vm = this;
       vm.total = 0;
       vm.salariosMinimos = 0;
+      vm.getMes = getMes;
 
-      vm.deputados = [
-        {
-          id: 3151,
-          nome: "Nome do camarada",
-          partido: "PR/PB",
-          imagem: "http://www.camara.gov.br/internet/deputado/bandep/178957.jpg"
-        },
-        {
-          id: 3152,
-          nome: "Nome do camarada B",
-          partido: "PR/PE",
-          imagem: "http://www.camara.gov.br/internet/deputado/bandep/178957.jpg"
-        }
-      ];
+      vm.deputados = [];
 
       function init() {
         $http.get(RESTAPI+"gasto_anual?ano=2017").then(function(res) {
           vm.total = res.data[0];
           vm.salariosMinimos = Math.round( vm.total / 937000);
         });
+        $http.get(RESTAPI+"top10").then(function(res) {
+          vm.deputados = res.data;
+        });
       }
       init();
+
+      function getMes(mes) {
+        switch (mes) {
+          case "1":
+            return "Janeiro"
+            break;
+          case "2":
+            return "Fevereiro"
+            break;
+          case "3":
+            return "Março"
+            break;
+          case "4":
+            return "Abril"
+            break;
+          case "5":
+            return "Maio"
+            break;
+          case "6":
+            return "Junho"
+            break;
+          case "7":
+            return "Julho"
+            break;
+          case "8":
+            return "Agosto"
+            break;
+          case "9":
+            return "Setembro"
+            break;
+          case "10":
+            return "Outubro"
+            break;
+          case "11":
+            return "Novembro"
+            break;
+          case "12":
+            return "Dezembro"
+            break;
+          default:
+            return "--"
+            break;
+        }
+      }
     });
 })();

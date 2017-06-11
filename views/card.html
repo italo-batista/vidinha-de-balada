@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-head">
-    {{ deputado.nome }}
+    <a ui-sref="perfil({id: deputado.id})">{{ deputado.nome }}</a>
   </div>
   <div class="card-subhead">
     <div class="card-img">
@@ -9,22 +9,17 @@
       </a>
     </div>
     <div class="card-subtitle">
-      {{ deputado.partido }}
+      {{ deputado.uf }}
     </div>
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-sm-2">
-        <p>{{ deputado.alimentacao }}</p>
-        <p>Alimentação</p>
+      <div class="col-sm-6 text-center">
       </div>
-      <div class="col-sm-2">
-        {{ deputado.combustivel }}
+      <div class="col-sm-6">
+        <p>Estourou em {{ deputado.mes+" de "+deputado.ano }}</p>
+        <p><strong class="estouro">{{ deputado.total | currency:'R$ ' }}</strong> / {{ deputado.cota_mensal | currency:'R$ ' }}</p>
       </div>
-      <div class="col-sm-2"></div>
-      <div class="col-sm-2"></div>
-      <div class="col-sm-2"></div>
-      <div class="col-sm-2"></div>
     </div>
   </div>
 </div>
