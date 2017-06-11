@@ -13,7 +13,9 @@
         })
         .state('perfil', {
           url: '/perfil/:id',
-          templateUrl: 'views/perfil.html'
+          templateUrl: 'views/perfil.html',
+          controller: 'PerfilCtrl',
+          controllerAs: 'ctrl'
         });
       $urlRouterProvider.otherwise('/');
     });

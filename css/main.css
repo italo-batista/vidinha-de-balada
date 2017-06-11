@@ -140,11 +140,13 @@ a:hover {
   padding-bottom: 60px;
 }
 
-.tick > line {
-  stroke: #fff
+.tick > line,
+.axis > line {
+  stroke: #fff;
 }
 
-.tick > text {
+.tick > text,
+.axis > text {
   stroke: none;
   fill: #fff;
 }
