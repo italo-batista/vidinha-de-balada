@@ -1,4 +1,21 @@
-<div class="container text-center">
-  <h1>{{0 | currency:'R$ '}}</h1>
-  <h2>foi gasto em 2017 com a <br> Cota para exercício da atividade parlamentar</h2>
+<div class="container">
+  <div class="headline">
+    <p class="headline-title">{{ ctrl.total | currency:'R$ '}}</p>
+    <p>foram gastos com a <br>Cota para exercício da atividade parlamentar apenas em <strong>2017</strong></p>
+  </div>
+
+  <div class="float-flag">
+    Isso equivale à cerca de <br><strong>{{ctrl.salariosMinimos}}mil</strong> salários mínimos
+  </div>
+
+  <div class="content">
+
+    <h1 class="text-center">Os 10 mais #estourados</h1>
+
+    <br>
+
+    <card-deputado deputado="deputado" ng-repeat="deputado in ctrl.deputados"></card-deputado>
+
+  </div>
+
 </div>
