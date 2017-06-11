@@ -37,10 +37,15 @@ body {
 }
 
 .card {
-  margin-left: 100px;
-  margin-right: 100px;
   margin-bottom: 20px;
   background-color: #454545;
+}
+
+@media only screen and (min-width : 960px) {
+  .card {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
 }
 
 .card-head {
@@ -66,4 +71,5 @@ body {
 .card-subtitle {
   padding-left: 20px;
   padding-top: 16px;
+  padding-bottom: 60px;
 }
