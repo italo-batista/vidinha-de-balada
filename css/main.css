@@ -140,6 +140,17 @@ a:hover {
   padding-bottom: 60px;
 }
 
+.categorias {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.categoria {
+  font-size: 0.8em;
+  text-align: center;
+}
+
 .tick > line,
 .axis > line {
   stroke: #fff;
