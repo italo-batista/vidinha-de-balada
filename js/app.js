@@ -12,8 +12,10 @@
           controllerAs: 'ctrl'
         })
         .state('perfil', {
-          url: '/perfil',
-          templateUrl: 'views/perfil.html'
+          url: '/perfil/:id',
+          templateUrl: 'views/perfil.html',
+          controller: 'PerfilCtrl',
+          controllerAs: 'ctrl'
         });
       $urlRouterProvider.otherwise('/');
     });
