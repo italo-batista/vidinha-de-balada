@@ -191,6 +191,29 @@ for line in f:
 
 f.close()
 
+ranking = []
+f = open('data/top_10_estourados_brasil.csv')
+f.readline()
+
+for line in f:
+	rank = line.split(",")
+	valores = {  "nome" : rank[0],
+				"id" : rank[1],
+	             "uf" : rank[2],
+				"ano" : int(rank[3]),
+				"mes" : int(rank[4]),
+				"total" : float(rank[5]),
+				"cota_mensal" : float(rank[6]),
+				"coef" : float(rank[7])
+	}      
+	ranking.append(valores)
+
+f.close()
+
+@app.route('/top10')
+def top10():
+	return json.dumps(ranking)
+
 f = open('data/busca.csv')
 f.readline()
 
@@ -198,6 +221,10 @@ for line in f:
 	info = line.split(",")
 	if info[0] in deputados_dict.keys():
 		deputados_dict[info[0]]["urlfoto"] = info[2]
+	for dep in ranking:
+		if info[0] in dep["id"]:
+			dep["urlfoto"] = info[2]
+
 
 f.close()
 
@@ -230,27 +257,24 @@ def anual():
 	return json.dumps(gastos_anos[key])
 
 
-ranking = []
-f = open('data/top_10_estourados_brasil.csv')
+
+
+
+f = open('data/total_presenca_anos_somados.csv')
 f.readline()
 
 for line in f:
-	rank = line.split(",")
-	valores = {  "nome" : rank[0],
-	             "uf" : rank[2],
-				"ano" : rank[3],
-				"mes" : rank[4],
-				"total" : rank[5],
-				"cota_mensal" : rank[6],
-				"coef" : rank[7]
-	}      
-	ranking.append(valores)
+	info = line.split(",")
+	if info[0] in deputados_dict.keys():
+		deputados_dict[info[0]]["presencas"] = int(info[2])
+		deputados_dict[info[0]]["total_sessoes"] = int(info[3])
+	for dep in ranking:
+		if info[0] in dep["id"]:
+			dep["presencas"] = int(info[2])
+			dep["total_sessoes"] = int(info[3])
+
 
 f.close()
-
-@app.route('/top10')
-def top10():
-	return json.dumps(ranking)
 
 if __name__ == '__main__':
     app.run(debug=True)
