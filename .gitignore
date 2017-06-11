@@ -2,3 +2,4 @@
 /.idea/
 .idea/*
 .Rproj.user
+*.pyc

@@ -3,12 +3,16 @@
 
   angular
     .module('baladaApp')
-    .controller('PerfilCtrl', function() {
+    .controller('PerfilCtrl', function($http, $stateParams, RESTAPI) {
       var vm = this;
-      vm.deputado = {
-        nome: "Nome do camarada",
-        partido: "PR/PB",
-        imagem: "http://www.camara.gov.br/internet/deputado/bandep/178957.jpg"
+      vm.deputado = {}
+      vm.id = $stateParams.id;
+
+      function init() {
+        $http.get(RESTAPI+"deputado?id="+vm.id).then(function(res) {
+          vm.deputado = res.data;
+        });
       }
+      init();
     });
 })();
