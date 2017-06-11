@@ -13,7 +13,7 @@ app.directive('lineChart', function ($parse) {
               .attr('version', '1.1')
               .attr('viewBox', '0 0 '+width+' '+height)
               .attr('width', '100%');
-          var margin = {top: 20, right: 80, bottom: 30, left: 50};
+          var margin = {top: 20, right: 20, bottom: 30, left: 100};
           var width = width - margin.left - margin.right;
           var height = height - margin.top - margin.bottom;
           var g = chart.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -53,7 +53,6 @@ app.directive('lineChart', function ($parse) {
                 .attr("transform", "rotate(-90)")
                 .attr("y", 6)
                 .attr("dy", "0.71em")
-                .attr("fill", "#000")
                 .text("Gasto total, R$");
 
             var dep = g.selectAll(".deputado")

@@ -4,7 +4,9 @@
   </div>
   <div class="card-subhead">
     <div class="card-img">
-      <img ng-src="{{ deputado.imagem }}" alt="{{ deputado.nome }}" width="100%">
+      <a ui-sref="perfil({id: deputado.id})">
+        <img ng-src="{{ deputado.imagem }}" alt="{{ deputado.nome }}" width="100%">
+      </a>
     </div>
     <div class="card-subtitle">
       {{ deputado.partido }}
@@ -12,8 +14,13 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-2"></div>
+      <div class="col-sm-2">
+        <p>{{ deputado.alimentacao }}</p>
+        <p>Alimentação</p>
+      </div>
+      <div class="col-sm-2">
+        {{ deputado.combustivel }}
+      </div>
       <div class="col-sm-2"></div>
       <div class="col-sm-2"></div>
       <div class="col-sm-2"></div>
