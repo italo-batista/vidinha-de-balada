@@ -230,21 +230,21 @@ def anual():
 	return json.dumps(gastos_anos[key])
 
 
-ranking = {}
+ranking = []
 f = open('data/top_10_estourados_brasil.csv')
 f.readline()
 
 for line in f:
 	rank = line.split(",")
-	valores = {  "uf" : rank[2],
+	valores = {  "nome" : rank[0],
+	             "uf" : rank[2],
 				"ano" : rank[3],
 				"mes" : rank[4],
 				"total" : rank[5],
 				"cota_mensal" : rank[6],
 				"coef" : rank[7]
 	}      
-
-	ranking[rank[0]] = valores
+	ranking.append(valores)
 
 f.close()
 
