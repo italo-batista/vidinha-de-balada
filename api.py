@@ -181,12 +181,23 @@ deputados_dict = {}
 f = open('data/tabela_gastos_por_categoria.csv')
 f.readline()
 
+
 for line in f:
 	deputado = line.split(",")
 
 	dep_obj = Deputado(deputado[0], deputado[1], deputado[2], deputado[3], deputado[4], deputado[5], deputado[6], deputado[7])
 
 	deputados_dict[deputado[0]] = dep_obj.valores
+
+f.close()
+
+f = open('data/busca.csv')
+f.readline()
+
+for line in f:
+	info = line.split(",")
+	if info[0] in deputados_dict.keys():
+		deputados_dict[info[0]]["urlfoto"] = info[2]
 
 f.close()
 
@@ -218,7 +229,7 @@ def anual():
 	key =request.args.get('ano').lower()
 	return json.dumps(gastos_anos[key])
 
-	
+
 if __name__ == '__main__':
     app.run(debug=True)
 
