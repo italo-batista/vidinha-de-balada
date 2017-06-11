@@ -20,20 +20,18 @@ app.directive('lineChart', function ($parse, $window) {
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             var x = d3.scaleTime().range([0, width]),
-                y = d3.scaleLinear().range([height, 0]),
-                z = d3.scaleOrdinal(d3.schemeCategory10);
+                y = d3.scaleLinear().range([height, 0]);
+
+            var color = d3.scaleOrdinal(d3.schemeCategory10)
 
             var line = d3.line()
+                .curve(d3.curveBasis)
                 .x(function (d) {
                     return x(d.date);
                 })
                 .y(function (d) {
                     return y(+d.total);
                 });
-
-            var div = d3.select("#line-chart").append("div")
-                .attr("class", "tooltip")
-                .style("opacity", 0);
 
             d3.csv("data/mais_dps_2016.csv", function (error, data) {
                 if (error) throw error;
@@ -45,6 +43,10 @@ app.directive('lineChart', function ($parse, $window) {
 
                 x.domain(d3.extent(data, function (d) {
                     return d.date;
+                }));
+
+                color.domain(d3.extent(data, function (d) {
+                    return d.txNameParlamentar;
                 }));
 
                 y.domain([
@@ -77,12 +79,31 @@ app.directive('lineChart', function ($parse, $window) {
                     .attr("class", "politico");
 
                 politico.append("path")
-                    .datum(data)
+                    .datum(data.filter( function (p) {
+                        return p.txNomeParlamentar === "DELEGADO WALDIR"
+                    }))
+                    .attr("data-legend", "Min")
                     .attr("class", "line")
                     .attr("d", line)
-                    .style("stroke", function (d) {
-                        return z(d.txNomeParlamentar);
-                    });
+                    .style("stroke", "#2196F3");
+
+                politico.append("path")
+                    .datum(data.filter( function (p) {
+                        return p.txNomeParlamentar === "JÚLIO DELGADO"
+                    }))
+                    .attr("data-legend", "Med")
+                    .attr("class", "line")
+                    .attr("d", line)
+                    .style("stroke", "#F06292");
+
+                politico.append("path")
+                    .datum(data.filter( function (p) {
+                        return p.txNomeParlamentar === "ABEL MESQUITA JR."
+                    }))
+                    .attr("data-legend", "Max")
+                    .attr("class", "line")
+                    .attr("d", line)
+                    .style("stroke", "#F44336");
 
                 politico.append("text")
                     .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(+d.total) + ")"; })
@@ -90,8 +111,20 @@ app.directive('lineChart', function ($parse, $window) {
                     .attr("dy", "0.35em")
                     .style("font", "10px sans-serif");
 
-            });
+                legend = chart.append("g")
+                    .attr("class","legend")
+                    .attr("transform","translate(50,30)")
+                    .style("font-size","12px")
+                    .call(d3.legend)
 
+                setTimeout(function() {
+                    legend
+                        .style("font-size","20px")
+                        .attr("data-style-padding",10)
+                        .call(d3.legend)
+                },1000)
+
+            });
         }
     };
     return directiveDefinitionObject;
