@@ -7,8 +7,8 @@ app.directive('radarChart', function ($parse) {
       replace: false,
       link: function (scope, element, attrs) {
 
-        var width = 1200,
-            height = 1200;
+        var width = 900,
+            height = 900;
 
         var config = {
             w: width,
@@ -27,8 +27,8 @@ app.directive('radarChart', function ($parse) {
           if (error) throw error;
            var cfg = {
              radius: 5,
-             w: 500,
-             h: 500,
+             w: 600,
+             h: 600,
              factor: 1,
              factorLegend: 1,
              levels: 3,
@@ -108,7 +108,7 @@ app.directive('radarChart', function ($parse) {
           .attr("class", "legend")
           .text(function(d){return d})
           .style("font-family", "sans-serif")
-          .style("font-size", "20px")
+          .style("font-size", "24px")
           .attr("text-anchor", "middle")
           .attr("dy", "1em")
           .attr("transform", function(d, i){return "translate(0, -10)"})
