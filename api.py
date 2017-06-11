@@ -6,8 +6,11 @@ from gasto import *
 from deputado import *
 from collections import OrderedDict
 import unicodedata
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
+
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -197,6 +200,25 @@ def deputado_por_id():
 	key = request.args.get('id').lower()
 	return json.dumps(deputados_dict[key])
 
+
+gastos_anos = {}
+f = open('data/gasto_total_anos.csv')
+f.readline()
+
+for line in f:
+	gasto_anual = line.split(",")
+	valores = [float(gasto_anual[1]), float(gasto_anual[2])]
+	gastos_anos[gasto_anual[0]] = valores
+
+f.close()
+
+
+@app.route('/gasto_anual')
+def anual():
+	key =request.args.get('ano').lower()
+	return json.dumps(gastos_anos[key])
+
+	
 if __name__ == '__main__':
     app.run(debug=True)
 
