@@ -20,12 +20,13 @@ Abra a linha de comando de dentro da pasta do projeto insira
   python api.py
 ```
 e aperte _enter_
-(se você não tiver instalado deve instalar a biblioteca python Flask)
+(se você não já tiver instalado, deve instalar a biblioteca python Flask)
 
-E em outra aba insira
+Em outra aba insira
 ```
+npm install browser-sync
 browser-sync start --server
 ```
 e aperte _enter_
 
-Depois é só acessar [localhost:3000](localhost:3000])
+Depois é só acessar [localhost:3000](http://localhost:3000)
