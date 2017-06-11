@@ -65,6 +65,7 @@ app.directive('lineChart', function ($parse) {
 
                 g.append("g")
                     .attr("class", "axis axis--y")
+                    .style("font", "11px sans-serif")
                     .call(d3.axisLeft(y))
                     .append("text")
                     .attr("transform", "rotate(-90)")
@@ -94,7 +95,7 @@ app.directive('lineChart', function ($parse) {
                     .attr("data-legend", "Med")
                     .attr("class", "line")
                     .attr("d", line)
-                    .style("stroke", "#F06292");
+                    .style("stroke", "#e67e22");
 
                 politico.append("path")
                     .datum(data.filter( function (p) {
@@ -109,7 +110,7 @@ app.directive('lineChart', function ($parse) {
                     .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(+d.total) + ")"; })
                     .attr("x", 3)
                     .attr("dy", "0.35em")
-                    .style("font", "10px sans-serif");
+
 
             });
         }
