@@ -10,7 +10,7 @@ a {
 
 a:active,
 a:hover {
-  outline: 0;
+  color: #fff;
 }
 
 .nav-main {
@@ -160,4 +160,8 @@ a:hover {
 .axis > text {
   stroke: none;
   fill: #fff;
+}
+
+.estouro {
+  font-size: 2em;
 }
