@@ -111,19 +111,6 @@ app.directive('lineChart', function ($parse, $window) {
                     .attr("dy", "0.35em")
                     .style("font", "10px sans-serif");
 
-                legend = chart.append("g")
-                    .attr("class","legend")
-                    .attr("transform","translate(50,30)")
-                    .style("font-size","12px")
-                    .call(d3.legend)
-
-                setTimeout(function() {
-                    legend
-                        .style("font-size","20px")
-                        .attr("data-style-padding",10)
-                        .call(d3.legend)
-                },1000)
-
             });
         }
     };
