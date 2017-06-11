@@ -1,7 +1,58 @@
-.header {
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #463066;
+  color: #ffffff;
+}
+
+a {
+  color: #fff;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+.nav-main {
+  margin-top: 20px;
+  margin-right: 20px;
 }
 
 .logo  {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.headline {
+  /*background-color: #ff4e81;*/
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.headline-title {
+  font-size: 5em;
+}
+
+@media only screen and (max-width : 320px) {
+  .headline-title {
+    font-size: 1.2em;
+  }
+}
+
+.float-flag {
+  background-color: #fff;
+  color: #454545;
+  padding: 10px;
+  margin: auto;
+  width: 250px;
+}
+
+.float-flag > strong {
+  font-size: 1.5em;
+}
+
+.content {
   margin-top: 50px;
   margin-bottom: 50px;
 }
@@ -50,4 +101,42 @@
 .toolTip span {
   font-weight: 500;
   color: #081F2C;
+}
+
+.card {
+  margin-bottom: 20px;
+  background-color: #454545;
+}
+
+@media only screen and (min-width : 960px) {
+  .card {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+}
+
+.card-head {
+  background-color: #ff4e81;
+  padding: 20px;
+  padding-left: 151px;
+  font-size: 1.5em;
+}
+
+.card-subhead {
+  display: flex;
+  padding-left: 20px;
+}
+
+.card-img {
+  width: 114px;
+  height: 114px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-top: -40px;
+}
+
+.card-subtitle {
+  padding-left: 20px;
+  padding-top: 16px;
+  padding-bottom: 60px;
 }
