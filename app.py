@@ -11,7 +11,6 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app)
 
-
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -39,7 +38,6 @@ gastos_dict = {}
 #             return string.decode(i)
 #         except:
 #             pass
-
 
 f = open('data/gasto_mensal_por_depoutado_por_categoria.csv')
 f.readline()
@@ -277,5 +275,5 @@ for line in f:
 f.close()
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+	port = int(os.environ.get('PORT', 5000))
+	app.run(host='0.0.0.0', port=port)
