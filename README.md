@@ -13,3 +13,19 @@ Vidinha de Balada propõe analisar os gastos da CEAP verificando se o deputado e
 ----
 
 Melhorias são muito bem-vindas! :))
+
+### Para rodar o projeto
+Abra a linha de comando de dentro da pasta do projeto insira
+```
+  python api.py
+```
+e aperte _enter_
+(se você não tiver instalado deve instalar a biblioteca python Flask)
+
+E em outra aba insira
+```
+browser-sync start --server
+```
+e aperte _enter_
+
+Depois é só acessar [localhost:3000](localhost:3000])
