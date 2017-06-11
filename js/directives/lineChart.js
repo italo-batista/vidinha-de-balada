@@ -26,14 +26,13 @@ app.directive('lineChart', function ($parse, $window) {
               .x(function(d) { return x(d.date); })
               .y(function(d) { return y(+d.total); })
 
-          d3.csv("data/gasto_mensal_por_depoutado.csv", function(error, data) {
+          d3.csv("data/mais_dps_2016.csv", function(error, data) {
             if (error) throw error;
 
             var parseTime = d3.timeParse("%m %Y");
             data.forEach(function(d) {
               d.date = parseTime(d.mes + " " + d.ano);
             });
-            data = data.splice(0, 100);
 
             x.domain(d3.extent(data, function(d) { return d.date; }));
 
@@ -70,12 +69,11 @@ app.directive('lineChart', function ($parse, $window) {
                 .attr("d", line)
                 .style("stroke", function(d) { return z(d.txNomeParlamentar); });
 
-            city.append("text")
-                .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(+d.total) + ")"; })
-                .attr("x", 3)
-                .attr("dy", "0.35em")
-                .style("font", "10px sans-serif")
-                .text(function(d) { return d.txNomeParlamentar; });
+              city.append("text")
+                  .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(+d.total) + ")"; })
+                  .attr("x", 3)
+                  .attr("dy", "0.35em")
+                  .style("font", "10px sans-serif");
           });
 
         }
