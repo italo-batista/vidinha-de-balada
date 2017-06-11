@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="headline">
+  <div class="headline" ng-show="ctrl.total > 0">
     <p class="headline-title">{{ ctrl.total | currency:'R$ '}}</p>
     <p>foram gastos com a <br>Cota para exercício da atividade parlamentar apenas em <strong>2017</strong></p>
   </div>
 
-  <div class="float-flag">
+  <div class="float-flag" ng-show="ctrl.total > 0">
     Isso equivale à cerca de <br><strong>{{ctrl.salariosMinimos}}mil</strong> salários mínimos
   </div>
 
