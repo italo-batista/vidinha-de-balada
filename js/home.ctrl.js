@@ -7,7 +7,6 @@
       var vm = this;
       vm.total = 0;
       vm.salariosMinimos = 0;
-      vm.getMes = getMes;
 
       vm.deputados = [];
 
@@ -27,7 +26,7 @@
       }
       init();
 
-      function getMes(mes) {
+      vm.getMes = function(mes) {
         switch (mes) {
           case "1":
             return "Janeiro"

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" ng-controller="HomeCtrl as vm">
   <div class="card-head">
     <a ui-sref="perfil({id: deputado.id})">{{ deputado.nome }}</a>
   </div>
@@ -17,7 +17,7 @@
       <div class="col-sm-6 text-center">
       </div>
       <div class="col-sm-6">
-        <p>Estourou em {{ deputado.mes+" de "+deputado.ano }}</p>
+        <p>Estourou em {{ vm.getMes(deputado.mes)+" de "+deputado.ano }}</p>
         <p><strong class="estouro">{{ deputado.total | currency:'R$ ' }}</strong> / {{ deputado.cota_mensal | currency:'R$ ' }}</p>
       </div>
     </div>
