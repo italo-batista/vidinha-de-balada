@@ -230,6 +230,28 @@ def anual():
 	return json.dumps(gastos_anos[key])
 
 
+ranking = {}
+f = open('data/top_10_estourados_brasil.csv')
+f.readline()
+
+for line in f:
+	rank = line.split(",")
+	valores = {  "uf" : rank[2],
+				"ano" : rank[3],
+				"mes" : rank[4],
+				"total" : rank[5],
+				"cota_mensal" : rank[6],
+				"coef" : rank[7]
+	}      
+
+	ranking[rank[0]] = valores
+
+f.close()
+
+@app.route('/top10')
+def top10():
+	return json.dumps(ranking)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
