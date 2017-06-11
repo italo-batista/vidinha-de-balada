@@ -107,14 +107,25 @@ app.directive('lineChart', function ($parse) {
                     .attr("d", line)
                     .style("stroke", "#F44336");
 
-                politico.append("text")
-                    .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(+d.total) + ")"; })
+               var dataFiltrada = data.filter(function(p) {
+                 return p.date > new Date('2017/03/01').valueOf();
+               })
+               dataFiltrada.splice(1, 1);
+               dataFiltrada.splice(3, 2);
+
+               politico.append("text")
+                .data(dataFiltrada)
+                    .datum(function(d) { return {nome: d.txNomeParlamentar, date: d.date, total: +d.total }; })
+                    .attr("transform", function(d) { return "translate(" + x(d.date) + "," + y(d.total) + ")"; })
                     .attr("x", 3)
-                    .attr("dy", "0.35em")
+                    .attr("dy", "1em")
+                    .attr("class", "estourados")
+                    .style("font", "10px sans-serif")
+                    .style("color", "#fff")
+                    .text(function(d) { return d.nome; });
 
-
-            });
-        }
-       };
+                })
+              }
+            }
      return directiveDefinitionObject;
   });
