@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('baladaApp');
 
-app.directive('lineChart', function ($parse, $window) {
+app.directive('lineChart', function ($parse) {
     var directiveDefinitionObject = {
         restrict: 'E',
         replace: false,
@@ -56,17 +56,16 @@ app.directive('lineChart', function ($parse, $window) {
                 .attr("fill", "#000")
                 .text("Gasto total, R$");
 
-            var city = g.selectAll(".city")
+            var dep = g.selectAll(".deputado")
               .data(data)
               .enter().append("g")
-                .attr("class", "city");
+                .attr("class", "deputado");
 
-            city.append("path")
+            dep.append("path")
               .datum(data)
                 .attr("class", "line")
                 .attr("d", line)
                 .style("stroke", function(d) { return z(d.txNomeParlamentar); });
-
           });
 
         }
