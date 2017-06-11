@@ -12,7 +12,4 @@ filtro = filtro %>% filter(total > 177225.5)
 
 filtrados = filter( dados_t%txNomeParlamentar %in% filtro$txNomeParlamentar )
 
-
-
-
 write.table(filtrado, file = "mais_dps_2016.csv", row.names=FALSE, col.names=TRUE, sep=",")

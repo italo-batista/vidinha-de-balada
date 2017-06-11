@@ -7,8 +7,8 @@ app.directive('radarChart', function ($parse) {
       replace: false,
       link: function (scope, element, attrs) {
 
-        var width = 1000,
-            height = 1000;
+        var width = 1500,
+            height = 1500;
 
         var config = {
             w: width,
