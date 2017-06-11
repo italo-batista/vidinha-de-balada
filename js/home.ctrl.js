@@ -27,6 +27,7 @@
       init();
 
       vm.getMes = function(mes) {
+        mes = str(mes);
         switch (mes) {
           case "1":
             return "Janeiro"
