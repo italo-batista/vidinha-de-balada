@@ -12,7 +12,7 @@
           controllerAs: 'ctrl'
         })
         .state('perfil', {
-          url: '/perfil',
+          url: '/perfil/:id',
           templateUrl: 'views/perfil.html'
         });
       $urlRouterProvider.otherwise('/');
