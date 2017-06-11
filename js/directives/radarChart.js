@@ -136,8 +136,8 @@ app.directive('radarChart', function ($parse) {
           allAxis, function(x, y) {
             console.log(x, y)
             dataValues.push([
-              cfg.w/2*(1-(parseFloat(Math.max((data[x]/data['total'])*300, 0))/cfg.maxValue)*cfg.factor*Math.sin(y*cfg.radians/total)),
-              cfg.h/2*(1-(parseFloat(Math.max((data[x]/data['total'])*300, 0))/cfg.maxValue)*cfg.factor*Math.cos(y*cfg.radians/total))
+              cfg.w/2*(1-(parseFloat(Math.max((data[x]/data['total'])*225, 0))/cfg.maxValue)*cfg.factor*Math.sin(y*cfg.radians/total)),
+              cfg.h/2*(1-(parseFloat(Math.max((data[x]/data['total'])*225, 0))/cfg.maxValue)*cfg.factor*Math.cos(y*cfg.radians/total))
             ]);
           }
         )
@@ -178,12 +178,12 @@ app.directive('radarChart', function ($parse) {
               .append("svg:circle")
               .attr("class", "radar-chart-serie"+series)
               .attr('r', cfg.radius)
-              .attr("alt", function(j){return Math.max((data[j]/data['total'])*300, 0)})
+              .attr("alt", function(j){return Math.max((data[j]/data['total'])*200, 0)})
               .attr("cx", function(j, i){
-                return cfg.w/2*(1-(Math.max((data[j]/data["total"])*300, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total));
+                return cfg.w/2*(1-(Math.max((data[j]/data["total"])*225, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total));
               })
               .attr("cy", function(j, i){
-                return cfg.h/2*(1-(Math.max((data[j]/data["total"])*300, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
+                return cfg.h/2*(1-(Math.max((data[j]/data["total"])*225, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
               })
               .attr("data-id", function(j){return j.area})
               .style("fill", "#fff")
