@@ -6,8 +6,11 @@ from gasto import *
 from deputado import *
 from collections import OrderedDict
 import unicodedata
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
+
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -178,12 +181,23 @@ deputados_dict = {}
 f = open('data/tabela_gastos_por_categoria.csv')
 f.readline()
 
+
 for line in f:
 	deputado = line.split(",")
 
 	dep_obj = Deputado(deputado[0], deputado[1], deputado[2], deputado[3], deputado[4], deputado[5], deputado[6], deputado[7])
 
 	deputados_dict[deputado[0]] = dep_obj.valores
+
+f.close()
+
+f = open('data/busca.csv')
+f.readline()
+
+for line in f:
+	info = line.split(",")
+	if info[0] in deputados_dict.keys():
+		deputados_dict[info[0]]["urlfoto"] = info[2]
 
 f.close()
 
@@ -196,6 +210,25 @@ def deputados():
 def deputado_por_id():
 	key = request.args.get('id').lower()
 	return json.dumps(deputados_dict[key])
+
+
+gastos_anos = {}
+f = open('data/gasto_total_anos.csv')
+f.readline()
+
+for line in f:
+	gasto_anual = line.split(",")
+	valores = [float(gasto_anual[1]), float(gasto_anual[2])]
+	gastos_anos[gasto_anual[0]] = valores
+
+f.close()
+
+
+@app.route('/gasto_anual')
+def anual():
+	key =request.args.get('ano').lower()
+	return json.dumps(gastos_anos[key])
+
 
 if __name__ == '__main__':
     app.run(debug=True)
