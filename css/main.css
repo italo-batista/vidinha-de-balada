@@ -10,11 +10,60 @@ body {
 }
 
 .logo  {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.headline {
+  /*background-color: #ff4e81;*/
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.headline-title {
+  font-size: 5em;
+}
+
+@media only screen and (max-width : 320px) {
+  .headline-title {
+    font-size: 1.2em;
+  }
+}
+
+.content {
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
-.headline {
+.card {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 20px;
+  background-color: #454545;
+}
+
+.card-head {
   background-color: #ff4e81;
   padding: 20px;
+  padding-left: 151px;
+  font-size: 1.5em;
+}
+
+.card-subhead {
+  display: flex;
+  padding-left: 20px;
+}
+
+.card-img {
+  width: 114px;
+  height: 114px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-top: -40px;
+}
+
+.card-subtitle {
+  padding-left: 20px;
+  padding-top: 16px;
 }
