@@ -1,0 +1,10 @@
+[
+    [
+      {"area": "Central ", "value": 80},
+      {"area": "Kirkdale", "value": 40},
+      {"area": "Kensington ", "value": 40},
+      {"area": "Everton ", "value": 90},
+      {"area": "Picton ", "value": 60},
+      {"area": "Riverside ", "value": 80}
+  	]
+  ]

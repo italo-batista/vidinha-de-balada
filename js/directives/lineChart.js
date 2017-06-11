@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('baladaApp');
 
-app.directive('lineChart', function ($parse, $window) {
+app.directive('lineChart', function ($parse) {
     var directiveDefinitionObject = {
         restrict: 'E',
         replace: false,
@@ -113,6 +113,6 @@ app.directive('lineChart', function ($parse, $window) {
 
             });
         }
-    };
-    return directiveDefinitionObject;
-});
+       };
+     return directiveDefinitionObject;
+  });
