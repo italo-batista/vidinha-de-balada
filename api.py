@@ -3,6 +3,7 @@ import json
 from flask import Flask, request
 import sys
 from gasto import *
+from deputado import *
 from collections import OrderedDict
 import unicodedata
 
@@ -24,9 +25,9 @@ cota_mensal = 8
 coef = 9
 
 categorias_gastos = {}
-nomes_gastos = {}
+ids_gastos = {}
 categorias = set()
-nomes = set()
+ids = set()
 gastos_dict = {}
 
 # def force_decode(string, codecs=['utf8', 'cp1252']):
@@ -55,8 +56,8 @@ for line in f:
     # conjunto único de categorias
     categorias.add(gasto[nossas_categorias])
 
-    #conjunto único de nomes
-    nomes.add(gasto[txNomeParlamentar])
+    #conjunto único de ids
+    ids.add(gasto[idecadastro])
 
     gastos_dict[gasto_obj.idecadastro] = gasto_obj
 
@@ -67,16 +68,16 @@ for line in f:
     else:
         categorias_gastos[gasto_obj.nossas_categorias] = [gasto_obj]
 
-    # constrói dict mapeando Nomes para gastos
+    # constrói dict mapeando ids para gastos
     # deve ser usado para melhorar o desempenho das buscas
-    if gasto_obj.txNomeParlamentar in nomes_gastos:
-        nomes_gastos[gasto_obj.txNomeParlamentar].append(gasto_obj)
+    if gasto_obj.idecadastro in ids_gastos:
+        ids_gastos[gasto_obj.idecadastro].append(gasto_obj)
     else:
-        nomes_gastos[gasto_obj.txNomeParlamentar] = [gasto_obj]
+        ids_gastos[gasto_obj.idecadastro] = [gasto_obj]
 
 # para trabalhar melhor com json
 categorias = list(categorias)
-nomes = list(nomes)
+ids = list(ids)
 
 f.close()
 
@@ -85,10 +86,10 @@ f.close()
 def index():
     return "API no ar."
 
-@app.route('/searchCategory')
+@app.route('/search')
 def buscaCategoria():
     categorias_tag = request.args.get('categorias', [])
-    keys = request.args.get('key').lower()
+    keys = request.args.get('categoria').lower()
     keys = remover_combinantes(keys).split()
     categorias_key = categorias
     if categorias_tag:
@@ -115,21 +116,21 @@ def buscaCategoria():
             out.append(matches)
     return json.dumps(out)
 
-@app.route('/searchName')
-def buscaNome():
-    nomes_tag = request.args.get('nome', [])
-    keys = request.args.get('key').lower()
+@app.route('/gasto')
+def buscaid():
+    ids_tag = request.args.get('nome', [])
+    keys = request.args.get('id').lower()
     keys = remover_combinantes(keys).split()
 
-    nomes_key = nomes
-    if nomes_tag:
-        nomes_key = nomes_tag.encode('utf-8').split(',')
+    ids_key = ids
+    if ids_tag:
+        ids_key = ids_tag.encode('utf-8').split(',')
 
-    collection = apply_filtro_nome(gastos_dict.values, nomes_key)
+    collection = apply_filtro_nome(gastos_dict.values, ids_key)
     out = []
 
     for gasto in collection:
-    	if keys[0] in str(gasto.txNomeParlamentar).lower():
+    	if keys[0] in str(gasto.idecadastro):
             matches = {
                 'txNomeParlamentar' : gasto.txNomeParlamentar,
                 'idecadastro' : gasto.idecadastro,
@@ -156,19 +157,45 @@ def apply_filtro(gastos, categorias_key):
             collection += categorias_gastos[categoria]
     return collection
 
-## Filtra a coleção de gastos por categoria.
-def apply_filtro_nome(gastos, nomes_key):
+## Filtra a coleção de gastos por ca\tegoria.
+def apply_filtro_nome(gastos, ids_key):
     # filtra para melhor desempenho
     collection = []
-    for nome in nomes_key:
-        if nome in nomes:
-            collection += nomes_gastos[nome]
+    for nome in ids_key:
+        if nome in ids:
+            collection += ids_gastos[nome]
     return collection
 
 
 def remover_combinantes(string):
     string = unicodedata.normalize('NFD', string)
     return u''.join(ch for ch in string if unicodedata.category(ch) != 'Mn')
+
+
+
+deputados_dict = {}
+
+f = open('data/tabela_gastos_por_categoria.csv')
+f.readline()
+
+for line in f:
+	deputado = line.split(",")
+
+	dep_obj = Deputado(deputado[0], deputado[1], deputado[2], deputado[3], deputado[4], deputado[5], deputado[6], deputado[7])
+
+	deputados_dict[deputado[0]] = dep_obj.valores
+
+f.close()
+
+
+@app.route('/todos')
+def deputados():
+	return json.dumps(deputados_dict)
+
+@app.route('/deputado')
+def deputado_por_id():
+	key = request.args.get('id').lower()
+	return json.dumps(deputados_dict[key])
 
 if __name__ == '__main__':
     app.run(debug=True)
