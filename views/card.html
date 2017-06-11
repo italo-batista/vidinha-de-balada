@@ -1,13 +1,13 @@
 <div class="card">
   <div class="card-head">
-    {{ "Nome do Camarada" }}
+    {{ deputado.nome }}
   </div>
   <div class="card-subhead">
     <div class="card-img">
-      <img src="http://www.camara.gov.br/internet/deputado/bandep/178957.jpg" alt="Deputado" width="100%">
+      <img ng-src="{{ deputado.imagem }}" alt="{{ deputado.nome }}" width="100%">
     </div>
     <div class="card-subtitle">
-      {{ "PR"+" - "+"UF" }}
+      {{ deputado.partido }}
     </div>
   </div>
   <div class="card-body">

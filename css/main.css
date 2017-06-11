@@ -4,6 +4,15 @@ body {
   color: #ffffff;
 }
 
+a {
+  color: #fff;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
 .nav-main {
   margin-top: 20px;
   margin-right: 20px;
@@ -29,6 +38,18 @@ body {
   .headline-title {
     font-size: 1.2em;
   }
+}
+
+.float-flag {
+  background-color: #fff;
+  color: #454545;
+  padding: 10px;
+  margin: auto;
+  width: 250px;
+}
+
+.float-flag > strong {
+  font-size: 1.5em;
 }
 
 .content {

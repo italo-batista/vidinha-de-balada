@@ -6,7 +6,10 @@
     .directive('cardDeputado', function() {
       return {
         templateUrl: 'views/card.html',
-        restrict: 'E'
+        restrict: 'E',
+        scope: {
+          deputado: '='
+        }
       }
     });
 })();
