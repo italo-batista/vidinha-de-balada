@@ -1,4 +1,4 @@
-# Vidinha de Balada
+# [Vidinha de Balada](https://italo-batista.github.io/vidinha-de-balada/#!/)
 
 Vidinha de Balada propõe analisar os gastos da CEAP verificando se o deputado esta usando esse gasto é proporcional a sua presença e participação na câmara. Com isso, vamos possibilitar ao cidadão uma visão de fácil entendimento dos gastos do seu gestor, colocando este gestor em foco.
 
@@ -17,7 +17,7 @@ Melhorias são muito bem-vindas! :))
 ### Para rodar o projeto
 Abra a linha de comando de dentro da pasta do projeto insira
 ```
-  python api.py
+  python app.py
 ```
 e aperte _enter_
 (se você não já tiver instalado, deve instalar a biblioteca python Flask)
