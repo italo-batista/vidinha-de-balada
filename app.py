@@ -1,6 +1,7 @@
 # coding: utf-8
 import json
 from flask import Flask, request
+import os
 import sys
 from gasto import *
 from deputado import *
