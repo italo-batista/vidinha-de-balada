@@ -1,6 +1,7 @@
 
 library(dplyr)
 
+# http://www2.camara.leg.br/transparencia/cota-para-exercicio-da-atividade-parlamentar/dados-abertos-cota-parlamentar
 urlCamara <- "http://www.camara.leg.br/cotas/"
 
 
