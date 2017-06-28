@@ -1,8 +1,10 @@
+#!/usr/bin/python
 # coding: utf-8
 import json
 from flask import Flask, request
 import os
 import sys
+sys.path.insert(0, 'api')
 from gasto import *
 from deputado import *
 from collections import OrderedDict
@@ -18,9 +20,9 @@ sys.setdefaultencoding('utf8')
 #colunas CSV
 txNomeParlamentar = 0
 idecadastro	 = 1
-sgUF = 2 
+sgUF = 2
 ano = 3
-mes = 4 
+mes = 4
 nossas_categorias = 5
 codNossas_categorias = 6
 total = 7
@@ -204,7 +206,7 @@ for line in f:
 				"total" : float(rank[5]),
 				"cota_mensal" : float(rank[6]),
 				"coef" : float(rank[7])
-	}      
+	}
 	ranking.append(valores)
 
 f.close()

@@ -7,6 +7,8 @@ app.directive('lineChart', function ($parse) {
         replace: false,
         link: function (scope, element, attrs) {
 
+            // ESTE GRÁFICO SERÁ MODIFICADO PARA COMPOR A LINHA DO TEMPO DE GASTOS DE UM DEPUTADO
+
             var width = 600,
                 height = 300;
             var margin = {top: 20, right: 80, bottom: 30, left: 100};
