@@ -42,7 +42,7 @@ gastos_dict = {}
 #         except:
 #             pass
 
-f = open('data/gasto_mensal_por_depoutado_por_categoria.csv')
+f = open('data/gerados-hackfest/gasto_mensal_por_depoutado_por_categoria.csv')
 f.readline()
 
 #line = [x.decode('utf8') for x in line]
@@ -179,7 +179,7 @@ def remover_combinantes(string):
 
 deputados_dict = {}
 
-f = open('data/tabela_gastos_por_categoria.csv')
+f = open('data/gerados-hackfest/tabela_gastos_por_categoria.csv')
 f.readline()
 
 
@@ -193,7 +193,7 @@ for line in f:
 f.close()
 
 ranking = []
-f = open('data/top_10_estourados_brasil.csv')
+f = open('data/gerados-hackfest/top_10_estourados_brasil.csv')
 f.readline()
 
 for line in f:
@@ -215,7 +215,7 @@ f.close()
 def top10():
 	return json.dumps(ranking)
 
-f = open('data/busca.csv')
+f = open('data/gerados-hackfest/busca.csv')
 f.readline()
 
 for line in f:
@@ -241,7 +241,7 @@ def deputado_por_id():
 
 
 gastos_anos = {}
-f = open('data/gasto_total_anos.csv')
+f = open('data/gerados-hackfest/gasto_total_anos.csv')
 f.readline()
 
 for line in f:
@@ -261,7 +261,7 @@ def anual():
 
 
 
-f = open('data/total_presenca_anos_somados.csv')
+f = open('data/gerados-hackfest/total_presenca_anos_somados.csv')
 f.readline()
 
 for line in f:

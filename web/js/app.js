@@ -8,13 +8,13 @@
       $stateProvider
         .state('home', {
           url: '/',
-          templateUrl: 'views/home.html',
+          templateUrl: 'web/views/home.html',
           controller: 'HomeCtrl',
           controllerAs: 'ctrl'
         })
         .state('perfil', {
           url: '/perfil/:id',
-          templateUrl: 'views/perfil.html',
+          templateUrl: 'web/views/perfil.html',
           controller: 'PerfilCtrl',
           controllerAs: 'ctrl'
         });

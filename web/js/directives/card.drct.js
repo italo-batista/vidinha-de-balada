@@ -5,7 +5,7 @@
     .module('baladaApp')
     .directive('cardDeputado', function() {
       return {
-        templateUrl: 'views/card.html',
+        templateUrl: 'web/views/card.html',
         restrict: 'E',
         scope: {
           deputado: '='
