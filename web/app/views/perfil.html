@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="card" ng-show="ctrl.deputado.nome">
+    <div class="card-head">
+      {{ ctrl.deputado.nome }}
+    </div>
+    <div class="card-subhead">
+      <div class="card-img">
+        <a ui-sref="perfil({id: ctrl.deputado.id})">
+          <img ng-src="{{ ctrl.deputado.urlfoto }}" alt="{{ ctrl.deputado.nome }}" width="100%">
+        </a>
+      </div>
+      <div class="card-subtitle">
+        {{ ctrl.deputado.uf }}
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="categorias">
+        <div class="categoria">
+          <p>{{ ctrl.deputado.alimentacao | currency:'R$ ' }}</p>
+          <p>Alimentação</p>
+        </div>
+        <div class="categoria">
+          <p>{{ ctrl.deputado.combustivel | currency:'R$ ' }}</p>
+          <p>Combustível</p>
+        </div>
+        <div class="categoria">
+          <p>{{ ctrl.deputado.locacao | currency:'R$ ' }}</p>
+          <p>Locação de veículos</p>
+        </div>
+        <div class="categoria">
+          <p>{{ ctrl.deputado.alimentacao | currency:'R$ ' }}</p>
+          <p>Alimentação</p>
+        </div>
+        <div class="categoria">
+            <p>{{ ctrl.deputado.passagem | currency:'R$ ' }}</p>
+            <p>Passagens aéreas</p>
+        </div>
+        <div class="categoria">
+            <p>{{ ctrl.deputado.escritorio | currency:'R$ ' }}</p>
+            <p>Escritório</p>
+        </div>
+        <div class="categoria">
+            <p>{{ ctrl.deputado.divulgacao | currency:'R$ ' }}</p>
+            <p>Divulgação de atividades</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-6">
+          <radar-chart id="radar-chart" deputado="ctrl.id"></radar-chart>
+        </div>
+      </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="card" ng-controller="HomeCtrl as vm">
+  <div class="card-head">
+    <a ui-sref="perfil({id: deputado.id})">{{ deputado.nome }}</a>
+  </div>
+  <div class="card-subhead">
+    <div class="card-img">
+      <a ui-sref="perfil({id: deputado.id})">
+        <img ng-src="{{ deputado.urlfoto }}" alt="{{ deputado.nome }}" width="100%">
+      </a>
+    </div>
+    <div class="card-subtitle">
+      {{ deputado.uf }}
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6 text-center">
+      </div>
+      <div class="col-sm-6">
+        <p>Estourou em {{ deputado.mes+" de "+deputado.ano }}</p>
+        <p><strong class="estouro">{{ deputado.total | currency:'R$ ' }}</strong> / {{ deputado.cota_mensal | currency:'R$ ' }}</p>
+      </div>
+    </div>
+  </div>
+</div>

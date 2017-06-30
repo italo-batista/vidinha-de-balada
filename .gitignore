@@ -1,3 +1,7 @@
 .idea
 .idea/*
 *.pyc
+/web/node_modules
+/web/bower_components
+/web/dist
+/web/.tmp
