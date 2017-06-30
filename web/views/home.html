@@ -1,7 +1,17 @@
 <div class="container">
-  <div class="headline" ng-show="ctrl.total > 0">
-    <p class="headline-title">{{ ctrl.total | currency:'R$ '}}</p>
-    <p>foram gastos com a <br>Cota para exercício da atividade parlamentar apenas em <strong>2017</strong></p>
+  <div class="gastometro-container">
+    <div class="selecter">
+      <select ng-model="selectedYear"
+              ng-options="ano for ano in ctrl.mandatoAnos"
+              ng-change="ctrl.setYear(selectedYear)">
+        <option value="" disabled selected> Ano</option>
+      </select>
+    </div>
+
+    <div class="headline" ng-show="ctrl.total > 0">
+      <p class="headline-title">{{ ctrl.total | currency:'R$ '}}</p>
+      <p>foram gastos com a <br>Cota para exercício da atividade parlamentar apenas em <strong>2017</strong></p>
+    </div>
   </div>
 
   <div class="float-flag" ng-show="ctrl.total > 0">
