@@ -1,18 +1,23 @@
-# [Vidinha de Balada](https://italo-batista.github.io/vidinha-de-balada/#!/)
+## [Vidinha de Balada](https://italo-batista.github.io/vidinha-de-balada/#!/)
 
-Vidinha de Balada propõe analisar os gastos da CEAP verificando se o deputado esta usando esse gasto é proporcional a sua presença e participação na câmara. Com isso, vamos possibilitar ao cidadão uma visão de fácil entendimento dos gastos do seu gestor, colocando este gestor em foco.
+Vidinha de Balada surgiu no [Hackfest Contra a Corrupção](http://hackfest.com.br/). 
 
-É possível acompanhar:
-- um gastômetro (o que foi gastado com a CEAP no presente ano em salários mínimos);
+O projeto propõe analisar os gastos da CEAP (Cota para o Exercício da Atividade Parlamentar), possibilitando ao cidadão comum:
+
+- verificar se o gasto do deputado é proporcional a sua presença e/ou participação nas sessões da câmara;
+- comparar facilmente os valores gastos pelos deputados com parâmetros conhecidos.
+
+Com os gestores (deputados) em foco, é possível acompanhar:
+
+- Gastômetro (o que foi gastado com a CEAP no presente ano);
 - Top deputados gastadores;
-- Filtrar por estado, nome e partido;
 - Presença nas sessões e gastos ao longo dos meses;
 - Gastos por categoria;
 - Timeline de presenças e gastos.
 
 ----
 
-Melhorias são muito bem-vindas! :))
+O projeto está em fase de desenvolvimento. Melhorias são muito bem-vindas! :))
 
 ### Para rodar o projeto
 Abra a linha de comando de dentro da pasta do projeto insira
