@@ -7,71 +7,46 @@
       var vm = this;
       vm.total = 0;
       vm.salariosMinimos = 0;
-
       vm.deputados = [];
+      vm.anoSelecionado = 0;
+      vm.anoMaximo = new Date().getFullYear();
+      vm.anoMinimo = 2015;
+      vm.setAno = setAno;
+      vm.subirAno = subirAno;
+      vm.descerAno = descerAno;
+      vm.isPossivelSubir = isPossivelSubir;
+      vm.isPossivelDescer = isPossivelDescer;
 
-      vm.selectedYear = new Date().getFullYear();
-      vm.mandatoAnos = [0, 1, 2, 3].map(function (i) { return vm.selectedYear - i });
+      function setAno(ano) {
+        vm.anoSelecionado = ano;
+        $http.get(RESTAPI+"gasto_anual?ano="+ vm.anoSelecionado).then(function(res) {
+          vm.total = res.data[0];
+          vm.salariosMinimos = Math.round( vm.total / 937000);
+        });
+      };
 
-      vm.updateTotal = function () {
-            $http.get(RESTAPI+"gasto_anual?ano="+ vm.selectedYear).then(function(res) {
-                vm.total = res.data[0];
-                vm.salariosMinimos = Math.round( vm.total / 937000);
-            });
-        };
+      function subirAno() {
+        if (vm.anoSelecionado < vm.anoMaximo) {
+          setAno(vm.anoSelecionado+1)
+        }
+      }
 
-      vm.getMes = function(mes) {
-            mes = str(mes);
-            switch (mes) {
-                case "1":
-                    return "Janeiro"
-                    break;
-                case "2":
-                    return "Fevereiro"
-                    break;
-                case "3":
-                    return "Março"
-                    break;
-                case "4":
-                    return "Abril"
-                    break;
-                case "5":
-                    return "Maio"
-                    break;
-                case "6":
-                    return "Junho"
-                    break;
-                case "7":
-                    return "Julho"
-                    break;
-                case "8":
-                    return "Agosto"
-                    break;
-                case "9":
-                    return "Setembro"
-                    break;
-                case "10":
-                    return "Outubro"
-                    break;
-                case "11":
-                    return "Novembro"
-                    break;
-                case "12":
-                    return "Dezembro"
-                    break;
-                default:
-                    return "--"
-                    break;
-            }
-        };
+      function descerAno() {
+        if (vm.anoSelecionado > vm.anoMinimo) {
+          setAno(vm.anoSelecionado-1)
+        }
+      }
 
-      vm.setYear = function (y) {
-            vm.selectedYear = y;
-            vm.updateTotal();
-        };
+      function isPossivelSubir() {
+        return vm.anoSelecionado >= vm.anoMaximo;
+      }
+
+      function isPossivelDescer() {
+        return vm.anoSelecionado <= vm.anoMinimo;
+      }
 
       function init() {
-        vm.updateTotal();
+        setAno(vm.anoMaximo);
         $http.get(RESTAPI+"top10").then(function(res) {
           res.data.forEach(function(d) {
             d.urlfoto = d.urlfoto.replace('"', '').replace('\"', '');

@@ -4,12 +4,15 @@ body {
   color: #ffffff;
 }
 
-a {
+a,
+.btn-link {
   color: #fff;
 }
 
 a:active,
-a:hover {
+a:hover,
+.btn-link:hover,
+.btn-link:focus {
   color: #fff;
 }
 
@@ -182,20 +185,10 @@ a:hover {
   color: #fff;
 }
 
-.selecter {
-  display: block;
-  padding: 0 20%;
-  width: 100%;
+.seletor-ano {
+  font-size: 2em;
 }
 
-.selecter select {
-  width: 55px;
-  color: #47525b;
-  background-color: #f1f1f1;
-}
-
-.gastometro-container {
-  padding: 10px 100px;
-  position: relative;
-  display: block;
+.seletor-ano > a:link {
+  font-size: 0.8em;
 }
