@@ -2,11 +2,11 @@
     'use strict';
 
     angular.module('baladaApp')
-        .directive('mrCountTo', ['$timeout', mrCountTo]);
+        .directive('countTo', ['$timeout', countTo]);
 
 
     /*jshint latedef: nofunc */
-    function mrCountTo($timeout) {
+    function countTo($timeout) {
         return {
             restrict: 'A',
             replace: false,
