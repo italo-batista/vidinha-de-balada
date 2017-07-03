@@ -1,16 +1,19 @@
+# coding: utf-8
+
 class Deputado:
 	def __init__(self, ide, nome, alimentacao, combustivel, locacao, passagem, escritorio, divulgacao):
 
 		self.id = ide
 		self.valores = {
-					"nome" : nome,
-					"alimentacao" : float(alimentacao),
-					"combustivel" : float(combustivel),
-					"locacao" : float(locacao),
-					"passagem" : float(passagem),
-					"escritorio" : float(escritorio),
-					"divulgacao" : float(divulgacao),
-					"total" : (float(alimentacao) + float(combustivel) + float(locacao) + float(passagem) + float(escritorio) + float(divulgacao))
+
+					"Nome" : nome,
+					"Alimentação" : float(alimentacao),
+					"Combustível" : float(combustivel),
+					"Locação de veículos" : float(locacao),
+					"Passagens aéreas" : float(passagem),
+					"Escritório" : float(escritorio),
+					"Divulgação de atividade parlamentar" : float(divulgacao),
+					"Total" : (float(alimentacao) + float(combustivel) + float(locacao) + float(passagem) + float(escritorio) + float(divulgacao))
 		}
 
 

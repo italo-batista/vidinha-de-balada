@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding: utf-8
 import json
-from flask import Flask, request
+from flask import Flask, request, make_response, Response
 import os
 import sys
 sys.path.insert(0, 'api')
@@ -10,6 +10,7 @@ from deputado import *
 from collections import OrderedDict
 import unicodedata
 from flask_cors import CORS, cross_origin
+import csv 
 
 app = Flask(__name__)
 CORS(app)
@@ -35,55 +36,91 @@ categorias = set()
 ids = set()
 gastos_dict = {}
 
-# def force_decode(string, codecs=['utf8', 'cp1252']):
-#     for i in codecs:
-#         try:
-#             return string.decode(i)
-#         except:
-#             pass
 
-f = open('data/gerados-hackfest/gasto_mensal_por_depoutado_por_categoria.csv')
-f.readline()
 
-#line = [x.decode('utf8') for x in line]
-for line in f:
-    gasto = line.split(',')
 
-    # cate = str(gasto[nossas_categorias])
-    # cate = force_decode(str(cate))
+def force_decode(string, codecs=['utf8', 'cp1252']):
+    for i in codecs:
+        try:
+            return string.decode(i)
+        except:
+            pass
 
-    # cate = str(unicodedata.normalize('NFKD', cate).encode('utf-8','ignore'))
+@app.route('/teste')
+def todos_deputados():
+    lista_deputados = []
+    with open('data/gerados-hackfest/gasto_mensal_por_depoutado_por_categoria.csv') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=",")
+        for row in reader:
+            info_deputado = {}
+            id_deputado = str(unicodedata.normalize('NFKD', force_decode(row['idecadastro'])).encode('utf-8','ignore'))
+            nome_deputado = str(unicodedata.normalize('NFKD', force_decode(row['txNomeParlamentar'])).encode('utf-8','ignore'))
+            categoria = str(unicodedata.normalize('NFKD', force_decode(row['nossas_categorias'])).encode('utf-8','ignore'))
+            estado = str(unicodedata.normalize('NFKD', force_decode(row['sgUF'])).encode('utf-8','ignore'))
+            info_deputado = { 
+                "txNomeParlamentar" : nome_deputado,
+                "idecadastro" : id_deputado,
+                "sgUF" : estado,
+                "ano" : int(row['ano']),
+                "mes" : int(row['mes']),
+                "nossas_categorias" : categoria,
+                "codNossas_categorias" : int(row['codNossas_categorias']),
+                "total" : float(row['total']),
+                "cota_mensal" : float(row['cota_mensal']),
+                "coef" : float(row['coef'])
 
-	# inclui gasto no dict de gastos
-    gasto_obj = Gasto(gasto[txNomeParlamentar], gasto[idecadastro], gasto[sgUF], gasto[ano], gasto[mes], gasto[nossas_categorias], gasto[codNossas_categorias], gasto[total], gasto[cota_mensal], gasto[coef])
+                }
+            lista_deputados.append(info_deputado)
+    return json.dumps(lista_deputados, ensure_ascii=False).encode('utf-8')
 
-    # conjunto único de categorias
-    categorias.add(gasto[nossas_categorias])
 
-    #conjunto único de ids
-    ids.add(gasto[idecadastro])
 
-    gastos_dict[gasto_obj.idecadastro] = gasto_obj
+lista_deputados = []
+with open('data/gerados-hackfest/gasto_mensal_por_depoutado_por_categoria.csv') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter=",")
+    for row in reader:
+        info_deputado = {}
+        id_deputado = str(unicodedata.normalize('NFKD', force_decode(row['idecadastro'])).encode('utf-8','ignore'))
+        nome_deputado = str(unicodedata.normalize('NFKD', force_decode(row['txNomeParlamentar'])).encode('utf-8','ignore'))
+        categoria = str(unicodedata.normalize('NFKD', force_decode(row['nossas_categorias'])).encode('utf-8','ignore'))
+        estado = str(unicodedata.normalize('NFKD', force_decode(row['sgUF'])).encode('utf-8','ignore'))
+        
+        gasto_obj = Gasto(nome_deputado, 
+            id_deputado,
+            estado, 
+            int(row['ano']), 
+            int(row['mes']),
+            categoria, 
+            int(row['codNossas_categorias']), 
+            float(row['total']),
+            float(row['cota_mensal']),
+            float(row['coef']) )
 
-    # constrói dict mapeando categoria para gastos
-    # deve ser usado para melhorar o desempenho das buscas
-    if gasto_obj.nossas_categorias in categorias_gastos:
-        categorias_gastos[gasto_obj.nossas_categorias].append(gasto_obj)
-    else:
-        categorias_gastos[gasto_obj.nossas_categorias] = [gasto_obj]
+        # conjunto único de categorias
+        categorias.add(categoria)
 
-    # constrói dict mapeando ids para gastos
-    # deve ser usado para melhorar o desempenho das buscas
-    if gasto_obj.idecadastro in ids_gastos:
-        ids_gastos[gasto_obj.idecadastro].append(gasto_obj)
-    else:
-        ids_gastos[gasto_obj.idecadastro] = [gasto_obj]
+        #conjunto único de ids
+        ids.add(id_deputado)
+
+        gastos_dict[gasto_obj.idecadastro] = gasto_obj
+
+        # constrói dict mapeando categoria para gastos
+        # deve ser usado para melhorar o desempenho das buscas
+        if gasto_obj.nossas_categorias in categorias_gastos:
+            categorias_gastos[gasto_obj.nossas_categorias].append(gasto_obj)
+        else:
+            categorias_gastos[gasto_obj.nossas_categorias] = [gasto_obj]
+
+        # constrói dict mapeando ids para gastos
+        # deve ser usado para melhorar o desempenho das buscas
+        if gasto_obj.idecadastro in ids_gastos:
+            ids_gastos[gasto_obj.idecadastro].append(gasto_obj)
+        else:
+            ids_gastos[gasto_obj.idecadastro] = [gasto_obj]
 
 # para trabalhar melhor com json
 categorias = list(categorias)
 ids = list(ids)
-
-f.close()
 
 
 @app.route('/')
@@ -94,7 +131,7 @@ def index():
 def buscaCategoria():
     categorias_tag = request.args.get('categorias', [])
     keys = request.args.get('categoria').lower()
-    keys = remover_combinantes(keys).split()
+    keys = normalizar_codificacao(keys).split()
     categorias_key = categorias
     if categorias_tag:
         categorias_key = categorias_tag.encode('utf-8').split(',')
@@ -118,13 +155,17 @@ def buscaCategoria():
 
             }
             out.append(matches)
-    return json.dumps(out)
+
+
+    response = make_response(json.dumps(out, ensure_ascii=False).encode('utf-8'))
+    response.headers['Access-Control-Allow-Origin'] = "*"
+    return response
 
 @app.route('/gasto')
 def buscaid():
     ids_tag = request.args.get('nome', [])
     keys = request.args.get('id').lower()
-    keys = remover_combinantes(keys).split()
+    keys = normalizar_codificacao(keys).split()
 
     ids_key = ids
     if ids_tag:
@@ -149,7 +190,7 @@ def buscaid():
 
             }
             out.append(matches)
-    return json.dumps(out)
+    return json.dumps(out, ensure_ascii=False).encode('utf-8')
 
 
 ## Filtra a coleção de gastos por categoria.
@@ -171,73 +212,90 @@ def apply_filtro_nome(gastos, ids_key):
     return collection
 
 
-def remover_combinantes(string):
-    string = unicodedata.normalize('NFD', string)
-    return u''.join(ch for ch in string if unicodedata.category(ch) != 'Mn')
+def normalizar_codificacao(string):
+    string = str(unicodedata.normalize('NFKD', force_decode(string)).encode('utf-8','ignore'))
+    return string
 
 
 
 deputados_dict = {}
 
-f = open('data/gerados-hackfest/tabela_gastos_por_categoria.csv')
-f.readline()
+# f = open('data/gerados-hackfest/tabela_gastos_por_categoria.csv')
+# f.readline()
 
 
-for line in f:
-	deputado = line.split(",")
+# for line in f:
+#     deputado = line.split(",")
+#     id_deputado = str(unicodedata.normalize('NFKD', force_decode(deputado[0])).encode('utf-8','ignore'))
+#     nome_deputado = str(unicodedata.normalize('NFKD', force_decode(deputado[1])).encode('utf-8','ignore'))
+#     dep_obj = Deputado(id_deputado, nome_deputado, deputado[2], deputado[3], deputado[4], deputado[5], deputado[6], deputado[7])
 
-	dep_obj = Deputado(deputado[0], deputado[1], deputado[2], deputado[3], deputado[4], deputado[5], deputado[6], deputado[7])
+#     deputados_dict[deputado[0]] = dep_obj.valores
 
-	deputados_dict[deputado[0]] = dep_obj.valores
+# f.close()
 
-f.close()
+with open('data/gerados-hackfest/tabela_gastos_por_categoria.csv') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter=",")
+    for row in reader:
+        nome_deputado = str(unicodedata.normalize('NFKD', force_decode(row['txNomeParlamentar'])).encode('utf-8','ignore'))
+
+        dep_obj = Deputado(row['idecadastro'], 
+            nome_deputado, 
+            row['Alimentação'], 
+            row['Combustível'], 
+            row['Locação de veículos'], 
+            row['Passagens aéreas'], 
+            row['Escritório'], 
+            row['Divulgação de atividade parlamentar'])
+
+        deputados_dict[row['idecadastro']] = dep_obj.valores
+
+
 
 ranking = []
-f = open('data/gerados-hackfest/top_10_estourados_brasil.csv')
-f.readline()
 
-for line in f:
-	rank = line.split(",")
-	valores = {  "nome" : rank[0],
-				"id" : rank[1],
-	             "uf" : rank[2],
-				"ano" : int(rank[3]),
-				"mes" : int(rank[4]),
-				"total" : float(rank[5]),
-				"cota_mensal" : float(rank[6]),
-				"coef" : float(rank[7])
-	}
-	ranking.append(valores)
+with open('data/gerados-hackfest/top_10_estourados_brasil.csv') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter=",")
+    for row in reader:
+        nome_deputado = str(unicodedata.normalize('NFKD', force_decode(row['txNomeParlamentar'])).encode('utf-8','ignore'))
+        valores = {  "nome" : nome_deputado,
+                "id" : row['idecadastro'],
+                 "uf" : row['sgUF'],
+                "ano" : int(row['ano']),
+                "mes" : int(row['mes']),
+                "total" : float(row['total']),
+                "cota_mensal" : float(row['cota_mensal']),
+                "coef" : float(row['coef'])
+        }
+        ranking.append(valores)
 
-f.close()
 
 @app.route('/top10')
 def top10():
-	return json.dumps(ranking)
-
-f = open('data/gerados-hackfest/busca.csv')
-f.readline()
-
-for line in f:
-	info = line.split(",")
-	if info[0] in deputados_dict.keys():
-		deputados_dict[info[0]]["urlfoto"] = info[2]
-	for dep in ranking:
-		if info[0] in dep["id"]:
-			dep["urlfoto"] = info[2]
+	return json.dumps(ranking, ensure_ascii=False).encode('utf-8'  )
 
 
-f.close()
-
+with open('data/gerados-hackfest/busca.csv') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter=",")
+    for row in reader:
+        id_deputado = row['idecadastro'] 
+        urlfoto = str(unicodedata.normalize('NFKD', force_decode(row['urlFoto'])).encode('utf-8','ignore'))
+        if id_deputado in deputados_dict.keys():
+            deputados_dict[id_deputado]["urlfoto"] = urlfoto
+        for dep in ranking:
+            if id_deputado in dep["id"]:
+                dep["urlfoto"] = urlfoto
 
 @app.route('/todos')
 def deputados():
-	return json.dumps(deputados_dict)
+	return json.dumps(deputados_dict,  ensure_ascii=False).encode('utf-8')
 
+#busca deputado a partir do seu ID
+#/deputado?id=
 @app.route('/deputado')
 def deputado_por_id():
 	key = request.args.get('id').lower()
-	return json.dumps(deputados_dict[key])
+	return json.dumps(deputados_dict[key], ensure_ascii=False).encode('utf-8')
 
 
 gastos_anos = {}
@@ -252,14 +310,11 @@ for line in f:
 f.close()
 
 
+#/gasto_anual?ano=
 @app.route('/gasto_anual')
 def anual():
 	key =request.args.get('ano').lower()
-	return json.dumps(gastos_anos[key])
-
-
-
-
+	return json.dumps(gastos_anos[key], ensure_ascii=False).encode('utf-8')
 
 f = open('data/gerados-hackfest/total_presenca_anos_somados.csv')
 f.readline()
@@ -278,5 +333,7 @@ for line in f:
 f.close()
 
 if __name__ == '__main__':
-	port = int(os.environ.get('PORT', 5000))
-	app.run(host='0.0.0.0', port=port)
+    port = int(os.environ.get('PORT', 5000))
+    app.debug = True
+    app.run(host='0.0.0.0', port=port)
+
