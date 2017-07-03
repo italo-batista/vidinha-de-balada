@@ -2,11 +2,11 @@
     'use strict';
 
     angular.module('baladaApp')
-        .directive('countTo', ['$timeout', countTo]);
+        .directive('vbCountTo', ['$timeout', '$filter', vbCountTo]);
 
 
     /*jshint latedef: nofunc */
-    function countTo($timeout) {
+    function vbCountTo($timeout, $filter) {
         return {
             restrict: 'A',
             replace: false,
@@ -36,9 +36,9 @@
                             $timeout.cancel(scope.timeoutId);
                             num = countTo;
                             attrs.value = countTo;
-                            e.textContent = countTo;
+                            e.textContent = $filter('currency')(countTo, 'R$ ');
                         } else {
-                            e.textContent = Math.round(num);
+                            e.textContent = $filter('currency')(Math.round(num), 'R$ ');
                             printOut();
                         }
                     }, refreshInterval);
