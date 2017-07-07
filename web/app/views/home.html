@@ -1,20 +1,14 @@
 <div class="container">
-  <div class="gastometro-container">
-    <div class="selecter">
-      <select ng-model="selectedYear"
-              ng-options="ano for ano in ctrl.mandatoAnos"
-              ng-change="ctrl.setYear(selectedYear)">
-        <option value="" disabled selected> Ano</option>
-      </select>
-    </div>
-
-    <div class="headline" ng-show="ctrl.total > 0">
-      <p class="headline-title">
-        <span mr-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="10"></span>
-        {{ctrl.total | currency:'R$ '}}
-      </p>
-      <p>foram gastos com a <br>Cota para exercício da atividade parlamentar apenas em <strong>2017</strong></p>
-    </div>
+  <div class="headline" ng-show="ctrl.total > 0">
+    <p class="seletor-ano">
+      <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      {{ctrl.anoSelecionado}}
+      <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </p>
+    <p class="headline-title">
+      <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
+    </p>
+    <p>foram gastos com a <br>Cota para exercício da atividade parlamentar apenas em <strong>{{ctrl.anoSelecionado}}</strong></p>
   </div>
 
   <div class="float-flag" ng-show="ctrl.total > 0">
