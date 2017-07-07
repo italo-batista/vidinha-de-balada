@@ -43,18 +43,6 @@ a:hover,
   }
 }
 
-.float-flag {
-  background-color: #fff;
-  color: #454545;
-  padding: 10px;
-  margin: auto;
-  width: 250px;
-}
-
-.float-flag > strong {
-  font-size: 1.5em;
-}
-
 .content {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -191,4 +179,12 @@ a:hover,
 
 .seletor-ano > a:link {
   font-size: 0.8em;
+}
+
+.carousel-indicators {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  width: auto;
+  margin: auto;
 }

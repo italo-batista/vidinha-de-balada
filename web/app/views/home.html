@@ -10,10 +10,15 @@
     </p>
     <p>foram gastos com a <br>Cota para exercício da atividade parlamentar apenas em <strong>{{ctrl.anoSelecionado}}</strong></p>
   </div>
-
-  <div class="float-flag" ng-show="ctrl.total > 0">
-    Isso equivale à cerca de <br><strong>{{ctrl.salariosMinimos}}milhões</strong> de salários mínimos
+  <div class="text-carousel text-center">
+    Isso equivale à cerca de <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000"></span>
+    <!-- <ol class="carousel-indicators">
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+    </ol> -->
   </div>
+
 </div>
 
 <div class="content">

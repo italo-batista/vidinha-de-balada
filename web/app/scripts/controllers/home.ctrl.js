@@ -8,6 +8,7 @@
             vm.total = 0;
             vm.salariosMinimos = 0;
             vm.deputados = [];
+            vm.textosEquivalentes = [];
             vm.anoSelecionado = 0;
             vm.anoMaximo = new Date().getFullYear();
             vm.anoMinimo = 2015;
@@ -22,6 +23,7 @@
                 $http.get(RESTAPI + "gasto_anual?ano=" + vm.anoSelecionado).then(function (res) {
                     vm.total = res.data[0];
                     vm.salariosMinimos = Math.round(vm.total / 937000);
+                    setTextosEquivalentes(vm.salariosMinimos);
                 });
             };
 
@@ -43,6 +45,23 @@
 
             function isPossivelDescer() {
                 return vm.anoSelecionado <= vm.anoMinimo;
+            }
+
+            function setTextosEquivalentes(salariosMinimos) {
+              vm.textosEquivalentes = [
+                {
+                  texto: "milhões de salários mínimos",
+                  valor: salariosMinimos
+                },
+                {
+                  texto: "mil casas populares",
+                  valor: salariosMinimos
+                },
+                {
+                  texto: "milhões de cestas básicas",
+                  valor: salariosMinimos
+                }
+              ];
             }
 
             function init() {
