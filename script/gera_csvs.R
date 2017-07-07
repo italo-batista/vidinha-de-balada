@@ -5,8 +5,9 @@ options(scipen = 50)
 library(readr)
 
 dados_gastos = cria_data_frame_2015_2017()
-cotas = read_csv("cota_por_estado.csv")
-votacoes = read_csv("votacoes2.csv")
+dados = dados_gastos
+cotas = read_csv("../data/final/cota_por_estado.csv")
+votacoes = read_csv("../data/final/votacoes2.csv")
 
 tabela_final_mensal = cria_tabela_final_mensal(dados_gastos)
 write.csv(tabela_final_mensal, "tabela_final_mensal.csv", row.names = F)
@@ -25,6 +26,10 @@ write.csv(tabela_gasto_total_anos, "tabela_gasto_total_anos.csv", row.names = F)
 
 tabela_6_gastos = cria_tabela_6_gastos(dados_gastos)
 write.csv(tabela_6_gastos, "tabela_6_gastos.csv", row.names = F)
+
+tabela_6_gastos_mensal = cria_tabela_6_gastos(dados_gastos)
+write.csv(tabela_6_gastos_mensal, "tabela_6_gastos_mensal.csv", row.names = F)
+
 
 top_estourados = cria_top_estourados(tabela_final_mensal)
 write.csv(top_estourados, "top_estourados.csv", row.names = F)
