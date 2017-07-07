@@ -10,7 +10,7 @@ from deputado import *
 from collections import OrderedDict
 import unicodedata
 from flask_cors import CORS, cross_origin
-import csv 
+import csv
 
 app = Flask(__name__)
 CORS(app)
@@ -57,7 +57,7 @@ def todos_deputados():
             nome_deputado = str(unicodedata.normalize('NFKD', force_decode(row['txNomeParlamentar'])).encode('utf-8','ignore'))
             categoria = str(unicodedata.normalize('NFKD', force_decode(row['nossas_categorias'])).encode('utf-8','ignore'))
             estado = str(unicodedata.normalize('NFKD', force_decode(row['sgUF'])).encode('utf-8','ignore'))
-            info_deputado = { 
+            info_deputado = {
                 "txNomeParlamentar" : nome_deputado,
                 "idecadastro" : id_deputado,
                 "sgUF" : estado,
@@ -84,14 +84,14 @@ with open('data/gerados-hackfest/gasto_mensal_por_depoutado_por_categoria.csv') 
         nome_deputado = str(unicodedata.normalize('NFKD', force_decode(row['txNomeParlamentar'])).encode('utf-8','ignore'))
         categoria = str(unicodedata.normalize('NFKD', force_decode(row['nossas_categorias'])).encode('utf-8','ignore'))
         estado = str(unicodedata.normalize('NFKD', force_decode(row['sgUF'])).encode('utf-8','ignore'))
-        
-        gasto_obj = Gasto(nome_deputado, 
+
+        gasto_obj = Gasto(nome_deputado,
             id_deputado,
-            estado, 
-            int(row['ano']), 
+            estado,
+            int(row['ano']),
             int(row['mes']),
-            categoria, 
-            int(row['codNossas_categorias']), 
+            categoria,
+            int(row['codNossas_categorias']),
             float(row['total']),
             float(row['cota_mensal']),
             float(row['coef']) )
@@ -239,13 +239,13 @@ with open('data/gerados-hackfest/tabela_gastos_por_categoria.csv') as csvfile:
     for row in reader:
         nome_deputado = str(unicodedata.normalize('NFKD', force_decode(row['txNomeParlamentar'])).encode('utf-8','ignore'))
 
-        dep_obj = Deputado(row['idecadastro'], 
-            nome_deputado, 
-            row['Alimentação'], 
-            row['Combustível'], 
-            row['Locação de veículos'], 
-            row['Passagens aéreas'], 
-            row['Escritório'], 
+        dep_obj = Deputado(row['idecadastro'],
+            nome_deputado,
+            row['Alimentação'],
+            row['Combustível'],
+            row['Locação de veículos'],
+            row['Passagens aéreas'],
+            row['Escritório'],
             row['Divulgação de atividade parlamentar'])
 
         deputados_dict[row['idecadastro']] = dep_obj.valores
@@ -278,7 +278,7 @@ def top10():
 with open('data/gerados-hackfest/busca.csv') as csvfile:
     reader = csv.DictReader(csvfile, delimiter=",")
     for row in reader:
-        id_deputado = row['idecadastro'] 
+        id_deputado = row['idecadastro']
         urlfoto = str(unicodedata.normalize('NFKD', force_decode(row['urlFoto'])).encode('utf-8','ignore'))
         if id_deputado in deputados_dict.keys():
             deputados_dict[id_deputado]["urlfoto"] = urlfoto
@@ -336,4 +336,3 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.debug = True
     app.run(host='0.0.0.0', port=port)
-
