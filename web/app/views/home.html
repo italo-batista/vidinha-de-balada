@@ -1,29 +1,31 @@
-<div class="container">
-  <div class="headline" ng-show="ctrl.total > 0">
-    <p class="seletor-ano">
-      <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()"><span class="glyphicon glyphicon-chevron-left"></span></a>
-      {{ctrl.anoSelecionado}}
-      <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()"><span class="glyphicon glyphicon-chevron-right"></span></a>
-    </p>
-    <p class="headline-title">
-      <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
-    </p>
-    <p>foram gastos com a <br>Cota para exercício da atividade parlamentar apenas em <strong>{{ctrl.anoSelecionado}}</strong></p>
-  </div>
-  <div class="text-carousel text-center">
-    Isso equivale à cerca de <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000"></span>
-    <!-- <ol class="carousel-indicators">
-      <li class="active"></li>
-      <li></li>
-      <li></li>
-    </ol> -->
-  </div>
+<div class="gastometro">
+  <div class="container">
+    <div class="headline" ng-show="ctrl.total > 0">
+      <h4>Gastômetro <span class="glyphicon glyphicon-info-sign"></span></h4>
+      <p class="seletor-ano">
+        <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        {{ctrl.anoSelecionado}}
+        <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()"><span class="glyphicon glyphicon-chevron-right"></span></a>
+      </p>
+      <p class="headline-title">
+        <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
+      </p>
+    </div>
+    <div class="text-carousel text-center">
+      Isso equivale à cerca de <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000"></span>
+      <!-- <ol class="carousel-indicators">
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+      </ol> -->
+    </div>
 
+  </div>
 </div>
 
 <div class="content">
   <div class="container">
-    <h1 class="text-center">Os 10 mais #estourados</h1>
+    <h1 class="text-center">Top 10 gastadores do mês</h1>
     <br>
     <card-deputado deputado="deputado" ng-repeat="deputado in ctrl.deputados"></card-deputado>
   </div>

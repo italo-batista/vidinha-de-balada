@@ -1,6 +1,6 @@
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #463066;
+  background-color: #573C82;
   color: #ffffff;
 }
 
@@ -35,6 +35,16 @@ a:hover,
 
 .headline-title {
   font-size: 5em;
+}
+
+.gastometro {
+  background-color: #463066;
+  padding-bottom: 40px;
+  padding-top: 20px;
+}
+
+h4 > .glyphicon {
+  font-size: 14px;
 }
 
 @media only screen and (max-width : 320px) {
