@@ -46,6 +46,7 @@ Para rodar o frontend em modo de desenvolvimento, entre no diretório _web_ do p
 
 Para instalar as dependências:
 ```
+cd web
 npm install
 bower install
 ```
