@@ -78,7 +78,7 @@
                         }
 
                         vm.deputados.push(d);
-                    })
+                    });
                 });
             }
 
