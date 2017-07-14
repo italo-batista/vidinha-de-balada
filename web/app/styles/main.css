@@ -248,6 +248,7 @@ a:hover,
   cursor: pointer;
   padding: 10px;
   list-style: none;
+  padding-left: 15px;
 }
 
 .resultado-busca ul > li:hover {
