@@ -332,6 +332,22 @@ for line in f:
 
 f.close()
 
+timeline_deputados = {}
+with open('data/gerados-hackfest/gasto_mensal_por_deputado.csv') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter=",")
+    for row in reader:
+        if row['idecadastro'] not in timeline_deputados:
+            timeline_deputados[row['idecadastro']] = []
+        dep = {}
+        dep[row['mes']+"/"+row['ano']] = float(row['total'])
+        timeline_deputados[row['idecadastro']].append(dep)
+
+#/timeline?id=
+@app.route('/timeline')
+def timeline_presenca_gastos():
+    key = request.args.get('id').lower()
+    return json.dumps(timeline_deputados[key], ensure_ascii=False).encode('utf-8')
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.debug = True
