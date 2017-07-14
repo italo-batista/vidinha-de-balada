@@ -188,3 +188,32 @@ a:hover,
   width: auto;
   margin: auto;
 }
+
+.diretiva-busca {
+  padding-right: 15px;
+}
+
+.botao-busca {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 4px;
+  float: left;
+}
+
+.botao-busca:hover {
+  text-decoration: none;
+  background-color: #eee;
+}
+
+.barra-busca {
+  position: relative;
+  display: block;
+  padding-top: 5px;
+  padding-right: 15px;
+  margin: 5px;
+  border-radius: 4px;
+  float: left;
+  border-color: transparent;
+  color: #563B7F;
+}
