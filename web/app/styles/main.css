@@ -210,10 +210,46 @@ a:hover,
   position: relative;
   display: block;
   padding-top: 5px;
-  padding-right: 15px;
-  margin: 5px;
-  border-radius: 4px;
-  float: left;
   border-color: transparent;
   color: #563B7F;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.barra-busca:focus {
+  outline: none;
+}
+
+.resultado-busca {
+  position: relative;
+  float: left;
+  margin: 5px;
+  background: #fff;
+}
+
+.resultado-busca ul {
+  background: #fff;
+  border-color: transparent;
+  box-sizing: border-box;
+  list-style: none;
+  -webkit-padding-start: 0;
+  position: absolute;
+  z-index: 1000;
+  overflow: scroll;
+  overflow-x: hidden;
+  max-height: 150px;
+}
+
+.resultado-busca ul > li a {
+  color: #563B7F;
+}
+
+.resultado-busca ul > li {
+  cursor: pointer;
+  padding: 10px;
+  list-style: none;
+}
+
+.resultado-busca ul > li:hover {
+  background: #eee;
 }

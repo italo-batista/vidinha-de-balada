@@ -335,10 +335,14 @@ f.close()
 @app.route("/busca")
 def busca_deputado_por_nome():
     nome = request.args.get('nome').lower()
-    resultados = {}
+    resultados = []
+    deputado = {}
     for key,value in deputados_dict.iteritems():
         if nome in value['Nome'].lower():
-            resultados[value['Nome']] = key
+            deputado['nome'] = value['Nome']
+            deputado['id'] = key
+            resultados.append(deputado)
+            deputado = {}
     return json.dumps(resultados, ensure_ascii=False).encode('utf-8')
 
 if __name__ == '__main__':
