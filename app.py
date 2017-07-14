@@ -332,6 +332,15 @@ for line in f:
 
 f.close()
 
+@app.route("/busca")
+def busca_deputado_por_nome():
+    nome = request.args.get('nome').lower()
+    resultados = {}
+    for key,value in deputados_dict.iteritems():
+        if nome in value['Nome'].lower():
+            resultados[value['Nome']] = key
+    return json.dumps(resultados, ensure_ascii=False).encode('utf-8')
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.debug = True
