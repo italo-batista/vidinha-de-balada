@@ -13,7 +13,7 @@
           }
 
           scope.$watch(function() { return scope.nome; }, function(newValue, oldValue) {
-                if (newValue && newValue.length > 3) {
+                if (newValue && newValue.length > 0) {
                   scope.buscaNome();
                 }
           }, true);
