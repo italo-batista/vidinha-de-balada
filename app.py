@@ -332,6 +332,7 @@ for line in f:
 
 f.close()
 
+#/busca?nome=
 @app.route("/busca")
 def busca_deputado_por_nome():
     nome = request.args.get('nome').lower()
