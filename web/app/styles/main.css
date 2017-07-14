@@ -171,7 +171,7 @@ h4 > .glyphicon {
 }
 
 .card-body {
-  margin-top: 20px;
+  padding: 20px;
 }
 
 .categorias {
@@ -224,4 +224,8 @@ h4 > .glyphicon {
   left: auto;
   width: auto;
   margin: auto;
+}
+
+.text-small {
+  font-size: 0.9em;
 }
