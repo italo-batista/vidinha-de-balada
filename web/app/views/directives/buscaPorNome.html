@@ -1,8 +1,8 @@
 <div class="diretiva-busca row">
 <div class="resultado-busca">
   <input class="barra-busca" type="text" ng-model="nome" ng-show="mostrarBarraDeBusca">
-  <ul ng-show="mostrarBarraDeBusca && resultado" class="listagem-busca">
-    <li ng-repeat="deputado in resultado">
+  <ul ng-show="mostrarBarraDeBusca && nome" class="listagem-busca">
+    <li ng-repeat="deputado in resultado | filter:nome">
       <a ui-sref="perfil({id: deputado.id})" ng-click="ativarBusca()">{{deputado.nome}}</a>
     </li>
   </ul>
