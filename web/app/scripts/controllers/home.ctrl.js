@@ -7,6 +7,8 @@
             var vm = this;
             vm.total = 0;
             vm.salariosMinimos = 0;
+            vm.casasPopulares = 0;
+            vm.cestasBasicas = 0;
             vm.deputados = [];
             vm.textosEquivalentes = [];
             vm.anoSelecionado = 0;
@@ -18,12 +20,17 @@
             vm.isPossivelSubir = isPossivelSubir;
             vm.isPossivelDescer = isPossivelDescer;
 
+            // Os valores medianos de casasPopulares e cestasBasicas foram calculados com base em
+            // http://g1.globo.com/economia/noticia/governo-amplia-minha-casa-minha-vida-para-familias-com-renda-de-ate-r-9-mil.ghtml
+            // e https://www.dieese.org.br/analisecestabasica/2017/201705cestabasica.pdf
             function setAno(ano) {
                 vm.anoSelecionado = ano;
                 $http.get(RESTAPI + "gasto_anual?ano=" + vm.anoSelecionado).then(function (res) {
                     vm.total = res.data[0];
                     vm.salariosMinimos = Math.round(vm.total / 937000);
-                    setTextosEquivalentes(vm.salariosMinimos);
+                    vm.casasPopulares = Math.round(vm.total / 152500);
+                    vm.cestasBasicas = Math.round(vm.total / 390600);
+                    setTextosEquivalentes(vm.salariosMinimos, vm.casasPopulares, vm.cestasBasicas);
                 });
             };
 
@@ -47,7 +54,7 @@
                 return vm.anoSelecionado <= vm.anoMinimo;
             }
 
-            function setTextosEquivalentes(salariosMinimos) {
+            function setTextosEquivalentes(salariosMinimos, casasPopulares, cestasBasicas) {
               vm.textosEquivalentes = [
                 {
                   texto: "milhões de salários mínimos",
@@ -55,11 +62,11 @@
                 },
                 {
                   texto: "mil casas populares",
-                  valor: salariosMinimos
+                  valor: casasPopulares
                 },
                 {
                   texto: "milhões de cestas básicas",
-                  valor: salariosMinimos
+                  valor: cestasBasicas
                 }
               ];
             }
