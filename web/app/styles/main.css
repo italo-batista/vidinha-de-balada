@@ -16,20 +16,11 @@ a:hover,
   color: #fff;
 }
 
-.nav-main {
-  margin-top: 20px;
-  margin-right: 20px;
-}
-
-.logo  {
-  margin-top: 10px;
-  margin-bottom: 10px;
+.header {
+  height: 100vh;
 }
 
 .headline {
-  /*background-color: #ff4e81;*/
-  padding: 20px;
-  margin-bottom: 20px;
   text-align: center;
 }
 
@@ -40,6 +31,9 @@ a:hover,
 .gastometro {
   padding-bottom: 40px;
   padding-top: 20px;
+}
+
+.call-to-action {
 }
 
 h4 > .glyphicon {
@@ -53,8 +47,8 @@ h4 > .glyphicon {
 }
 
 .content {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .content-inverse {

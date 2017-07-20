@@ -14,6 +14,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/overhide.css">
     <!-- endbuild -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   </head>
@@ -21,20 +22,6 @@
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
-    <div class="nav-main container-fluid text-right">
-      <ul class="nav nav-pills navbar-right">
-        <li role="presentation"><a ui-sref="sobre">Sobre</a></li>
-      </ul>
-    </div>
-
-    <div class="header container text-center">
-      <div class="logo row">
-        <div class="col-sm-4 col-sm-offset-4">
-          <a ui-sref="home"><ng-include src="'views/logo.html'"></ng-include></a>
-        </div>
-      </div>
-    </div>
 
     <ui-view></ui-view>
 
