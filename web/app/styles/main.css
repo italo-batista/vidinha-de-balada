@@ -16,25 +16,28 @@ a:hover,
   color: #fff;
 }
 
-.nav-main {
-  margin-top: 20px;
-  margin-right: 20px;
-}
-
-.logo  {
-  margin-top: 10px;
-  margin-bottom: 10px;
+.header {
+  height: 100vh;
 }
 
 .headline {
-  /*background-color: #ff4e81;*/
-  padding: 20px;
-  margin-bottom: 20px;
   text-align: center;
 }
 
 .headline-title {
   font-size: 5em;
+}
+
+.gastometro {
+  padding-bottom: 40px;
+  padding-top: 20px;
+}
+
+.call-to-action {
+}
+
+h4 > .glyphicon {
+  font-size: 14px;
 }
 
 @media only screen and (max-width : 320px) {
@@ -44,18 +47,12 @@ a:hover,
 }
 
 .content {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .content-inverse {
-  background-color: #563B7F;
-}
-
-.legend rect {
-  fill:white;
-  stroke:black;
-  opacity:0.8;
+  background-color: #573C82;
 }
 
 .axis--x path {
@@ -99,16 +96,37 @@ a:hover,
   color: #081F2C;
 }
 
-.card {
-  margin-bottom: 20px;
-  background-color: #454545;
+.main-title {
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
-@media only screen and (min-width : 960px) {
+.card {
+  background-color: #463066;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 992px) {
   .card {
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-bottom: 20px;
   }
+  .card-odd {
+    margin-top: 40px;
+  }
+}
+
+.card-number {
+  float: left;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-top: -30px;
+  margin-left: -15px;
+  background-color: #463066;
+  font-weight: bold;
+  font-size: 1.5em;
+  line-height: 60px;
+  text-align: center;
 }
 
 .card-head {
@@ -128,13 +146,26 @@ a:hover,
   height: 114px;
   overflow: hidden;
   border-radius: 50%;
-  margin-top: -40px;
+  margin-top: -52px;
+  border: solid 4px #573C82;
 }
 
 .card-subtitle {
-  padding-left: 20px;
-  padding-top: 16px;
-  padding-bottom: 60px;
+  background-color: #ff4e81;
+  color: #fff;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  line-height: 35px;
+  text-align: center;
+  border-radius: 50%;
+  margin-top: 25px;
+  margin-left: -25px;
+  border: solid 4px #573C82;
+}
+
+.card-body {
+  padding: 20px;
 }
 
 .categorias {
@@ -187,4 +218,8 @@ a:hover,
   left: auto;
   width: auto;
   margin: auto;
+}
+
+.text-small {
+  font-size: 0.9em;
 }

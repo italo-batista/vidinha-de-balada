@@ -1,0 +1,9 @@
+.btn-default {
+    color: #fff;
+    background: none;
+    border-color: #fff;
+}
+
+.btn-lg, .btn-group-lg > .btn {
+    border-radius: 4px;
+}

@@ -85,7 +85,7 @@
                         }
 
                         vm.deputados.push(d);
-                    })
+                    });
                 });
             }
 
