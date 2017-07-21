@@ -339,8 +339,17 @@ with open('data/gerados-hackfest/gasto_mensal_por_deputado.csv') as csvfile:
         if row['idecadastro'] not in timeline_deputados:
             timeline_deputados[row['idecadastro']] = []
         dep = {}
-        dep[row['mes']+"/"+row['ano']] = float(row['total'])
+        dep[row['mes']+"/"+row['ano']] = [float(row['total'])]
         timeline_deputados[row['idecadastro']].append(dep)
+
+with open('data/gerados-hackfest/presenca_mensal_por_deputado_para_votacoes.csv') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter=",")
+    for row in reader:
+        if row['id_dep'] != 'NA' and row['id_dep'] in timeline_deputados.keys():
+            for dep in timeline_deputados[row['id_dep']]:
+                if dep.keys()[0] == row['mesv']+"/"+row['anov']:
+                    dep[dep.keys()[0]].append(row['coef'])
+                    dep[dep.keys()[0]].append((row['total_deputado']+"/"+row['total_mes']))
 
 #/timeline?id=
 @app.route('/timeline')

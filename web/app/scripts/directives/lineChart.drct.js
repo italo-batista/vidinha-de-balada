@@ -27,6 +27,7 @@ app.directive('lineChart', function ($parse, RESTAPI) {
 
       var x = d3.scaleTime().range([0, width]),
           y = d3.scaleLinear().range([height, 0]);
+      var yp = d3.scaleLinear().range([height, 0]);
 
       var line = d3.line()
         .curve(d3.curveLinear)
@@ -34,7 +35,11 @@ app.directive('lineChart', function ($parse, RESTAPI) {
         .y(function (d) { return y(+d.valor); });
 
       var gasto = d3.select("body").append("div")
-        .attr("class", "tooltip")
+        .attr("class", "tooltip_gasto")
+        .style("opacity", 0);
+
+      var presenca = d3.select("body").append("div")
+        .attr("class", "tooltip_presenca")
         .style("opacity", 0);
 
       d3.json(RESTAPI+"timeline?id="+scope.deputado, function (error, data) {
@@ -42,7 +47,11 @@ app.directive('lineChart', function ($parse, RESTAPI) {
 
         data.forEach(function (d) {
           d.date = parseTime(Object.keys(d)[0]);
-          d.valor = +d[Object.keys(d)[0]]
+          d.valor = +d[Object.keys(d)[0]][0];
+          if (d[Object.keys(d)[0]].length > 1) {
+            d.presenca = +d[Object.keys(d)[0]][1];
+            d.presenca_string = d[Object.keys(d)[0]][2];
+          }
         });
 
         x.domain(d3.extent(data, function (d) {
@@ -58,6 +67,8 @@ app.directive('lineChart', function ($parse, RESTAPI) {
           })
         ]);
 
+        yp.domain([0, 1]);
+
         g.append("path")
           .datum(data)
           .attr("fill", "None")
@@ -66,6 +77,27 @@ app.directive('lineChart', function ($parse, RESTAPI) {
           .attr("stroke-linecap", "round")
           .attr("stroke-width", 2)
           .attr("d", line)
+
+        g.selectAll("presenca")
+          .data(data.filter(function(d) {return d.presenca}))
+          .enter().append("circle")
+          .attr("r", 4)
+          .attr("cx", function(d) { return x(d.date); })
+          .attr("cy", function(d) { return yp(+d.presenca); })
+          .attr("fill", "#fff")
+          .on("mouseover", function(d) {
+             presenca.transition()
+               .duration(200)
+               .style("opacity", 1);
+             presenca.html("Presente em<br/>" + d.presenca_string + " votações<br/>" + formatTime(d.date))
+               .style("left", (d3.event.pageX) + "px")
+               .style("top", (d3.event.pageY - 30) + "px");
+             })
+           .on("mouseout", function(d) {
+             presenca.transition()
+               .duration(500)
+               .style("opacity", 0);
+             });
 
         g.selectAll("point")
           .data(data)
@@ -78,7 +110,7 @@ app.directive('lineChart', function ($parse, RESTAPI) {
              gasto.transition()
                .duration(200)
                .style("opacity", 1);
-             gasto.html(formatTime(d.date) + "<br/>R$ " + d.valor)
+             gasto.html("R$" + d.valor  + "<br/>" + formatTime(d.date))
                .style("left", (d3.event.pageX) + "px")
                .style("top", (d3.event.pageY - 30) + "px");
              })

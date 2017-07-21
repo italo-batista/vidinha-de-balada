@@ -189,7 +189,7 @@ a:hover,
   margin: auto;
 }
 
-div.tooltip {
+div.tooltip_gasto {
   position: absolute;
   text-align: center;
   width: 70px;
@@ -198,6 +198,19 @@ div.tooltip {
   font: 11px sans-serif;
   background: #ff4e81;
   color: #fff;
+  border: 0px;
+  pointer-events: none;
+}
+
+div.tooltip_presenca {
+  position: absolute;
+  text-align: center;
+  width: 80px;
+  height: 40px;
+  padding: 2px;
+  font: 11px sans-serif;
+  background: #fff;
+  color: #ff4e81;
   border: 0px;
   pointer-events: none;
 }
