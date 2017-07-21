@@ -250,13 +250,24 @@ cria_sessoes_mensal = function(votacoes) {
 
 cria_empresas = function(dados){
   empresas = dados %>%
+    filter(!is.na(txtCNPJCPF)) %>%
     select(txtCNPJCPF, txtFornecedor) %>%
     group_by(txtCNPJCPF) %>%
     mutate(txtFornecedor = first(txtFornecedor)) %>%
     group_by(txtCNPJCPF, txtFornecedor) %>%
-    summarise(n = n())
+  #  summarise(n = n())
     distinct()
 
+  empresas.na = dados %>%
+    filter(is.na(txtCNPJCPF)) %>%
+    select(txtCNPJCPF, txtFornecedor) %>%
+    group_by(txtFornecedor) %>% 
+    distinct() %>%
+    mutate(txtCNPJCPF = "00000000000000")
+  
+  empresas = empresas %>%
+    rbind(empresas.na)
+  
   return(empresas)  
 }
 

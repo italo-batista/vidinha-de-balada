@@ -48,3 +48,8 @@ write.csv(top_estourados, "top_estourados.csv", row.names = F)
 
 sessoes_mensal = cria_sessoes_mensal(votacoes)
 write.csv(sessoes_mensal, "sessoes_mensal.csv", row.names = F)
+
+empresas = cria_empresas(dados_gastos)
+write.csv(empresas, "empresas.csv", row.names = F)
+
+
