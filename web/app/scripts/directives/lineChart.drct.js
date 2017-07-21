@@ -110,7 +110,7 @@ app.directive('lineChart', function ($parse, RESTAPI) {
              gasto.transition()
                .duration(200)
                .style("opacity", 1);
-             gasto.html("R$" + d.valor  + "<br/>" + formatTime(d.date))
+             gasto.html("R$ " + d.valor  + "<br/>" + formatTime(d.date))
                .style("left", (d3.event.pageX) + "px")
                .style("top", (d3.event.pageY - 30) + "px");
              })
@@ -124,19 +124,22 @@ app.directive('lineChart', function ($parse, RESTAPI) {
           .attr("class", "axis axis--x")
           .attr("transform", "translate(0," + height + ")")
           .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%m/%Y")))
-          .style("font-size", "16px");
+          .style("font-size", "16px")
+          .style("font-family", "'Montserrat', sans-serif");
 
         g.append("g")
           .attr("class", "axis axis--y")
           .style("font", "14px sans-serif")
           .call(d3.axisLeft(y).tickSize(0))
           .style("font-size", "16px")
+          .style("font-family", "'Montserrat', sans-serif")
           .append("text")
           .attr("transform", "rotate(-90)")
           .attr("y", 6)
           .attr("dy", "0.71em")
           .attr("fill", "#000")
-          .text("Gasto total mensal, R$");
+          .text("Gasto total mensal, R$")
+          .style("font-family", "'Montserrat', sans-serif");
         })
       }
     }
