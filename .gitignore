@@ -5,4 +5,5 @@
 /web/bower_components
 /web/dist
 /web/.tmp
+/web/secret.json
 .Rproj.user
