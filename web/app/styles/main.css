@@ -188,3 +188,16 @@ a:hover,
   width: auto;
   margin: auto;
 }
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 70px;
+  height: 30px;
+  padding: 2px;
+  font: 11px sans-serif;
+  background: #ff4e81;
+  color: #fff;
+  border: 0px;
+  pointer-events: none;
+}
