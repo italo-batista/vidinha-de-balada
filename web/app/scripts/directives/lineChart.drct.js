@@ -45,14 +45,15 @@ app.directive('lineChart', function ($parse, RESTAPI) {
       d3.json(RESTAPI+"timeline?id="+scope.deputado, function (error, data) {
         if (error) throw error;
         var cota_mensal;
+        const salarioMinimo = 937;
         data.forEach(function (d) {
           d.date = parseTime(Object.keys(d)[0]);
-          d.valor = +d[Object.keys(d)[0]][0];
+          d.valor = (+d[Object.keys(d)[0]][0])/salarioMinimo;
           if (d[Object.keys(d)[0]].length > 2) {
             d.presenca = +d[Object.keys(d)[0]][2];
             d.presenca_string = d[Object.keys(d)[0]][3];
           }
-          cota_mensal = +d[Object.keys(d)[0]][1];
+          cota_mensal = (+d[Object.keys(d)[0]][1])/salarioMinimo;
         });
 
         x.domain(d3.extent(data, function (d) {
@@ -149,7 +150,7 @@ app.directive('lineChart', function ($parse, RESTAPI) {
              gasto.transition()
                .duration(200)
                .style("opacity", 1);
-             gasto.html("R$ " + d.valor  + "<br/>" + formatTime(d.date))
+             gasto.html(d.valor.toFixed(0) + " salários mínimos<br/>" + formatTime(d.date))
                .style("left", (d3.event.pageX) + "px")
                .style("top", (d3.event.pageY - 30) + "px");
              })
@@ -177,7 +178,7 @@ app.directive('lineChart', function ($parse, RESTAPI) {
           .attr("y", 6)
           .attr("dy", "0.71em")
           .attr("fill", "#000")
-          .text("Gasto total mensal, R$")
+          .text("Gasto total mensal, salários mínimos")
           .style("font-family", "'Montserrat', sans-serif");
         })
       }
