@@ -10,11 +10,17 @@ from flask import Flask, jsonify, request
 # use this material:
 # http://blog.cloudoki.com/getting-started-with-restful-apis-using-the-flask-microframework-for-python/
 
+# other links:
+#	http://www.roblayton.com/2015/04/creating-python-flask-crud-api-with.html
+#	http://www.roblayton.com/2015/04/connecting-python-script-to-mysql.html
+#	https://github.com/jigyasa-grover/RESTful-API-using-Python-Flask-MySQL
+#
+
 
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Pesquisas@localhost/vidinha_balada'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://USER:SENHA@SERVER/vidinha_balada'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
