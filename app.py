@@ -122,7 +122,6 @@ with open('data/gerados-hackfest/gasto_mensal_por_depoutado_por_categoria.csv') 
 categorias = list(categorias)
 ids = list(ids)
 
-
 @app.route('/')
 def index():
     return "API no ar."
@@ -339,7 +338,7 @@ with open('data/gerados-hackfest/gasto_mensal_por_deputado.csv') as csvfile:
         if row['idecadastro'] not in timeline_deputados:
             timeline_deputados[row['idecadastro']] = []
         dep = {}
-        dep[row['mes']+"/"+row['ano']] = [float(row['total'])]
+        dep[row['mes']+"/"+row['ano']] = [float(row['total']), float(row['cota_mensal'])]
         timeline_deputados[row['idecadastro']].append(dep)
 
 with open('data/gerados-hackfest/presenca_mensal_por_deputado_para_votacoes.csv') as csvfile:

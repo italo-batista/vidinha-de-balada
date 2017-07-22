@@ -44,14 +44,15 @@ app.directive('lineChart', function ($parse, RESTAPI) {
 
       d3.json(RESTAPI+"timeline?id="+scope.deputado, function (error, data) {
         if (error) throw error;
-
+        var cota_mensal;
         data.forEach(function (d) {
           d.date = parseTime(Object.keys(d)[0]);
           d.valor = +d[Object.keys(d)[0]][0];
-          if (d[Object.keys(d)[0]].length > 1) {
-            d.presenca = +d[Object.keys(d)[0]][1];
-            d.presenca_string = d[Object.keys(d)[0]][2];
+          if (d[Object.keys(d)[0]].length > 2) {
+            d.presenca = +d[Object.keys(d)[0]][2];
+            d.presenca_string = d[Object.keys(d)[0]][3];
           }
+          cota_mensal = +d[Object.keys(d)[0]][1];
         });
 
         x.domain(d3.extent(data, function (d) {
@@ -68,6 +69,28 @@ app.directive('lineChart', function ($parse, RESTAPI) {
         ]);
 
         yp.domain([0, 1]);
+
+        var dataMin = d3.min(data, function (c) {return +c.date});
+        var dataMax = d3.max(data, function (c) {return +c.date});
+
+        g.append("line")
+          .style("stroke", "#fff")
+          .attr("stroke-dasharray", "5, 10")
+          .attr("x1", x(dataMin))
+          .attr("y1", y(cota_mensal))
+          .attr("x2", x(dataMax))
+          .attr("y2", y(cota_mensal));
+
+        g.append("text")
+          .attr("y", y(cota_mensal)-5)
+          .attr("x", function(){ return x(dataMax)-45})
+          .attr('text-anchor', 'middle')
+          .attr("stroke", "#fff")
+          .attr("stroke-width", "0.9px")
+          .attr("fill", "#fff")
+          .attr("font-size", "14px")
+          .attr("font-family", "'Montserrat', sans-serif")
+          .text("Cota mensal");
 
         g.append("path")
           .datum(data)
