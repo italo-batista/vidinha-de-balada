@@ -81,10 +81,26 @@ app.directive('lineChart', function ($parse, RESTAPI) {
         g.selectAll("presenca")
           .data(data.filter(function(d) {return d.presenca}))
           .enter().append("circle")
-          .attr("r", 4)
+          .attr("r", 13)
           .attr("cx", function(d) { return x(d.date); })
           .attr("cy", function(d) { return yp(+d.presenca); })
-          .attr("fill", "#fff")
+          .attr("fill", "None")
+          .attr("stroke-width", 1.5)
+          .attr("stroke", "#fff")
+
+        g.selectAll("presenca")
+          .data(data.filter(function(d) {return d.presenca}))
+          .enter().append("text")
+          .attr("x", function(d) { return x(d.date); })
+          .attr("y", function(d) { return yp(+d.presenca); })
+          .attr("text-anchor", "middle")
+          .attr("stroke", "#fff")
+          .attr("stroke-width", "0.9px")
+          .attr("dy", ".3em")
+          .style("font-size", "10px")
+          .style("font-family", "'Montserrat', sans-serif")
+          .style("cursor", "default")
+          .text(function(d){return d.presenca_string})
           .on("mouseover", function(d) {
              presenca.transition()
                .duration(200)
@@ -97,7 +113,7 @@ app.directive('lineChart', function ($parse, RESTAPI) {
              presenca.transition()
                .duration(500)
                .style("opacity", 0);
-             });
+          });
 
         g.selectAll("point")
           .data(data)
