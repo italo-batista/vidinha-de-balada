@@ -4,7 +4,7 @@ options(scipen = 50)
 
 # retorna um data frame com resumo mensal dos gastos de cada deputado
 
-cria_tabela_final_mensal = function(dados){
+cria_tabela_final_gastos = function(dados){
   # antes de usar essa funcao o data frame dados deve estar no formato gerado pela
   # funcao prepara_tabela_final
 
@@ -295,17 +295,17 @@ cria_tabela_gastos_empresas = function(dados, empresas){
   
   tabela_gastos_empresas =  dados %>%
     filter(!is.na(txtCNPJCPF)) %>%
-    select(txNomeParlamentar, idecadastro, sgUF,  ano, mes, vlrLiquido, txtCNPJCPF, nossas_categorias) %>%
+    select(idecadastro,ano, mes, vlrLiquido, txtCNPJCPF, nossas_categorias) %>%
     left_join(empresas)
   
   tabela_gastos_empresas.na =  dados %>%
     filter(is.na(txtCNPJCPF)) %>%
-    select(txNomeParlamentar, idecadastro, sgUF,  ano, mes, vlrLiquido, txtFornecedor, nossas_categorias) %>%
+    select(idecadastro, ano, mes, vlrLiquido, txtFornecedor, nossas_categorias) %>%
     left_join(empresas %>% filter(txtCNPJCPF == "00000000000000"))
   
   tabela_gastos_empresas = tabela_gastos_empresas %>%
     rbind(tabela_gastos_empresas.na) %>%
-    group_by(txNomeParlamentar, idecadastro, sgUF,  ano, mes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
+    group_by(idecadastro, ano, mes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
     summarise(total = sum(vlrLiquido))
   
   return(tabela_gastos_empresas)
@@ -329,4 +329,8 @@ cria_tabela_info_pessoais = function(info_deputados, twitter_profiles, dados){
     left_join(twitter_profiles %>% select(idecadastro, twitter_profile))
   
   return(tabela_info_pessoais)
+}
+
+cria_ganhadores_selos = function(tabela_info_pessoais, tabela_6_gastos_mensal, tabela_final_votacoes){
+
 }
