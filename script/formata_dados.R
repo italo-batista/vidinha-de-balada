@@ -2,6 +2,7 @@ library(readr)
 library(dplyr)
 options(scipen = 50)
 
+# retorna um data frame com resumo mensal dos gastos de cada deputado
 
 cria_tabela_final_mensal = function(dados){
   # antes de usar essa funcao o data frame dados deve estar no formato gerado pela
@@ -45,6 +46,8 @@ cria_tabela_final_categoria = function(dados){
 
   return(tabela_final_categoria)
 }
+
+# retorna csv referente a presença dos deputados para votações em cada mês
 
 cria_tabela_final_votacoes = function(votacoes){
 
@@ -108,6 +111,8 @@ cria_tabela_gastos_presenca = function(tabela_final_votacoes, tabela_final_mensa
   return(tabela_gasto_presenca)
 }
 
+# retorna csv com a soma de todos os gastos e todas as cotas em cada ano
+
 cria_tabela_gasto_total_anos = function(tabela_final_mensal) {
 
   names(tabela_final_mensal) = c("nome", "id", "uf", "ano", "mes", "total_gasto", "cota_mensal", "coef_gasto")
@@ -167,7 +172,10 @@ cria_tabela_6_gastos = function(dados){
 
 }
 
-cria_tabela_6_gastos_mensal = function(dados){
+# retorna data frame com o total gasto em cada uma das principais categorias a cada mês.
+# a coluna toal é referente ao total gasto em todas as categorias (inclusive as que não estão nessa tabela)
+
+cria_tabela_6_gastos_mensal = function(dados, tabela_final_mensal){
   
   tabela_6_gastos_mensal = dados %>%
   #  filter(vlrLiquido >= 0) %>%
@@ -207,7 +215,12 @@ cria_tabela_6_gastos_mensal = function(dados){
   
   tabela_6_gastos_mensal[is.na(tabela_6_gastos_mensal)] = 0
   
-  tabela_6_gastos_mensal$total = rowSums(tabela_6_gastos_mensal[,5:10] )
+  tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
+    left_join(tabela_final_mensal %>%
+                group_by(idecadastro, txNomeParlamentar, ano, mes) %>%
+                summarise("total" = sum(total)))
+  
+ # tabela_6_gastos_mensal$total = rowSums(tabela_6_gastos_mensal[,5:10] )
   
   return(tabela_6_gastos_mensal)
   
@@ -237,6 +250,8 @@ cria_top_estourados = function(tabela_final_mensal) {
 
 #########################################################################################
 
+# retorna um data frame de 3 colunas com ano, mes e quantidade e sessões
+
 cria_sessoes_mensal = function(votacoes) {
   sessoes = votacoes %>%
     filter(anov > 2014) %>%
@@ -247,6 +262,10 @@ cria_sessoes_mensal = function(votacoes) {
   
   return(sessoes)
 }
+
+# retorna um data frame de duas colunas com cnpj e nome de empresas
+# empresas sem cnpj tem este campo zerado
+# para empresas que possuem mais de um nome para o mesmo cnpj, apenas um deles foi selecionado e atribuído para todos
 
 cria_empresas = function(dados){
   empresas = dados %>%
@@ -271,3 +290,23 @@ cria_empresas = function(dados){
   return(empresas)  
 }
 
+# retorna data frame com cada gastos.
+# Há colunas para nome, idecadastro, UF,  ano, mes, valor, Empresa, cnpj e categoria
+
+cria_tabela_gastos_empresas = function(dados, empresas){
+  
+  tabela_gastos_empresas =  dados %>%
+    filter(!is.na(txtCNPJCPF)) %>%
+    select(txNomeParlamentar, idecadastro, sgUF,  ano, mes, vlrLiquido, txtCNPJCPF, nossas_categorias) %>%
+    left_join(empresas)
+  
+  tabela_gastos_empresas.na =  dados %>%
+    filter(is.na(txtCNPJCPF)) %>%
+    select(txNomeParlamentar, idecadastro, sgUF,  ano, mes, vlrLiquido, txtFornecedor, nossas_categorias) %>%
+    left_join(empresas %>% filter(txtCNPJCPF == "00000000000000"))
+  
+  tabela_gastos_empresas = tabela_gastos_empresas %>%
+    rbind(tabela_gastos_empresas.na)
+  
+  return(tabela_gastos_empresas)
+}
