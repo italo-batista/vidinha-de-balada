@@ -69,47 +69,45 @@ cria_tabela_final_votacoes = function(votacoes){
 
   tabela_final_votacoes = votacoes %>%
     filter(anov > 2014) %>%
-    group_by(nome, id_dep, partido, uf, anov, mesv, diav) %>%
+    group_by(id_dep, anov, mesv, diav) %>%
     distinct() %>%
-    group_by(nome, id_dep, partido, uf, anov, mesv) %>%
-    summarise(total_deputado = n()) %>%
-    inner_join(sessoes) %>%
-    mutate(coef = total_deputado/total_mes)
+    group_by(id_dep, anov, mesv) %>%
+    summarise(total_deputado = n())
 
   return(tabela_final_votacoes)
 
 }
 
-cria_tabela_gastos_presenca = function(tabela_final_votacoes, tabela_final_mensal){
-  ### TODO: adicionar partido quando o vereador não esteve presença no mês
-  names(tabela_final_mensal) = c("nome", "id", "uf", "ano", "mes", "total_gasto", "cota_mensal", "coef_gasto")
-  names(tabela_final_votacoes) = c("nome", "id", "partido", "uf","ano", "mes", "total_presenca", "total_mes", "coef_presenca")
-
-  sessoes = votacoes %>%
-    filter(anov > 2014) %>%
-    group_by(anov, mesv, diav) %>%
-    distinct() %>%
-    group_by(anov, mesv) %>%
-    summarise(total_mes = n())
-
-  tabela_gasto_presenca = tabela_final_mensal %>%
-                          full_join(tabela_final_votacoes[,2:9])
-
-  tabela_gasto_presenca$total_presenca[is.na(tabela_gasto_presenca$total_presenca)] = 0
-  tabela_gasto_presenca$coef_presenca[is.na(tabela_gasto_presenca$coef_presenca)] = 0
-
-  names(sessoes) = c("ano", "mes", "total_presenca_mes")
-
-  tabela_gasto_presenca = tabela_gasto_presenca %>%
-                          left_join(sessoes)
-  tabela_gasto_presenca$total_presenca_mes[is.na(tabela_gasto_presenca$total_presenca_mes)] = 0
-  tabela_gasto_presenca$total_mes = tabela_gasto_presenca$total_presenca_mes
-  tabela_gasto_presenca = tabela_gasto_presenca %>%
-                          ungroup() %>%
-                          select(-total_presenca_mes)
-
-  return(tabela_gasto_presenca)
-}
+# cria_tabela_gastos_presenca = function(tabela_final_votacoes, tabela_final_mensal){
+#   ### TODO: adicionar partido quando o vereador não esteve presença no mês
+#   names(tabela_final_mensal) = c("nome", "id", "uf", "ano", "mes", "total_gasto", "cota_mensal", "coef_gasto")
+#   names(tabela_final_votacoes) = c("nome", "id", "partido", "uf","ano", "mes", "total_presenca", "total_mes", "coef_presenca")
+# 
+#   sessoes = votacoes %>%
+#     filter(anov > 2014) %>%
+#     group_by(anov, mesv, diav) %>%
+#     distinct() %>%
+#     group_by(anov, mesv) %>%
+#     summarise(total_mes = n())
+# 
+#   tabela_gasto_presenca = tabela_final_mensal %>%
+#                           full_join(tabela_final_votacoes[,2:9])
+# 
+#   tabela_gasto_presenca$total_presenca[is.na(tabela_gasto_presenca$total_presenca)] = 0
+#   tabela_gasto_presenca$coef_presenca[is.na(tabela_gasto_presenca$coef_presenca)] = 0
+# 
+#   names(sessoes) = c("ano", "mes", "total_presenca_mes")
+# 
+#   tabela_gasto_presenca = tabela_gasto_presenca %>%
+#                           left_join(sessoes)
+#   tabela_gasto_presenca$total_presenca_mes[is.na(tabela_gasto_presenca$total_presenca_mes)] = 0
+#   tabela_gasto_presenca$total_mes = tabela_gasto_presenca$total_presenca_mes
+#   tabela_gasto_presenca = tabela_gasto_presenca %>%
+#                           ungroup() %>%
+#                           select(-total_presenca_mes)
+# 
+#   return(tabela_gasto_presenca)
+# }
 
 # retorna csv com a soma de todos os gastos e todas as cotas em cada ano
 
