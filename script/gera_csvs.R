@@ -10,7 +10,8 @@ cotas = read_csv("../data/final/cota_por_estado.csv")
 votacoes = read_csv("https://raw.githubusercontent.com/nazareno/dados-da-camara-federal/master/dados/votacoes.csv") %>%
   formata_data_votacoes()
 #emendas = le_csv_zip("http://portal.convenios.gov.br/images/docs/CGSIS/csv/siconv_emenda.csv.zip", "siconv_emenda.csv")
-
+twitter_profiles = read_csv("../data/final/twitter_profiles.csv")
+info_deputados = read_csv("../data/final/infodeputados.csv")
 
 tabela_final_mensal = cria_tabela_final_mensal(dados_gastos)
 write.csv(tabela_final_mensal, "tabela_final_mensal.csv", row.names = F)
@@ -52,5 +53,5 @@ write.csv(empresas, "empresas.csv", row.names = F)
 tabela_gastos_empresas = cria_tabela_gastos_empresas(dados_gastos, empresas)
 write.csv(tabela_gastos_empresas, "tabela_gastos_empresas.csv", row.names = F)
 
-
-
+tabela_info_pessoais = cria_tabela_info_pessoais(info_deputados, twitter_profiles, dados_gastos)
+write.csv(tabela_info_pessoais, "tabela_info_pessoais.csv", row.names = F)

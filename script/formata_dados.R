@@ -9,7 +9,7 @@ cria_tabela_final_mensal = function(dados){
   # funcao prepara_tabela_final
 
   tabela_final_mensal = dados %>%
-    filter(vlrLiquido > 0) %>%
+    filter(vlrLiquido >= 0) %>%
     select(txNomeParlamentar, idecadastro, sgUF,  ano, mes, vlrLiquido) %>%
     group_by(txNomeParlamentar, idecadastro, sgUF, ano, mes) %>%
     summarise(total = sum(vlrLiquido)) %>%
@@ -306,7 +306,29 @@ cria_tabela_gastos_empresas = function(dados, empresas){
     left_join(empresas %>% filter(txtCNPJCPF == "00000000000000"))
   
   tabela_gastos_empresas = tabela_gastos_empresas %>%
-    rbind(tabela_gastos_empresas.na)
+    rbind(tabela_gastos_empresas.na) %>%
+    group_by(txNomeParlamentar, idecadastro, sgUF,  ano, mes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
+    summarise(total = sum(vlrLiquido))
   
   return(tabela_gastos_empresas)
+}
+
+cria_tabela_info_pessoais = function(info_deputados, twitter_profiles, dados){
+  names(twitter_profiles)[3] = c("idecadastro")
+  names(info_deputados)[1] = c("idecadastro")
+  
+  ultimos_partidos = dados %>%
+    ungroup() %>%
+    arrange(idecadastro, -ano, -mes) %>%
+    group_by(idecadastro, txNomeParlamentar) %>%
+    summarise(sgPartido = first(sgPartido))
+  
+  names(ultimos_partidos)[1] = c("idecadastro")
+  
+  tabela_info_pessoais = dados %>% select(idecadastro, txNomeParlamentar, sgUF) %>% distinct() %>%
+    left_join(ultimos_partidos) %>%
+    left_join(info_deputados %>% select(idecadastro, urlFoto, fone, email)) %>%
+    left_join(twitter_profiles %>% select(idecadastro, twitter_profile))
+  
+  return(tabela_info_pessoais)
 }
