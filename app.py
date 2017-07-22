@@ -348,7 +348,8 @@ with open('data/gerados-hackfest/presenca_mensal_por_deputado_para_votacoes.csv'
             for dep in timeline_deputados[row['id_dep']]:
                 if dep.keys()[0] == row['mesv']+"/"+row['anov']:
                     dep[dep.keys()[0]].append(row['coef'])
-                    dep[dep.keys()[0]].append((row['total_deputado']+"/"+row['total_mes']))
+                    dep[dep.keys()[0]].append(row['total_deputado'])
+                    dep[dep.keys()[0]].append(row['total_mes'])
 
 #/timeline?id=
 @app.route('/timeline')

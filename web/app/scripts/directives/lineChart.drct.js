@@ -51,7 +51,8 @@ app.directive('lineChart', function ($parse, RESTAPI) {
           d.valor = (+d[Object.keys(d)[0]][0])/salarioMinimo;
           if (d[Object.keys(d)[0]].length > 2) {
             d.presenca = +d[Object.keys(d)[0]][2];
-            d.presenca_string = d[Object.keys(d)[0]][3];
+            d.total_deputado = d[Object.keys(d)[0]][3];
+            d.total_mes = d[Object.keys(d)[0]][4];
           }
           cota_mensal = (+d[Object.keys(d)[0]][1])/salarioMinimo;
         });
@@ -84,12 +85,10 @@ app.directive('lineChart', function ($parse, RESTAPI) {
 
         g.append("text")
           .attr("y", y(cota_mensal)-5)
-          .attr("x", function(){ return x(dataMax)-45})
+          .attr("x", function(){ return x(dataMax)-50})
           .attr('text-anchor', 'middle')
-          .attr("stroke", "#fff")
-          .attr("stroke-width", "0.9px")
           .attr("fill", "#fff")
-          .attr("font-size", "14px")
+          .attr("font-size", "15px")
           .attr("font-family", "'Montserrat', sans-serif")
           .text("Cota mensal");
 
@@ -109,7 +108,7 @@ app.directive('lineChart', function ($parse, RESTAPI) {
           .attr("cx", function(d) { return x(d.date); })
           .attr("cy", function(d) { return yp(+d.presenca); })
           .attr("fill", "None")
-          .attr("stroke-width", 1.5)
+          .attr("stroke-width", 0.8)
           .attr("stroke", "#fff")
 
         g.selectAll("presenca")
@@ -118,18 +117,18 @@ app.directive('lineChart', function ($parse, RESTAPI) {
           .attr("x", function(d) { return x(d.date); })
           .attr("y", function(d) { return yp(+d.presenca); })
           .attr("text-anchor", "middle")
-          .attr("stroke", "#fff")
-          .attr("stroke-width", "0.9px")
           .attr("dy", ".3em")
-          .style("font-size", "10px")
+          .attr("fill", "#fff")
+          .style("font-size", "11px")
           .style("font-family", "'Montserrat', sans-serif")
           .style("cursor", "default")
-          .text(function(d){return d.presenca_string})
+          .text(function(d){return d.total_deputado +"/" + d.total_mes})
           .on("mouseover", function(d) {
              presenca.transition()
                .duration(200)
                .style("opacity", 1);
-             presenca.html("Presente em<br/>" + d.presenca_string + " votações<br/>" + formatTime(d.date))
+             presenca.html("Presente em<br/>" + d.total_deputado +
+             "/" + d.total_mes +  " votações<br/>" + formatTime(d.date))
                .style("left", (d3.event.pageX) + "px")
                .style("top", (d3.event.pageY - 30) + "px");
              })
