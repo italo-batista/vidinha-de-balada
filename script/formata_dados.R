@@ -73,6 +73,9 @@ cria_tabela_final_votacoes = function(votacoes){
     distinct() %>%
     group_by(id_dep, anov, mesv) %>%
     summarise(total_deputado = n())
+  
+  tabela_final_votacoes = tabela_final_votacoes %>%
+    select(mesv, anov, id_dep, total_deputado)
 
   return(tabela_final_votacoes)
 
@@ -223,6 +226,7 @@ cria_tabela_6_gastos_mensal = function(dados, tabela_final_mensal){
   return(tabela_6_gastos_mensal)
   
 }
+
 cria_top_estourados_estado = function(estado, tabela_final_mensal) {
 
   estourados = tabela_final_mensal%>%
@@ -257,6 +261,9 @@ cria_sessoes_mensal = function(votacoes) {
     distinct() %>%
     group_by(anov, mesv) %>%
     summarise(total_mes = n())
+  
+  sessoes = sessoes %>%
+    select(mesv, anov, total_mes)
   
   return(sessoes)
 }
@@ -308,6 +315,7 @@ cria_tabela_gastos_empresas = function(dados, empresas){
     group_by(idecadastro, ano, mes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
     summarise(total = sum(vlrLiquido))
   
+  
   return(tabela_gastos_empresas)
 }
 
@@ -327,6 +335,12 @@ cria_tabela_info_pessoais = function(info_deputados, twitter_profiles, dados){
     left_join(ultimos_partidos) %>%
     left_join(info_deputados %>% select(idecadastro, urlFoto, fone, email)) %>%
     left_join(twitter_profiles %>% select(idecadastro, twitter_profile))
+  
+  tabela_info_pessoais = tabela_info_pessoais %>%
+    select(idecadastro, txNomeParlamentar, ultimos_partidos, sgUF, urlFoto, twitter_profile, fone, email)
+  
+  # (id, nome, partidoAtual, uf, foto, twitter, telefone, email, dataNasc);
+  # "idecadastro","txNomeParlamentar","sgUF","sgPartido","urlFoto","fone","email","twitter_profile"
   
   return(tabela_info_pessoais)
 }
