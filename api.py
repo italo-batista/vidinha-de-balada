@@ -46,6 +46,13 @@ categoria_divulgacao = 'Divulgação de atividade parlamentar'
 categoria_locacao = 'Locação de veículos'
 categoria_combustivel = 'Combustível'
 categoria_passagens = 'Passagens aéreas'
+
+#categoria_alimentacao = 'Alimentaca'
+#categoria_escritorio = 'Escritório'
+#categoria_divulgacao = 'Divulgação'
+#categoria_locacao = 'Locação de'
+#categoria_combustivel = 'Combustíve'
+#categoria_passagens = 'Passagens'
 	
 def init():
 	pass
@@ -173,31 +180,44 @@ def getCota(uf):
 	data_all = [cota.uf, cota.cota]
 	return jsonify(cotas=data_all)
 
-@app.route('/deputado/id=<id>', methods=['GET'])
+def somaGastos(query_gasto_categoria):
+	gastoTotal = 0
+	for gasto in query_gasto_categoria:
+		gastoTotal = gastoTotal + gasto.valor
+	return gastoTotal
+	
+@app.route('/deputados/<id>', methods=['GET'])
 def getDeputado(id):
 			
 	deputado = Deputado.query.filter_by(id=id).first()	
-	gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_alimentacao).first_or_404()
-	gasto_escritorio = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_escritorio).first_or_404()
-	gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_divulgacao).first_or_404()
-	gasto_locacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_locacao).first_or_404()
-	gasto_combustivel = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_combustivel).first_or_404()
-	gasto_passagens = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_passagens).first_or_404()
-	presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id, mes=mesPassado, ano=ano).first_or_404()
-	presencas_total = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first_or_404()
-	# o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
-	total_gastos = gasto_alimentacao.valor + gasto_escritorio.valor + gasto_divulgacao.valor + gasto_locacao.valor + gasto_combustivel.valor + gasto_passagens.valor
+	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_alimentacao).all()
+	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_escritorio).all()
+	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_divulgacao).all()
+	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_locacao).all()
+	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_combustivel).all()
+	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, idCategoria=categoria_passagens).all()
+	presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id, mes=mesPassado, ano=ano).first()
+	presencas_total = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first()
 	
+	gasto_alimentacao = somaGastos(query_gasto_alimentacao)
+	gasto_escritorio = somaGastos(query_gasto_escritorio)
+	gasto_divulgacao = somaGastos(query_gasto_divulgacao)
+	gasto_locacao = somaGastos(query_gasto_locacao)
+	gasto_combustivel = somaGastos(query_gasto_combustivel)
+	gasto_passagens = somaGastos(query_gasto_passagens)
 	
+	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
+	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens
+		
 	json = {
 	'Nome' : deputado.nome,
 	'urlfoto' : deputado.foto,
-	'Alimentação' : gasto_alimentacao.valor,
-	'Escritório' : gasto_escritorio.valor,
-	'Divulgação de atividade parlamentar' : gasto_divulgacao.valor,
-	'Locação de veículos' : gasto_locacao.valor,
-	'Combustível' : gasto_combustivel.valor,
-	'Passagens aéreas' : gasto_passagens.valor,
+	'Alimentação' : gasto_alimentacao,
+	'Escritório' : gasto_escritorio,
+	'Divulgação de atividade parlamentar' : gasto_divulgacao,
+	'Locação de veículos' : gasto_locacao,
+	'Combustível' : gasto_combustivel,
+	'Passagens aéreas' : gasto_passagens,
 	'presencas' : presencas_deputado.quantidadeParticipacoes,
 	'total_sessoes' : presencas_total.quantidadeSessoes,
 	'Total' : total_gastos
