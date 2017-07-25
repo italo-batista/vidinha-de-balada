@@ -27,7 +27,6 @@ app.directive('lineChart', function ($parse, RESTAPI) {
 
       var x = d3.scaleTime().range([0, width]),
           y = d3.scaleLinear().range([height, 0]);
-      var yp = d3.scaleLinear().range([height, 0]);
 
       var line = d3.line()
         .curve(d3.curveLinear)
@@ -69,7 +68,10 @@ app.directive('lineChart', function ($parse, RESTAPI) {
             return +c.valor
           })
         ]);
-
+	//Muda escala de gráfico
+	//Se quiser que o 100% de presença seja igual à cota mensal
+        //var yp = d3.scaleLinear().range([height, y(cota_mensal)]);
+        var yp = d3.scaleLinear().range([height, 0]);
         yp.domain([0, 1]);
 
         var dataMin = d3.min(data, function (c) {return +c.date});
@@ -85,8 +87,8 @@ app.directive('lineChart', function ($parse, RESTAPI) {
 
         g.append("text")
           .attr("y", y(cota_mensal)-5)
-          .attr("x", function(){ return x(dataMax)-50})
-          .attr('text-anchor', 'middle')
+          .attr("x", function(){ return x(dataMax)})
+          .attr('text-anchor', 'end')
           .attr("fill", "#fff")
           .attr("font-size", "15px")
           .attr("font-family", "'Montserrat', sans-serif")
