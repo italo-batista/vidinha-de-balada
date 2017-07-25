@@ -48,7 +48,6 @@ CREATE TABLE emendasPropostasDeputado (
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
 );
 
-"idecadastro","ano","mes","txtCNPJCPF","txtFornecedor","nossas_categorias","total"
 
 CREATE TABLE gastos (
 
