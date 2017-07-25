@@ -292,6 +292,8 @@ cria_empresas = function(dados){
   empresas = empresas %>%
     rbind(empresas.na)
   
+  empresas$id = rownames(empresas)
+  
   return(empresas)  
 }
 
