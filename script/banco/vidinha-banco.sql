@@ -77,7 +77,7 @@ CREATE TABLE gastos (
 	nomeFornecedor VARCHAR(15) NOT NULL,
 	nomeCategoria VARCHAR(30) NOT NULL,
 	valor FLOAT,
-	id VARCHAR(10)
+	id VARCHAR(10),
 	
 	PRIMARY KEY (id),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
