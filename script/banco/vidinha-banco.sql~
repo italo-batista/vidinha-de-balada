@@ -30,7 +30,7 @@ CREATE TABLE sessoesMes (
 CREATE TABLE empresas (
 
 	cnpj VARCHAR(15),
-	nome VARCHAR(10),
+	nome VARCHAR(20),
 	id VARCHAR(10),
 
   PRIMARY KEY (id),
