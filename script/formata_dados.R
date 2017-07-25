@@ -301,28 +301,7 @@ cria_empresas = function(dados){
 # Há colunas para nome, idecadastro, UF,  ano, mes, valor, Empresa, cnpj e categoria
 
 #idDocumento: idDeputado: mesEmissao:	anoEmissao: nomeCategoria: idCategoria: nomeFornecedor: valor: cnpj: 
-cria_tabela_gastos_empresas = function(dados, empresas){
-  
-  tabela_gastos_empresas =  dados %>%
-    filter(!is.na(txtCNPJCPF)) %>%
-    select(idecadastro,ano, mes, vlrLiquido, txtCNPJCPF, nossas_categorias) %>%
-    left_join(empresas)
-  
-  tabela_gastos_empresas.na =  dados %>%
-    filter(is.na(txtCNPJCPF)) %>%
-    select(idecadastro, ano, mes, vlrLiquido, txtFornecedor, nossas_categorias) %>%
-    left_join(empresas %>% filter(txtCNPJCPF == "00000000000000"))
-  
-  tabela_gastos_empresas = tabela_gastos_empresas %>%
-    rbind(tabela_gastos_empresas.na) %>%
-    group_by(idecadastro, ano, mes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
-    summarise(total = sum(vlrLiquido))
-  
-  
-  return(tabela_gastos_empresas)
-}
-
-cria_tabela_gastos_empresas_teste = function(dados, empresas) {
+cria_tabela_gastos_empresas = function(dados, empresas) {
   
   tabela_gastos_empresas =  dados %>%
     filter(!is.na(txtCNPJCPF)) %>%
