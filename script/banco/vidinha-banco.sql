@@ -5,7 +5,6 @@ CREATE DATABASE vidinha_balada;
 
 USE vidinha_balada;
 
-
 CREATE TABLE deputado (
 
 	id VARCHAR(7) NOT NULL,
@@ -49,21 +48,20 @@ CREATE TABLE emendasPropostasDeputado (
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
 );
 
-
+"idecadastro","ano","mes","txtCNPJCPF","txtFornecedor","nossas_categorias","total"
 
 CREATE TABLE gastos (
 
-	idDocumento VARCHAR(10) NOT NULL,
 	idDeputado VARCHAR(7) NOT NULL,
-	mesEmissao INT,
 	anoEmissao INT,
-	idCategoria VARCHAR(10) NOT NULL,
-	nomeFornecedor VARCHAR(15) NOT NULL,
-	valor FLOAT,
+	mesEmissao INT,
 	cnpj VARCHAR(15),
-
-	PRIMARY KEY (idDocumento),
-	CONSTRAINT unique_obs UNIQUE (idDeputado, mesEmissao, anoEmissao, idCategoria),
+	nomeFornecedor VARCHAR(15) NOT NULL,
+	nomeCategoria VARCHAR(30) NOT NULL,
+	valor FLOAT,
+	id VARCHAR(10)
+	
+	PRIMARY KEY (id),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
 );
 
@@ -83,7 +81,9 @@ CREATE TABLE empresas (
 
 	cnpj VARCHAR(15),
 	nome VARCHAR(10),
+	id VARCHAR(10),
 
+  PRIMARY KEY (id),
 	CONSTRAINT unique_obs UNIQUE (cnpj, nome)
 );
 
