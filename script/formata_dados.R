@@ -345,6 +345,27 @@ cria_tabela_info_pessoais = function(info_deputados, twitter_profiles, dados){
   return(tabela_info_pessoais)
 }
 
-cria_ganhadores_selos = function(tabela_info_pessoais, tabela_6_gastos_mensal, tabela_final_votacoes){
 
+cria_ganhadores_selos = function(tabela_6_gastos_mensal, tabela_final_votacoes){
+  
+  ganhadores_selos = tabela_6_gastos_mensal %>% select(-total) %>%
+    gather("categoria", "valor", 5:10) %>%
+    group_by(ano, mes, categoria) %>%
+    mutate("mediana" = median(valor)) %>%
+    filter(valor > mediana)
+  
+  return(ganhadores_selos)
+  
+  # mediana_gastos = tabela_6_gastos_mensal %>%
+  #   ungroup() %>%
+  #   select(-idecadastro, -txNomeParlamentar, -total) %>%
+  #   group_by(ano, mes) %>%
+  #   summarise("Alimentação" = median(`Alimentação`),
+  #          "Combustíveis" = median(`Combustíveis`),
+  #          "Locação de veículos" = median(`Locação de veículos`),
+  #          "Passagens aéreas" = median(`Passagens aéreas`),
+  #          "Escritório" = median(`Escritório`),
+  #          "Divulgação de atividade parlamentar" = median(`Divulgação de atividade parlamentar`)) %>%
+  #   gather("categoria", "valor", 3:8)
+  
 }
