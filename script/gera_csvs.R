@@ -13,26 +13,26 @@ votacoes = read_csv("https://raw.githubusercontent.com/nazareno/dados-da-camara-
 twitter_profiles = read_csv("../data/final/twitter_profiles.csv")
 info_deputados = read_csv("../data/final/infodeputados.csv")
 
-tabela_final_gastos = cria_tabela_final_gastos(dados_gastos)
-write.csv(tabela_final_gastos, "tabela_final_gastos.csv", row.names = F)
+# esse csv não gera nenhuma tabela no bd
+# tabela_final_gastos = cria_tabela_final_gastos(dados_gastos)
+# write.csv(tabela_final_gastos, "tabela_final_gastos.csv", row.names = F)
 
 # tabela_final_categoria = cria_tabela_final_categoria(dados_gastos)
 # write.csv(tabela_final_categoria, "tabela_final_categoria.csv", row.names = F)
 
-tabela_final_votacoes = cria_tabela_final_votacoes(votacoes)
-write.csv(tabela_final_votacoes, "tabela_final_votacoes.csv", row.names = F)
-
 # tabela_gastos_presenca = cria_tabela_gastos_presenca(tabela_final_votacoes, tabela_final_gastos)
 # write.csv(tabela_gastos_presenca, "tabela_gastos_presenca.csv", row.names = F)
 
-tabela_gasto_total_anos = cria_tabela_gasto_total_anos(tabela_final_gastos)
-write.csv(tabela_gasto_total_anos, "tabela_gasto_total_anos.csv", row.names = F)
+# esse csv não gera nenhuma tabela no bd
+# tabela_gasto_total_anos = cria_tabela_gasto_total_anos(tabela_final_gastos)
+# write.csv(tabela_gasto_total_anos, "tabela_gasto_total_anos.csv", row.names = F)
 
 # tabela_6_gastos = cria_tabela_6_gastos(dados_gastos)
 # write.csv(tabela_6_gastos, "tabela_6_gastos.csv", row.names = F)
 
-tabela_6_gastos_mensal = cria_tabela_6_gastos_mensal(dados_gastos, tabela_final_gastos)
-write.csv(tabela_6_gastos_mensal, "tabela_6_gastos_mensal.csv", row.names = F)
+# esse csv não gera nenhuma tabela no bd
+# tabela_6_gastos_mensal = cria_tabela_6_gastos_mensal(dados_gastos, tabela_final_gastos)
+# write.csv(tabela_6_gastos_mensal, "tabela_6_gastos_mensal.csv", row.names = F)
 
 # top_estourados = cria_top_estourados(tabela_final_gastos)
 # write.csv(top_estourados, "top_estourados.csv", row.names = F)
@@ -44,6 +44,9 @@ write.csv(tabela_6_gastos_mensal, "tabela_6_gastos_mensal.csv", row.names = F)
 #   write.csv(temp, paste("top_10_estourados_", uf, ".csv", sep=""), row.names = F)
 # }
 
+tabela_final_votacoes = cria_tabela_final_votacoes(votacoes)
+write.csv(tabela_final_votacoes, "tabela_final_votacoes.csv", row.names = F)
+
 sessoes_mensal = cria_sessoes_mensal(votacoes)
 write.csv(sessoes_mensal, "sessoes_mensal.csv", row.names = F)
 
@@ -53,5 +56,9 @@ write.csv(empresas, "empresas.csv", row.names = F)
 tabela_gastos_empresas = cria_tabela_gastos_empresas(dados_gastos, empresas)
 write.csv(tabela_gastos_empresas, "tabela_gastos_empresas.csv", row.names = F)
 
-tabela_info_pessoais = cria_tabela_info_pessoais(info_deputados, twitter_profiles, dados_gastos)
-write.csv(tabela_info_pessoais, "tabela_info_pessoais.csv", row.names = F)
+tabela_info_deputados = cria_tabela_info_deputados(info_deputados, twitter_profiles, dados_gastos)
+write.csv(tabela_info_deputados, "tabela_info_deputados.csv", row.names = F)
+
+
+rm(tabela_info_deputados, tabela_gastos_empresas, empresas, sessoes_mensal,tabela_final_votacoes)
+#rm(tabela_6_gastos_mensal, tabela_final_gastos, tabela_gasto_total_anos, tabela_info_pessoais,twitter_profiles, dados_gastos, info_deputados, votacoes)

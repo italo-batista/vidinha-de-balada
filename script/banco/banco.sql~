@@ -1,0 +1,35 @@
+
+tabela_final_votacoes.csv  tabela_gastos_empresas.csv  
+
+
+load data local infile '/home/ubuntu/data/tabela_info_deputados.csv' into table deputado fields terminated by ','
+  enclosed by '"'
+  lines terminated by '\n'
+    (id, nome, partidoAtual, uf, foto, twitter, telefone, email);
+
+
+load data local infile '/home/ubuntu/data/empresas.csv' into table empresas fields terminated by ','
+  enclosed by '"'
+  lines terminated by '\n'
+    (cnpj, nome, id);
+
+
+load data local infile '/home/ubuntu/data/sessoes_mensal.csv' into table sessoesMes fields terminated by ','
+  enclosed by '"'
+  lines terminated by '\n'
+    (mes, ano, quantidadeSessoes);
+
+
+# ok ate aqui
+
+
+
+load data local infile 'uniq.csv' into table tblUniq fields terminated by ','
+enclosed by '"'
+lines terminated by '\n'
+(uniqName, uniqCity, uniqComments)
+
+load data local infile 'tabela_info_pessoais.csv' into table deputado fields terminated by ','
+  enclosed by '"'
+  lines terminated by '\n'
+    (id, nome, partidoAtual, uf, foto, twitter, telefone, email);

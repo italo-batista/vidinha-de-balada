@@ -292,13 +292,16 @@ cria_empresas = function(dados){
   empresas = empresas %>%
     rbind(empresas.na)
   
+  empresas$id = rownames(empresas)
+  
   return(empresas)  
 }
 
 # retorna data frame com cada gastos.
 # Há colunas para nome, idecadastro, UF,  ano, mes, valor, Empresa, cnpj e categoria
+#idDocumento: idDeputado: mesEmissao:	anoEmissao: nomeCategoria: idCategoria: nomeFornecedor: valor: cnpj: 
+cria_tabela_gastos_empresas = function(dados, empresas) {
 
-cria_tabela_gastos_empresas = function(dados, empresas){
   
   tabela_gastos_empresas =  dados %>%
     filter(!is.na(txtCNPJCPF)) %>%
@@ -315,11 +318,12 @@ cria_tabela_gastos_empresas = function(dados, empresas){
     group_by(idecadastro, ano, mes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
     summarise(total = sum(vlrLiquido))
   
+  tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
   
   return(tabela_gastos_empresas)
 }
 
-cria_tabela_info_pessoais = function(info_deputados, twitter_profiles, dados){
+cria_tabela_info_deputados = function(info_deputados, twitter_profiles, dados){
   names(twitter_profiles)[3] = c("idecadastro")
   names(info_deputados)[1] = c("idecadastro")
   
@@ -337,7 +341,7 @@ cria_tabela_info_pessoais = function(info_deputados, twitter_profiles, dados){
     left_join(twitter_profiles %>% select(idecadastro, twitter_profile))
   
   tabela_info_pessoais = tabela_info_pessoais %>%
-    select(idecadastro, txNomeParlamentar, ultimos_partidos, sgUF, urlFoto, twitter_profile, fone, email)
+    select(idecadastro, txNomeParlamentar, sgPartido, sgUF, urlFoto, twitter_profile, fone, email)
   
   # (id, nome, partidoAtual, uf, foto, twitter, telefone, email, dataNasc);
   # "idecadastro","txNomeParlamentar","sgUF","sgPartido","urlFoto","fone","email","twitter_profile"
