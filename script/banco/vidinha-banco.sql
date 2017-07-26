@@ -1,7 +1,9 @@
 
 DROP DATABASE IF EXISTS vidinha_balada;
 
-CREATE DATABASE vidinha_balada;
+CREATE DATABASE vidinha_balada
+  CHARACTER SET utf8
+  COLLATE utf8_general_ci;
 
 USE vidinha_balada;
 
@@ -16,7 +18,7 @@ CREATE TABLE deputado (
 	telefone VARCHAR(15),
 	email VARCHAR(30),
 	PRIMARY KEY (id)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE sessoesMes (
 
@@ -24,7 +26,7 @@ CREATE TABLE sessoesMes (
 	ano INT(4),
 	quantidadeSessoes INT,
 	PRIMARY KEY (mes, ano)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 CREATE TABLE empresas (
@@ -32,10 +34,10 @@ CREATE TABLE empresas (
 	cnpj VARCHAR(15),
 	nome VARCHAR(20),
 	id VARCHAR(10),
-
-  PRIMARY KEY (id),
+	
+	PRIMARY KEY (id),
 	CONSTRAINT unique_obs UNIQUE (cnpj, nome)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 CREATE TABLE cotas (
@@ -43,7 +45,7 @@ CREATE TABLE cotas (
 	uf CHAR(2),
 	cota FLOAT,
 	PRIMARY KEY(uf)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE sessoesMesDeputado (
 
@@ -54,7 +56,7 @@ CREATE TABLE sessoesMesDeputado (
 	
 	PRIMARY KEY (mes, ano, idDeputado),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE emendasPropostasDeputado (
 
@@ -65,8 +67,7 @@ CREATE TABLE emendasPropostasDeputado (
 	
 	PRIMARY KEY (mes, ano, idDeputado),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
-);
-
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE gastos (
 
@@ -81,7 +82,7 @@ CREATE TABLE gastos (
 	
 	PRIMARY KEY (id),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE selosDeputado (
 
@@ -92,4 +93,4 @@ CREATE TABLE selosDeputado (
 
 	PRIMARY KEY (idDeputado, mes, ano, idCategoria),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
