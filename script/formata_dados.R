@@ -10,8 +10,8 @@ cria_tabela_final_gastos = function(dados){
 
   tabela_final_mensal = dados %>%
     filter(vlrLiquido >= 0) %>%
-    select(txNomeParlamentar, idecadastro, sgUF,  ano, mes, vlrLiquido) %>%
-    group_by(txNomeParlamentar, idecadastro, sgUF, ano, mes) %>%
+    select(txNomeParlamentar, idecadastro, sgUF,  numAno, numMes, vlrLiquido) %>%
+    group_by(txNomeParlamentar, idecadastro, sgUF, numAno, numMes) %>%
     summarise(total = sum(vlrLiquido)) %>%
     na.omit() %>%
     inner_join(cotas) %>%
@@ -37,8 +37,8 @@ cria_tabela_final_categoria = function(dados){
 
   tabela_final_categoria = dados %>%
     filter(vlrLiquido > 0) %>%
-    select(txNomeParlamentar, idecadastro, sgUF, ano, mes, nossas_categorias, vlrLiquido) %>%
-    group_by(txNomeParlamentar, idecadastro, sgUF, ano, mes, nossas_categorias) %>%
+    select(txNomeParlamentar, idecadastro, sgUF, numAno, numMes, nossas_categorias, vlrLiquido) %>%
+    group_by(txNomeParlamentar, idecadastro, sgUF, numAno, numMes, nossas_categorias) %>%
     summarise(total = sum(vlrLiquido)) %>%
     na.omit() %>%
     inner_join(cotas) %>%
@@ -180,45 +180,45 @@ cria_tabela_6_gastos_mensal = function(dados, tabela_final_mensal){
   
   tabela_6_gastos_mensal = dados %>%
   #  filter(vlrLiquido >= 0) %>%
-    select(idecadastro, txNomeParlamentar, ano, mes ) %>%
-    group_by(idecadastro, txNomeParlamentar, ano, mes) %>%
+    select(idecadastro, txNomeParlamentar, numAno, numMes ) %>%
+    group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
     distinct()
   
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Alimentação") %>%
-                group_by(idecadastro, txNomeParlamentar, ano, mes) %>%
+                group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
                 summarise(Alimentação = sum(vlrLiquido)))
   
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Combustíveis") %>%
-                group_by(idecadastro, txNomeParlamentar, ano, mes) %>%
+                group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
                 summarise("Combustíveis" = sum(vlrLiquido)))
   
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Locação de veículos") %>%
-                group_by(idecadastro, txNomeParlamentar, ano, mes) %>%
+                group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
                 summarise("Locação de veículos" = sum(vlrLiquido)))
   
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Passagens aéreas") %>%
-                group_by(idecadastro, txNomeParlamentar, ano, mes) %>%
+                group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
                 summarise("Passagens aéreas" = sum(vlrLiquido)))
   
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Escritório") %>%
-                group_by(idecadastro, txNomeParlamentar, ano, mes) %>%
+                group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
                 summarise(Escritório = sum(vlrLiquido)))
   
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Divulgação de atividade parlamentar") %>%
-                group_by(idecadastro, txNomeParlamentar, ano, mes) %>%
+                group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
                 summarise("Divulgação de atividade parlamentar" = sum(vlrLiquido)))
   
   tabela_6_gastos_mensal[is.na(tabela_6_gastos_mensal)] = 0
   
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(tabela_final_mensal %>%
-                group_by(idecadastro, txNomeParlamentar, ano, mes) %>%
+                group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
                 summarise("total" = sum(total)))
   
  # tabela_6_gastos_mensal$total = rowSums(tabela_6_gastos_mensal[,5:10] )
@@ -264,7 +264,7 @@ cria_sessoes_mensal = function(votacoes) {
   
   sessoes = sessoes %>%
     select(mesv, anov, total_mes)
-  
+
   return(sessoes)
 }
 
@@ -305,20 +305,22 @@ cria_tabela_gastos_empresas = function(dados, empresas) {
   
   tabela_gastos_empresas =  dados %>%
     filter(!is.na(txtCNPJCPF)) %>%
-    select(idecadastro,ano, mes, vlrLiquido, txtCNPJCPF, nossas_categorias) %>%
+    select(idecadastro,numAno, numMes, vlrLiquido, txtCNPJCPF, nossas_categorias) %>%
     left_join(empresas)
   
   tabela_gastos_empresas.na =  dados %>%
     filter(is.na(txtCNPJCPF)) %>%
-    select(idecadastro, ano, mes, vlrLiquido, txtFornecedor, nossas_categorias) %>%
+    select(idecadastro, numAno, numMes, vlrLiquido, txtFornecedor, nossas_categorias) %>%
     left_join(empresas %>% filter(txtCNPJCPF == "00000000000000"))
   
   tabela_gastos_empresas = tabela_gastos_empresas %>%
     rbind(tabela_gastos_empresas.na) %>%
-    group_by(idecadastro, ano, mes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
+    group_by(idecadastro, numAno, numMes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
     summarise(total = sum(vlrLiquido))
   
   tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
+  
+  names(tabela_gastos_empresas)[2:3] = c("ano", "mes")
   
   return(tabela_gastos_empresas)
 }
@@ -329,7 +331,7 @@ cria_tabela_info_deputados = function(info_deputados, twitter_profiles, dados){
   
   ultimos_partidos = dados %>%
     ungroup() %>%
-    arrange(idecadastro, -ano, -mes) %>%
+    arrange(idecadastro, -numAno, -numMes) %>%
     group_by(idecadastro, txNomeParlamentar) %>%
     summarise(sgPartido = first(sgPartido))
   
@@ -354,7 +356,7 @@ cria_ganhadores_selos = function(tabela_6_gastos_mensal, tabela_final_votacoes){
   
   ganhadores_selos = tabela_6_gastos_mensal %>% select(-total) %>%
     gather("categoria", "valor", 5:10) %>%
-    group_by(ano, mes, categoria) %>%
+    group_by(numAno, numMes, categoria) %>%
     mutate("mediana" = median(valor)) %>%
     filter(valor > mediana)
   
@@ -363,7 +365,7 @@ cria_ganhadores_selos = function(tabela_6_gastos_mensal, tabela_final_votacoes){
   # mediana_gastos = tabela_6_gastos_mensal %>%
   #   ungroup() %>%
   #   select(-idecadastro, -txNomeParlamentar, -total) %>%
-  #   group_by(ano, mes) %>%
+  #   group_by(numAno, numMes) %>%
   #   summarise("Alimentação" = median(`Alimentação`),
   #          "Combustíveis" = median(`Combustíveis`),
   #          "Locação de veículos" = median(`Locação de veículos`),
