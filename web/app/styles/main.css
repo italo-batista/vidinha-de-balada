@@ -170,6 +170,17 @@ h4 > .glyphicon {
   padding: 20px;
 }
 
+.card-exp {
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.card-content {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
 .categorias {
   display: flex;
   justify-content: space-between;

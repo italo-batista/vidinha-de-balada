@@ -18,10 +18,10 @@
     <div class="row">
       <div class="col-xs-4">
       Cota Mensal: <br/>
-      {{ deputado.cota_mensal | currency:'R$ ' }} <br/>
+      <span class="card-content">{{ deputado.cota_mensal | currency:'R$ ' }}</span> <br/>
       Valor gasto: <br/>
       <!--<strong class="estouro">-->
-      {{ deputado.total | currency:'R$ ' }}
+      <span class="card-content">{{ deputado.total | currency:'R$ ' }}</span>
       <!--</strong>-->
       </div>
 
@@ -37,16 +37,38 @@
       </div>
     </div>
 
-    <h4 class="text-center">Como usou sua cota:</h4>
+    <br/><br/>
+
+
 
     <div class="row">
-      <div class="col-xs-4 col-md-2 text-center"><span class="icon-alimento"></span> <p class="text-small">R$&nbsp;22mil</p></div>
-      <div class="col-xs-4 col-md-2 text-center"><span class="icon-combustivel"></span> <p class="text-small">R$&nbsp;22mil</p></div>
-      <div class="col-xs-4 col-md-2 text-center"><span class="icon-locacao"></span> <p class="text-small">R$&nbsp;22mil</p></div>
-      <div class="col-xs-4 col-md-2 text-center"><span class="icon-passagem"></span> <p class="text-small">R$&nbsp;22mil</p></div>
-      <div class="col-xs-4 col-md-2 text-center"><span class="icon-escritorio"></span> <p class="text-small">R$&nbsp;22mil</p></div>
-      <div class="col-xs-4 col-md-2 text-center"><span class="icon-divulgacao"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+        <div ng-click="hide()" class="card-exp"> + DETALHES</div>
+        
+        <div ng-hide="IsVisible">
+          
+          <h4 class="text-center">Como usou a cota:</h4>
+
+
+          <div class="row">
+            <div class="col-xs-4 col-md-2 text-center"><span class="icon-alimento"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+            <div class="col-xs-4 col-md-2 text-center"><span class="icon-combustivel"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+            <div class="col-xs-4 col-md-2 text-center"><span class="icon-locacao"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+            <div class="col-xs-4 col-md-2 text-center"><span class="icon-passagem"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+            <div class="col-xs-4 col-md-2 text-center"><span class="icon-escritorio"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+            <div class="col-xs-4 col-md-2 text-center"><span class="icon-divulgacao"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+          </div>
+
+        </div>
     </div>
+
+
+    
+
+
+
+    
+
+    
 
     <div class="row">
 
@@ -59,7 +81,7 @@
       </div>-->
 
     </div>
-
+ 
   </div> <!-- fim do card -->
 
 </div>
