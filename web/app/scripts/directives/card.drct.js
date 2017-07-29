@@ -9,6 +9,12 @@
         restrict: 'E',
         scope: {
           deputado: '='
+        },
+        link: function (scope, element, attrs) {
+          scope.IsVisible = true;
+          scope.hide = function ($scope) {
+              scope.IsVisible = scope.IsVisible ? false : true;
+          }
         }
       }
     });
