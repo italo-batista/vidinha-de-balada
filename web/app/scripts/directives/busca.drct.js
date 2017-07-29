@@ -9,7 +9,6 @@
           scope.nome = '';
           scope.buscaNome = function() {
             $http.get(RESTAPI+"busca?nome="+scope.nome).then(function(res) {
-              console.log(res);
               scope.resultado = res.data;
             })
           }
