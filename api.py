@@ -4,6 +4,7 @@ import ConfigParser
 import sqlalchemy
 import datetime
 import sys
+import operator
 from unidecode import unidecode
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import Flask, jsonify, request
@@ -26,7 +27,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:PASSWORD@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:martha@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
@@ -105,9 +106,10 @@ class Gasto(mysql.Model):
     nomeFornecedor = mysql.Column(mysql.String(15), nullable=False)
     valor = mysql.Column(mysql.Float)
     cnpj = mysql.Column(mysql.String(15))
+    idEmpresa = mysql.Column(mysql.Integer)
 
     def __repr__(self):
-        return '<Gasto (%s, %s, %s, %s, %s, %s, %s) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj)
+        return '<Gasto (%s, %s, %s, %s, %s, %s, %s, %d) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj, self.idEmpresa)
 
 class SessoesMes(mysql.Model):
     __tablename__ = 'sessoesMes'
@@ -160,7 +162,7 @@ class Empresa(mysql.Model):
     idEmpresa = mysql.Column(mysql.Integer, primary_key=True)
 
     def __repr__(self):
-        return '<Empresa (%s, %s) >' % (self.cnpj, self.nome)
+        return '<Empresa (%s, %s, %d) >' % (self.cnpj, self.nome, self.idEmpresa)
 
 
 # Routes --------------------------------------------------------------
@@ -204,6 +206,34 @@ def getDeputado(nome):
 			data_all.append(deputado.id)
 
 	return jsonify(deputadosId=data_all)
+
+@app.route('/empresasParceiras/<id>', methods=['GET'])
+def getEmpresasParceiras(id):
+	data = Gasto.query.filter_by(idDeputado = id)
+
+	data_all = {}
+	categorias = {}
+
+	for gasto in data:
+		chave = gasto.idEmpresa
+		if(chave not in data_all.keys):
+			data_all[chave] = [gasto.valor]
+			categorias[chave] = [gasto.nomeCategoria]
+		else:
+			data_all[chave] += gasto.valor
+			if(gasto.nomeCategoria not in categorias[chave]):
+				categorias[chave].append(gasto.nomeCategoria)
+				
+	parceiras = {}
+	n = 0
+	while n < 10:
+		max_val = max(data_all.iteritems(), key=operator.itemgetter(1))[0]
+		parceiras[max_val] = [data_all[max_val], categorias[max_val]]
+		data_all.pop(max_val)
+		n += 1
+
+
+	return jsonify(empresasParceiras = pareceiras)
 
 @app.route('/timelineDeputado/<id>', methods=['GET'])
 def getTimelineDeputado(id):
