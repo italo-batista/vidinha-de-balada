@@ -257,13 +257,23 @@ cria_top_estourados = function(tabela_final_mensal) {
 cria_sessoes_mensal = function(votacoes) {
   sessoes = votacoes %>%
     filter(anov > 2014) %>%
-    group_by(anov, mesv, diav) %>%
-    distinct() %>%
-    group_by(anov, mesv) %>%
+    # group_by(anov, mesv, diav) %>%
+    # distinct() %>%
+    # group_by(anov, mesv) %>%
+    # summarise(total_mes = n())
+  
+    select(anov, mesv, diav) %>% 
+    group_by(anov, mesv, diav) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(anov, mesv) %>% 
+    group_by(anov, mesv) %>% 
     summarise(total_mes = n())
   
   sessoes = sessoes %>%
     select(mesv, anov, total_mes)
+  
+  
 
   return(sessoes)
 }
