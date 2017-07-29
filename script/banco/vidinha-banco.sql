@@ -34,7 +34,6 @@ CREATE TABLE empresas (
 	cnpj VARCHAR(15),
 	nome VARCHAR(20),
 	idEmpresa VARCHAR(10),
-	
 	PRIMARY KEY (idEmpresa),
 	CONSTRAINT unique_obs UNIQUE (cnpj, nome)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -53,7 +52,7 @@ CREATE TABLE sessoesMesDeputado (
 	ano INT(4),
 	idDeputado VARCHAR(7) NOT NULL,
 	quantidadeParticipacoes INT,
-	
+
 	PRIMARY KEY (mes, ano, idDeputado),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -64,7 +63,7 @@ CREATE TABLE emendasPropostasDeputado (
 	ano INT(4),
 	idDeputado VARCHAR(7) NOT NULL,
 	quantidade INT,
-	
+
 	PRIMARY KEY (mes, ano, idDeputado),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
