@@ -25,7 +25,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Pesquisas@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:SUASENHA@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
@@ -173,10 +173,6 @@ class Empresa(mysql.Model):
 @app.route("/")
 def hello():  
     return "Hello World!"
-
-@app.route('/gasto_anual')
-def getGasto(ano):
-	pass
     
 @app.route('/cotas', methods=['GET'])
 def getCotas():  
@@ -195,30 +191,40 @@ def getCota(uf):
 	data_all = [cota.uf, cota.cota]
 	return jsonify(cotas=data_all)
 
+# Perfil
+
 def somaGastosTotais(query_gasto_categoria):
 	gastoTotal = 0
 	for gasto in query_gasto_categoria:
 		gastoTotal = gastoTotal + gasto.valor
 	return gastoTotal
 	
+def somaPresencasDeputado(query_presencas):
+	print query_presencas
+	presencas = 0
+	for presenca in query_presencas:
+		presencas = presencas + presenca.quantidadeParticipacoes
+	return presencas
+
+def somaPresencas(query_presencas):
+	print query_presencas
+	presencas = 0
+	for presenca in query_presencas:
+		presencas = presencas + presenca.quantidadeSessoes
+	return presencas
+		
 @app.route('/deputados/<id>', methods=['GET'])
 def getDeputado(id):
 			
 	deputado = Deputado.query.filter_by(id=id).first()	
-	#query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_alimentacao).all()
-	#query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_escritorio).all()
-	#query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_divulgacao).all()
-	#query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_locacao).all()
-	#query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_combustivel).all()
-	#query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_passagens).all()
 	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao).all()
 	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio).all()
 	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao).all()
 	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao).all()
 	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel).all()
 	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens).all()
-	presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id, mes=mesPassado, ano=ano).first() # sessoes so do mes passado
-	presencas_total = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first() # sessoes so do mes passado
+	query_presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id).all()
+	query_sessoes_total = SessoesMes.query.all()
 		
 	gasto_alimentacao = somaGastosTotais(query_gasto_alimentacao)
 	gasto_escritorio = somaGastosTotais(query_gasto_escritorio)
@@ -226,11 +232,11 @@ def getDeputado(id):
 	gasto_locacao = somaGastosTotais(query_gasto_locacao)
 	gasto_combustivel = somaGastosTotais(query_gasto_combustivel)
 	gasto_passagens = somaGastosTotais(query_gasto_passagens)
+	presencas_deputado = somaPresencasDeputado(query_presencas_deputado)
+	sessoes_total = somaPresencas(query_sessoes_total)
 		
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
 	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens
-	presencas = presencas_deputado.quantidadeParticipacoes if (presencas_deputado != None) else 0
-	total_sessoes = presencas_total.quantidadeSessoes if (presencas_total != None) else 0
 		
 	json = {
 	'Nome' : deputado.nome.decode("utf-8"),
@@ -241,8 +247,8 @@ def getDeputado(id):
 	'Locação de veículos' : gasto_locacao,
 	'Combustível' : gasto_combustivel,
 	'Passagens aéreas' : gasto_passagens,
-	'presencas' : presencas,
-	'total_sessoes': total_sessoes,
+	'presencas' : presencas_deputado,
+	'total_sessoes': sessoes_total,
 	'Total' : total_gastos
 	}
 	
