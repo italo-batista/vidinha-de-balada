@@ -1,6 +1,6 @@
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #61397B;
+  background-color: #4B4B4D;
   color: #ffffff;
 }
 
@@ -17,7 +17,8 @@ a:hover,
 }
 
 .header {
-  height: 65vh;
+  height: 60vh;
+  background-color: #61397B;
 }
 
 .headline {
@@ -30,7 +31,8 @@ a:hover,
 
 .gastometro {
   padding-bottom: 40px;
-  padding-top: 20px;
+  padding-top: 60px;
+  background-color: #61397B;
 }
 
 .call-to-action {
@@ -227,6 +229,8 @@ h4 > .glyphicon {
 .nav-colour {
   background-color: #463066;
   border: 0px;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .nav-colour .nav-text > li > a {
@@ -248,18 +252,31 @@ h4 > .glyphicon {
 #busca::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    #463066;
     font-weight: lighter;
+    font-size: 14px;
 }
 #busca:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
    color:    #463066;
    opacity:  1;
+   font-weight: lighter;
+   font-size: 12px;
 }
 #busca::-moz-placeholder { /* Mozilla Firefox 19+ */
    color:    #463066;
    opacity:  1;
+   font-weight: lighter;
+   font-size: 12px;
 }
 #busca:-ms-input-placeholder { /* Internet Explorer 10-11 */
    color:    #463066;
+   font-weight: lighter;
+   font-size: 12px;
 }
 #busca::-ms-input-placeholder { /* Microsoft Edge */
    color:    #463066;
+   font-weight: lighter;
+   font-size: 12px;
+}
+
+.corpo {
+  background-color: #4B4B4D;
 }
