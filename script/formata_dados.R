@@ -62,15 +62,21 @@ cria_tabela_final_votacoes = function(votacoes){
 
   sessoes = votacoes %>%
     filter(anov > 2014) %>%
-    group_by(anov, mesv, diav) %>%
-    distinct() %>%
-    group_by(anov, mesv) %>%
+    select(anov, mesv, diav) %>% 
+    group_by(anov, mesv, diav) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(anov, mesv) %>% 
+    group_by(anov, mesv) %>% 
     summarise(total_mes = n())
 
   tabela_final_votacoes = votacoes %>%
     filter(anov > 2014) %>%
+    select(id_dep, anov, mesv, diav) %>%
     group_by(id_dep, anov, mesv, diav) %>%
     distinct() %>%
+    ungroup() %>%
+    select(id_dep, anov, mesv) %>%
     group_by(id_dep, anov, mesv) %>%
     summarise(total_deputado = n())
   
