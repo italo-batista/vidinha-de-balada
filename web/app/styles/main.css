@@ -373,3 +373,17 @@ footer {
 .footer-text {
   float: right;
 }
+
+.sobre {
+  background-color: #61397B;
+  padding: 20px;
+  text-align: center;
+}
+
+.sobre-info {
+  padding-top: 20px;
+}
+
+.equipe {
+  margin-top: 20px;
+}
