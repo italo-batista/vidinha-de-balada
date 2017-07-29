@@ -17,7 +17,7 @@ a:hover,
 }
 
 .header {
-  height: 25vh;
+  height: 170px;
   background-color: #61397B;
 }
 
@@ -368,4 +368,8 @@ footer {
 
 .logo {
   text-align: center;
+}
+
+.footer-text {
+  float: right;
 }
