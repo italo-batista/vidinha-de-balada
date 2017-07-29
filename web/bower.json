@@ -1,5 +1,5 @@
 {
-  "name": "new-vidinha",
+  "name": "vidinha-de-balada",
   "version": "0.0.0",
   "dependencies": {
     "angular": "^1.4.0",
@@ -12,7 +12,7 @@
     "angular-mocks": "^1.4.0"
   },
   "appPath": "app",
-  "moduleName": "newVidinhaApp",
+  "moduleName": "baladaApp",
   "overrides": {
     "bootstrap": {
       "main": [
