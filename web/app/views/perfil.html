@@ -16,27 +16,33 @@
     <div class="card-body">
       <div class="categorias">
         <div class="categoria">
-          <p>{{ ctrl.deputado['Combustível'] | currency:'R$ ' }}</p>
+          <span class="card-content"><p>{{ ctrl.deputado['Combustível'] | currency:'R$ ' }}</p></span>
+          <span class="icon-combustivel"></span>
           <p>Combustível</p>
         </div>
         <div class="categoria">
-          <p>{{ ctrl.deputado['Locação de veículos'] | currency:'R$ ' }}</p>
+          <span class="card-content"><p>{{ ctrl.deputado['Locação de veículos'] | currency:'R$ ' }}</p></span>
+          <span class="icon-locacao"></span>
           <p>Locação de veículos</p>
         </div>
         <div class="categoria">
-          <p>{{ ctrl.deputado['Alimentação'] | currency:'R$ ' }}</p>
+          <span class="card-content"><p>{{ ctrl.deputado['Alimentação'] | currency:'R$ ' }}</p></span>
+          <span class="icon-alimento"></span>
           <p>Alimentação</p>
         </div>
         <div class="categoria">
-            <p>{{ ctrl.deputado['Passagens aéreas'] | currency:'R$ ' }}</p>
+            <span class="card-content"><p>{{ ctrl.deputado['Passagens aéreas'] | currency:'R$ ' }}</p></span>
+            <span class="icon-passagem"></span>
             <p>Passagens aéreas</p>
         </div>
         <div class="categoria">
-            <p>{{ ctrl.deputado['Escritório'] | currency:'R$ ' }}</p>
+            <span class="card-content"><p>{{ ctrl.deputado['Escritório'] | currency:'R$ ' }}</p></span>
+            <span class="icon-escritorio"></span>
             <p>Escritório</p>
         </div>
         <div class="categoria">
-            <p>{{ ctrl.deputado['Divulgação de atividade parlamentar'] | currency:'R$ ' }}</p>
+            <span class="card-content"><p>{{ ctrl.deputado['Divulgação de atividade parlamentar'] | currency:'R$ ' }}</p></span>
+            <span class="icon-divulgacao"></span>
             <p>Divulgação de atividades</p>
         </div>
       </div>
@@ -47,4 +53,27 @@
       </div>
       </div>
     </div>
+
+
+    <div class="card">
+      <div class="row">
+        <h4 class="font-e title-grafico">Presenças & Gastos <span class="glyphicon glyphicon-info-sign"></span></h4>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12">
+          <line-chart id="line-chart" deputado="ctrl.id"></line-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4 class="font-e title-grafico">Empresas parceiras <span class="glyphicon glyphicon-info-sign"></span></h4>
+    </div>
+
+    <div class="card">
+      <h4 class="font-e title-grafico">Coleção de selos <span class="glyphicon glyphicon-info-sign"></span></h4>
+    </div>
+
 </div>
