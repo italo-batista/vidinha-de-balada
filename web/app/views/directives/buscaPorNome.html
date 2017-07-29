@@ -4,7 +4,7 @@
     <input id="busca" class="busca" type="text" ng-model="nome" placeholder="Pesquisar Deputado">
     <ul ng-show="nome" class="listagem-busca">
       <li ng-repeat="deputado in resultado | filter:nome">
-        <a ui-sref="perfil({id: deputado.id})" ng-click="ativarBusca()">{{deputado.nome}}</a>
+        <a ui-sref="perfil({id: deputado.id})">{{deputado.nome}}</a>
       </li>
     </ul>
   </div>

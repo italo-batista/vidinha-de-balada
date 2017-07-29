@@ -12,6 +12,7 @@
               scope.resultado = res.data;
             })
           }
+          
           scope.buscaNome();
         }
       }
