@@ -58,7 +58,7 @@ categoria_alimentacao = 'Alimentação'
 categoria_escritorio = 'Escritório'
 categoria_divulgacao = 'Divulgação de atividade parlamentar'
 categoria_locacao = 'Locação de veículos'
-categoria_combustivel = 'Combustível'
+categoria_combustivel = 'Combustíveis'
 categoria_passagens = 'Passagens aéreas'
 
 #categoria_alimentacao = 'Alimentaca'
@@ -195,7 +195,7 @@ def getCota(uf):
 	data_all = [cota.uf, cota.cota]
 	return jsonify(cotas=data_all)
 
-def somaGastos(query_gasto_categoria):
+def somaGastosTotais(query_gasto_categoria):
 	gastoTotal = 0
 	for gasto in query_gasto_categoria:
 		gastoTotal = gastoTotal + gasto.valor
@@ -205,21 +205,27 @@ def somaGastos(query_gasto_categoria):
 def getDeputado(id):
 			
 	deputado = Deputado.query.filter_by(id=id).first()	
-	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_alimentacao).all()
-	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_escritorio).all()
-	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_divulgacao).all()
-	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_locacao).all()
-	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_combustivel).all()
-	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_passagens).all()
-	presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id, mes=mesPassado, ano=ano).first()
-	presencas_total = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first()
+	#query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_alimentacao).all()
+	#query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_escritorio).all()
+	#query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_divulgacao).all()
+	#query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_locacao).all()
+	#query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_combustivel).all()
+	#query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, mesEmissao=mesPassado, anoEmissao=ano, nomeCategoria=categoria_passagens).all()
+	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao).all()
+	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio).all()
+	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao).all()
+	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao).all()
+	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel).all()
+	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens).all()
+	presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id, mes=mesPassado, ano=ano).first() # sessoes so do mes passado
+	presencas_total = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first() # sessoes so do mes passado
 		
-	gasto_alimentacao = somaGastos(query_gasto_alimentacao)
-	gasto_escritorio = somaGastos(query_gasto_escritorio)
-	gasto_divulgacao = somaGastos(query_gasto_divulgacao)
-	gasto_locacao = somaGastos(query_gasto_locacao)
-	gasto_combustivel = somaGastos(query_gasto_combustivel)
-	gasto_passagens = somaGastos(query_gasto_passagens)
+	gasto_alimentacao = somaGastosTotais(query_gasto_alimentacao)
+	gasto_escritorio = somaGastosTotais(query_gasto_escritorio)
+	gasto_divulgacao = somaGastosTotais(query_gasto_divulgacao)
+	gasto_locacao = somaGastosTotais(query_gasto_locacao)
+	gasto_combustivel = somaGastosTotais(query_gasto_combustivel)
+	gasto_passagens = somaGastosTotais(query_gasto_passagens)
 		
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
 	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens

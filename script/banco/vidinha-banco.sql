@@ -76,7 +76,7 @@ CREATE TABLE gastos (
 	mesEmissao INT,
 	cnpj VARCHAR(20),
 	nomeFornecedor VARCHAR(15) NOT NULL,
-	nomeCategoria VARCHAR(30) NOT NULL,
+	nomeCategoria VARCHAR(40) NOT NULL,
 	valor FLOAT,
 	id VARCHAR(10),
 	
