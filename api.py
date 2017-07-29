@@ -54,20 +54,13 @@ if now.month == 1:
 else:
 	mesPassado = now.month - 1
 	ano = now.year
-
+	
 categoria_alimentacao = 'Alimentação'
 categoria_escritorio = 'Escritório'
 categoria_divulgacao = 'Divulgação de atividade parlamentar'
 categoria_locacao = 'Locação de veículos'
 categoria_combustivel = 'Combustíveis'
 categoria_passagens = 'Passagens aéreas'
-
-#categoria_alimentacao = 'Alimentaca'
-#categoria_escritorio = 'Escritório'
-#categoria_divulgacao = 'Divulgação'
-#categoria_locacao = 'Locação de'
-#categoria_combustivel = 'Combustíve'
-#categoria_passagens = 'Passagens'
 
 def init():
 	pass
@@ -114,7 +107,7 @@ class Gasto(mysql.Model):
     cnpj = mysql.Column(mysql.String(15))
 
     def __repr__(self):
-        return '<Gasto (%s, %s, %s, %s, %s, %s, %s) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.idCategoria, self.nomeFornecedor, self.valor, self.cnpj)
+        return '<Gasto (%s, %s, %s, %s, %s, %s, %s) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj)
 
 class SessoesMes(mysql.Model):
     __tablename__ = 'sessoesMes'
@@ -197,6 +190,9 @@ def getCota(uf):
 	data_all = [cota.uf, cota.cota]
 	return jsonify(cotas=data_all)
 
+
+# Perfil
+
 @app.route('/buscaEmpresasDeputado/<nome>', methods=['GET'])
 def getEmpresasDeputado(nome):
 	data = Deputado.query.all()
@@ -256,7 +252,6 @@ def getTimelineDeputado(id):
 
 	return jsonify(timelineDeputado=timeline)
 
-
 def somaGastosTotais(query_gasto_categoria):
 	gastoTotal = 0
 	for gasto in query_gasto_categoria:
@@ -264,22 +259,20 @@ def somaGastosTotais(query_gasto_categoria):
 	return gastoTotal
 
 def somaPresencasDeputado(query_presencas):
-	print query_presencas
 	presencas = 0
 	for presenca in query_presencas:
 		presencas = presencas + presenca.quantidadeParticipacoes
 	return presencas
 
 def somaPresencas(query_presencas):
-	print query_presencas
 	presencas = 0
 	for presenca in query_presencas:
 		presencas = presencas + presenca.quantidadeSessoes
 	return presencas
 
 @app.route('/deputados/<id>', methods=['GET'])
-def getDeputado(id):
-
+def getPerfilDeputado(id):
+			
 	deputado = Deputado.query.filter_by(id=id).first()
 	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao).all()
 	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio).all()
@@ -316,7 +309,122 @@ def getDeputado(id):
 	'Total' : total_gastos
 	}
 
-	return jsonify(json)
+# TOP 10
 
+def somaGastosCategoria(query_gasto_categoria):
+	gastoTotal = 0
+	for gasto in query_gasto_categoria:
+		gastoTotal = gastoTotal + gasto.valor
+	return gastoTotal
+
+def maisGastadores10(query_gastos):
+	deputados_id = []
+	gastos = []
+	
+	for gasto in query_gastos:
+		
+		if (gasto.idDeputado in deputados_id):
+			index = deputados_id.index(gasto.idDeputado)
+			gastos[index] = gastos[index] + gasto.valor
+		else:
+			deputados_id.append(gasto.idDeputado)
+			gastos.append(gasto.valor)
+	
+	tam = len(deputados_id)
+	deputadoGasto = []
+	
+	for i in xrange(tam):
+		tupla = (gastos[i], deputados_id[i])
+		deputadoGasto.append(tupla)
+		
+	tops = sorted(deputadoGasto, key=lambda x: x[0], reverse=True)
+	top10 = []
+	for i in range(10):
+		top10.append(tops[i])
+				
+	return top10
+	    
+@app.route("/top10", methods=['GET'])
+def top10():
+	query_gastos = Gasto.query.filter_by(mesEmissao=mesPassado, anoEmissao=ano).all()
+	top10 = maisGastadores10(query_gastos)
+	
+	json = []
+	
+	for i in range(len(top10)):
+		deputado = top10[i]
+		
+		# info deputado
+		
+		deputado_id = deputado[1]
+		deputado_gasto_total = deputado[0]
+		deputado_posicao = i + 1
+		
+		deputado_obj = Deputado.query.get(deputado_id)
+		
+		deputado_nome = deputado_obj.nome
+		deputado_partido = deputado_obj.partidoAtual
+		deputado_foto = deputado_obj.foto
+		deputado_uf = deputado_obj.uf
+		deputado_cota_uf = Cota.query.get(deputado_uf).cota
+		
+		deputado_presencas = SessoesMesDeputado.query.filter_by(idDeputado=deputado_id, mes=mesPassado, ano=ano).first().quantidadeParticipacoes
+		sessoes_totais = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first().quantidadeSessoes
+		
+		# gastos categorias
+		
+		query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_alimentacao, mesEmissao=mesPassado, anoEmissao=ano).all()
+		query_gasto_escritorio = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_escritorio, mesEmissao=mesPassado, anoEmissao=ano).all()
+		query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_divulgacao, mesEmissao=mesPassado, anoEmissao=ano).all()
+		query_gasto_locacao = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_locacao, mesEmissao=mesPassado, anoEmissao=ano).all()
+		query_gasto_combustivel = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_combustivel, mesEmissao=mesPassado, anoEmissao=ano).all()
+		query_gasto_passagens = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_passagens, mesEmissao=mesPassado, anoEmissao=ano).all()
+		
+		gasto_alimentacao = somaGastosCategoria(query_gasto_alimentacao)
+		gasto_escritorio = somaGastosCategoria(query_gasto_escritorio)
+		gasto_divulgacao = somaGastosCategoria(query_gasto_divulgacao)
+		gasto_locacao = somaGastosCategoria(query_gasto_locacao)
+		gasto_combustivel = somaGastosCategoria(query_gasto_combustivel)
+		gasto_passagens = somaGastosCategoria(query_gasto_passagens)
+		
+		gastos_categorias = {
+		categoria_alimentacao : gasto_alimentacao,
+		categoria_combustivel : gasto_combustivel,
+		categoria_divulgacao : gasto_divulgacao,
+		categoria_escritorio : gasto_escritorio,
+		categoria_locacao : gasto_locacao,
+		categoria_passagens : gasto_passagens
+		}
+		
+		meus_gastos = [(categoria_alimentacao, gasto_alimentacao), 
+		(categoria_combustivel, gasto_combustivel), 
+		(categoria_divulgacao, gasto_divulgacao), 
+		(categoria_escritorio, gasto_escritorio), 
+		(categoria_locacao, gasto_locacao),
+		(categoria_passagens, gasto_passagens)
+		]
+		
+		maior_gasto = sorted(meus_gastos, key=lambda x: x[1], reverse=True)[0]
+		
+		deputado_json = {
+		'Id' : deputado_id,
+		'Nome': deputado_nome,
+		'urlfoto' : deputado_foto,
+		'presencas' : deputado_presencas,
+		'total_sessoes': sessoes_totais,
+		'Total' : deputado_gasto_total,
+		'Posicao': deputado_posicao,
+		'Partido' : deputado_partido,
+		'UF' : deputado_uf,
+		'Cota UF' : deputado_cota_uf,
+		'Gastos' : gastos_categorias,
+		'Maior gasto categoria' : maior_gasto[0],
+		'Maior gasto valor' : maior_gasto[1]
+		}
+		
+		json.append(deputado_json)
+	
+	return jsonify(json) 
+					
 if __name__ == "__main__":
     app.run(debug=True)
