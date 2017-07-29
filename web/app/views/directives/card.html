@@ -1,4 +1,5 @@
-<div class="card" ng-controller="HomeCtrl as vm">
+<div ng-class="$parent.$odd ? 'card card-odd' : 'card'">
+  <div class="card-number">{{("0" + ($parent.$index + 1)).slice(-2)}}</div>
   <div class="card-head">
     <a ui-sref="perfil({id: deputado.id})">{{ deputado.nome }}</a>
   </div>
@@ -13,12 +14,22 @@
     </div>
   </div>
   <div class="card-body">
+    <h3 class="text-center">Como usou sua cota?</h3>
     <div class="row">
-      <div class="col-sm-6 text-center">
-      </div>
+      <div class="col-xs-4 col-md-2 text-center"><span class="icon-alimento"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+      <div class="col-xs-4 col-md-2 text-center"><span class="icon-combustivel"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+      <div class="col-xs-4 col-md-2 text-center"><span class="icon-locacao"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+      <div class="col-xs-4 col-md-2 text-center"><span class="icon-passagem"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+      <div class="col-xs-4 col-md-2 text-center"><span class="icon-escritorio"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+      <div class="col-xs-4 col-md-2 text-center"><span class="icon-divulgacao"></span> <p class="text-small">R$&nbsp;22mil</p></div>
+    </div>
+    <div class="row">
       <div class="col-sm-6">
-        <p>Estourou em {{ deputado.mes+" de "+deputado.ano }}</p>
-        <p><strong class="estouro">{{ deputado.total | currency:'R$ ' }}</strong> / {{ deputado.cota_mensal | currency:'R$ ' }}</p>
+        <p>
+          <strong class="estouro">{{ deputado.total | currency:'R$ ' }}</strong>/{{ deputado.cota_mensal | currency:'R$ ' }}
+          <br>
+          Total gasto/cota mensal
+        </p>
       </div>
     </div>
   </div>
