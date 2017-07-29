@@ -20,7 +20,7 @@ from flask import Flask, jsonify, request
 #	http://www.roblayton.com/2015/04/connecting-python-script-to-mysql.html
 #	https://github.com/jigyasa-grover/RESTful-API-using-Python-Flask-MySQL
 
-
+#oi bb
 # Config --------------------------------------------------------------
 
 app = Flask(__name__)
