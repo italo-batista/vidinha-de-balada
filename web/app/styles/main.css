@@ -1,6 +1,6 @@
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #463066;
+  background-color: #61397B;
   color: #ffffff;
 }
 
@@ -17,7 +17,7 @@ a:hover,
 }
 
 .header {
-  height: 100vh;
+  height: 65vh;
 }
 
 .headline {
@@ -222,4 +222,44 @@ h4 > .glyphicon {
 
 .text-small {
   font-size: 0.9em;
+}
+
+.nav-colour {
+  background-color: #463066;
+  border: 0px;
+}
+
+.nav-colour .nav-text > li > a {
+  color: #fff;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+  text-decoration: none;
+  background-color: #463066;
+}
+
+#busca {
+  border-radius: 0px;
+  border: 0;
+  margin-left: 5px;
+  color: #463066;
+}
+
+#busca::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #463066;
+    font-weight: lighter;
+}
+#busca:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #463066;
+   opacity:  1;
+}
+#busca::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #463066;
+   opacity:  1;
+}
+#busca:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #463066;
+}
+#busca::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #463066;
 }
