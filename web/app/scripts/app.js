@@ -24,6 +24,14 @@ angular
         templateUrl: 'views/perfil.html',
         controller: 'PerfilCtrl',
         controllerAs: 'ctrl'
+      })
+      .state('sobre', {
+        url: '/sobre',
+        templateUrl: 'views/sobre.html'
+      })
+      .state('contato', {
+        url: '/contato',
+        templateUrl: 'views/contato.html'
       });
     $urlRouterProvider.otherwise('/');
   });
