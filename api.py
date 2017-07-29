@@ -162,8 +162,9 @@ class SelosDeputado(mysql.Model):
 class Empresa(mysql.Model):
     __tablename__ = 'empresas'
 
-    cnpj = mysql.Column(mysql.String(15), primary_key=True)
+    cnpj = mysql.Column(mysql.String(15))
     nome = mysql.Column(mysql.String(10))
+	idEmpresa = mysql.Column(mysql.Integer, primary_key=True)
 
     def __repr__(self):
         return '<Empresa (%s, %s) >' % (self.cnpj, self.nome)
