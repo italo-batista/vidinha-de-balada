@@ -26,7 +26,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Pesquisas@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:PASSWORD@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
@@ -111,7 +111,7 @@ class Gasto(mysql.Model):
     id = mysql.Column(mysql.String(10), primary_key=True)
 
     def __repr__(self):
-        return '<Gasto (%s, %s, %s, %s, %s, %s, %s) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj)
+        return '<Gasto (%s, %s, %s, %s, %s, %s, %s) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj, self.id, self.idEmpresa)
 
 class SessoesMes(mysql.Model):
     __tablename__ = 'sessoesMes'
