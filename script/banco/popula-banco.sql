@@ -8,7 +8,7 @@ load data local infile '/home/ubuntu/data/tabela_info_deputados.csv' into table 
 load data local infile '/home/ubuntu/data/empresas.csv' into table empresas fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
-    (cnpj, nome, id);
+    (cnpj, nome, idEmpresa);
 
 
 load data local infile '/home/ubuntu/data/sessoes_mensal.csv' into table sessoesMes fields terminated by ','
@@ -32,7 +32,7 @@ load data local infile '/home/ubuntu/data/tabela_final_votacoes.csv' into table 
 load data local infile '/home/ubuntu/data/tabela_gastos_empresas.csv' into table gastos fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
-    (idDeputado, anoEmissao, mesEmissao, cnpj, nomeFornecedor, nomeCategoria, valor, id);
+    (idDeputado, anoEmissao, mesEmissao, cnpj, nomeFornecedor, nomeCategoria, valor, idEmpresa);
 
 
 /*
