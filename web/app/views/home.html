@@ -5,12 +5,15 @@
       </div>
     </div>
 </div>
+
+
+<div class="menu">
 <div class="row">
   <nav class="navbar nav-colour">
     <div class="container-fluid col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
       <form class="navbar-form navbar-left">
         <div class="form-group">
-          <label for="busca">VIDINHA DE BALADA</label>
+          <label for="busca"><span class="glyphicon glyphicon-search"></span></label>
           <input id="busca" type="text" class="form-control" placeholder="Pesquisar Deputado">
         </div>
       </form>
@@ -22,6 +25,8 @@
     </div>
   </nav>
 </div>
+</div>
+
 <div class="container corpo">
     <div class="gastometro">
       <div class="headline" ng-show="ctrl.total > 0">
@@ -47,7 +52,7 @@
 
   <div class="content-inverse top">
     <div class="container">
-      <h1 class="main-title text-center font-i">Top 10 gastadores do mês</h1>
+      <h1 class="main-title text-center font-i">Top 10 gastadores do mês anterior</h1>
       <div class="row">
         <div class="col-md-6" ng-repeat="deputado in ctrl.deputados">
           <card-deputado deputado="deputado"></card-deputado>
