@@ -26,7 +26,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:SUASENHA@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:PASSWORD@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
@@ -196,7 +196,7 @@ def getCota(uf):
 	data_all = [cota.uf, cota.cota]
 	return jsonify(cotas=data_all)
 
-@app.route('/buscaDeputado/<nome>', methods=['GET'])
+@app.route('/buscaEmpresasDeputado/<nome>', methods=['GET'])
 def getEmpresasDeputado(nome):
 	data = Deputado.query.all()
 
@@ -206,7 +206,55 @@ def getEmpresasDeputado(nome):
 		if(unidecode(nome.upper()) in unidecode(deputado.nome.upper())):
 			data_all.append(deputado.id)
 
-	return jsonify(buscaDeputado=data_all)
+	return jsonify(empresasDeputado=data_all)
+
+@app.route('/timelineDeputado/<id>', methods=['GET'])
+def getTimelineDeputado(id):
+	deputado = Deputado.query.filter_by(id=id).first()
+
+	timeline = {}
+
+	query_gastos = Gasto.query.filter_by(idDeputado=id).all()
+	query_presencas = SessoesMesDeputado.query.filter_by(idDeputado=id).all()
+	cota = Cota.query.filter_by(uf=deputado.uf).first()
+	query_sessoes = SessoesMes.query.all()
+
+	for gasto in query_gastos:
+		chave = str(gasto.anoEmissao) + "/" + str(gasto.mesEmissao)
+		if(chave not in timeline.keys()):
+			timeline[chave] = [gasto.valor]
+		else:
+			timeline[chave][0] += gasto.valor
+
+	for presenca in query_presencas:
+		chave = str(presenca.ano) + "/" + str(presenca.mes)
+
+		if(chave not in timeline.keys()):
+			timeline[chave] = [0, presenca.quantidadeParticipacoes]
+		else:
+			timeline[chave].append(presenca.quantidadeParticipacoes)
+
+	for sessao in query_sessoes:
+		chave = str(sessao.ano) + "/" + str(sessao.mes)
+		print chave
+		if(chave != "0/0"):
+			if(chave not in timeline.keys()):
+				timeline[chave] = [0,0, sessao.quantidadeSessoes, cota.cota]
+			else:
+				print (len(timeline[chave]))
+				if(len(timeline[chave]) == 1):
+					timeline[chave].append(0)
+				timeline[chave].append(sessao.quantidadeSessoes)
+				timeline[chave].append(cota.cota)
+
+	for mes in timeline:
+		if (len(timeline[mes]) == 1):
+			timeline[mes].append("-")
+			timeline[mes].append("-")
+			timeline[mes].append(cota.cota)
+
+	return jsonify(timelineDeputado=timeline)
+
 
 def somaGastosTotais(query_gasto_categoria):
 	gastoTotal = 0
