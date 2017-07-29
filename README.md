@@ -52,7 +52,30 @@ bower install
 ```
 Para rodar:
 ```
-grunt server
+grunt serve
 ```
 
 O navegador padrão abrirá automaticamente em [localhost:9000](http://localhost:9000).
+
+### Deployment
+
+## Frontend
+
+Para realizar o deployment do frontend, é preciso gerar os arquivos próprios para serem servidos em produção,
+isto é, arquivos HTML, CSS e Javascript concatenados, minificados e otimizados. Antes de tudo, copie e modifique
+o arquivo _secret.json.example_ para _secret.json_ e preencha-o com os dados de acordo com a sua realidade.
+Nunca submeta o arquivo _secret.json_ no versionamento do GIT pois ele contem informações do servidor (como usuário e senha).
+
+Para gerar os arquivos de produção:
+```
+grunt build
+```
+
+Isso criará o diretório _dist/_ que deve ser enviado para o servidor de produção:
+
+Para enviar os arquivos para o servidor:
+```
+grunt ssh_deploy:prod
+```
+
+Este comando utiliza o arquivo _secret.json_ para enviar os arquivos em _dist/_ para o servidor via SSH.

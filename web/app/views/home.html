@@ -30,18 +30,18 @@
 <div class="container corpo">
     <div class="gastometro">
       <div class="headline" ng-show="ctrl.total > 0">
-        <h4>Gastômetro <span class="glyphicon glyphicon-info-sign"></span></h4>
+        <h4 class="font-b">Gastômetro <span class="glyphicon glyphicon-info-sign"></span></h4>
         <p class="seletor-ano">
-          <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()"><span class="glyphicon glyphicon-chevron-left"></span></a>
-          {{ctrl.anoSelecionado}}
-          <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()"><span class="glyphicon glyphicon-chevron-right"></span></a>
+          <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()"><span class="glyphicon glyphicon-chevron-left font-c"></span></a>
+          <span class="font-c">{{ctrl.anoSelecionado}}</span>
+          <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()"><span class="glyphicon glyphicon-chevron-right font-c"></span></a>
         </p>
-        <p class="headline-title">
+        <p class="headline-title font-d">
           <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
         </p>
       </div>
-      <div class="text-carousel text-center" ng-show="ctrl.total > 0">
-        Isso equivale à cerca de <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000"></span>
+      <div class="text-carousel text-center font-a" ng-show="ctrl.total > 0">
+        Isso equivale à cerca de <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000" class="font-e"></span>
         <!-- <ol class="carousel-indicators">
           <li class="active"></li>
           <li></li>
@@ -49,18 +49,35 @@
         </ol> -->
       </div>
     </div>
-    <div class="call-to-action text-center">
-      <button class="btn btn-lg btn-default">Top 10</button>
-    </div>
 
-<div class="content content-inverse">
-  <div class="container">
-    <h1 class="main-title text-center">Top 10 gastadores do mês anterior</h1>
-    <div class="row">
-      <div class="col-md-6" ng-repeat="deputado in ctrl.deputados">
-        <card-deputado deputado="deputado"></card-deputado>
+  <div class="content-inverse top">
+    <div class="container">
+      <h1 class="main-title text-center font-i">Top 10 gastadores do mês anterior</h1>
+      <div class="row">
+        <div class="col-md-6" ng-repeat="deputado in ctrl.deputados">
+          <card-deputado deputado="deputado"></card-deputado>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-1 col-sm-2 col-sm-offset-1">
+        <a ui-sref="home" class="footer-colour"><ng-include src="'views/logo.html'"></ng-include></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1">
+        <hr class="footer-line">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-5 col-sm-3 col-sm-offset-8">
+        <span class="font-j">Nos siga e acompanhe essa balada</span>
+        <a class="icon-facebook font-j" href="https://www.facebook.com/Vidinha-de-Balada-1785003711829354/"></a>
+      </div>
+    </div>
+  </div
+</footer>

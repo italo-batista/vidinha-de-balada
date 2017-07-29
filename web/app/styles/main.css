@@ -31,7 +31,7 @@ a:hover,
 
 .gastometro {
   padding-bottom: 40px;
-  padding-top: 60px;
+  padding-top: 40px;
   background-color: #61397B;
 }
 
@@ -99,8 +99,8 @@ h4 > .glyphicon {
 }
 
 .main-title {
-  margin-top: 100px;
-  margin-bottom: 100px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .card {
@@ -294,4 +294,73 @@ h4 > .glyphicon {
 
 .corpo {
   background-color: #4B4B4D;
+}
+
+.top {
+  background-color: #61397B;
+  margin-top: 20px;
+}
+
+.font-a {
+  font-size: 16px;
+}
+
+.font-b {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.font-c {
+  font-size: 16px;
+}
+
+.font-d {
+  font-size: 52px;
+  font-weight: bold;
+}
+
+.font-e {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.font-f {
+  font-size: 89px;
+}
+
+.font-g {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.font-h {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.font-i {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 70px;
+  padding-top: 0px;
+  padding-bottom: 15px;
+  background-color: #61397B;
+}
+.footer-colour {
+    margin: 0;
+    padding: 0;
+}
+
+.footer-colour .fil0,
+.footer-colour .fil1 {
+  color: #fff;
+  fill: #fff
+}
+
+.footer-line {
+  margin-top: 0;
+  margin-bottom: 0;
 }
