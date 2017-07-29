@@ -20,7 +20,7 @@ sys.setdefaultencoding('utf8')
 
 #colunas CSV
 txNomeParlamentar = 0
-idecadastro	 = 1
+idecadastro  = 1
 sgUF = 2
 ano = 3
 mes = 4
@@ -122,7 +122,6 @@ with open('data/gerados-hackfest/gasto_mensal_por_depoutado_por_categoria.csv') 
 categorias = list(categorias)
 ids = list(ids)
 
-
 @app.route('/')
 def index():
     return "API no ar."
@@ -140,7 +139,7 @@ def buscaCategoria():
     out = []
 
     for gasto in collection:
-    	if keys[0] in str(gasto.nossas_categorias).lower():
+        if keys[0] in str(gasto.nossas_categorias).lower():
             matches = {
                 'txNomeParlamentar' : gasto.txNomeParlamentar,
                 'idecadastro' : gasto.idecadastro,
@@ -175,7 +174,7 @@ def buscaid():
     out = []
 
     for gasto in collection:
-    	if keys[0] in str(gasto.idecadastro):
+        if keys[0] in str(gasto.idecadastro):
             matches = {
                 'txNomeParlamentar' : gasto.txNomeParlamentar,
                 'idecadastro' : gasto.idecadastro,
@@ -272,7 +271,7 @@ with open('data/gerados-hackfest/top_10_estourados_brasil.csv') as csvfile:
 
 @app.route('/top10')
 def top10():
-	return json.dumps(ranking, ensure_ascii=False).encode('utf-8'  )
+    return json.dumps(ranking, ensure_ascii=False).encode('utf-8'  )
 
 
 with open('data/gerados-hackfest/busca.csv') as csvfile:
@@ -288,14 +287,14 @@ with open('data/gerados-hackfest/busca.csv') as csvfile:
 
 @app.route('/todos')
 def deputados():
-	return json.dumps(deputados_dict,  ensure_ascii=False).encode('utf-8')
+    return json.dumps(deputados_dict,  ensure_ascii=False).encode('utf-8')
 
 #busca deputado a partir do seu ID
 #/deputado?id=
 @app.route('/deputado')
 def deputado_por_id():
-	key = request.args.get('id').lower()
-	return json.dumps(deputados_dict[key], ensure_ascii=False).encode('utf-8')
+    key = request.args.get('id').lower()
+    return json.dumps(deputados_dict[key], ensure_ascii=False).encode('utf-8')
 
 
 gastos_anos = {}
@@ -303,9 +302,9 @@ f = open('data/gerados-hackfest/gasto_total_anos.csv')
 f.readline()
 
 for line in f:
-	gasto_anual = line.split(",")
-	valores = [float(gasto_anual[1]), float(gasto_anual[2])]
-	gastos_anos[gasto_anual[0]] = valores
+    gasto_anual = line.split(",")
+    valores = [float(gasto_anual[1]), float(gasto_anual[2])]
+    gastos_anos[gasto_anual[0]] = valores
 
 f.close()
 
@@ -313,24 +312,50 @@ f.close()
 #/gasto_anual?ano=
 @app.route('/gasto_anual')
 def anual():
-	key =request.args.get('ano').lower()
-	return json.dumps(gastos_anos[key], ensure_ascii=False).encode('utf-8')
+    key =request.args.get('ano').lower()
+    return json.dumps(gastos_anos[key], ensure_ascii=False).encode('utf-8')
 
 f = open('data/gerados-hackfest/total_presenca_anos_somados.csv')
 f.readline()
 
 for line in f:
-	info = line.split(",")
-	if info[0] in deputados_dict.keys():
-		deputados_dict[info[0]]["presencas"] = int(info[2])
-		deputados_dict[info[0]]["total_sessoes"] = int(info[3])
-	for dep in ranking:
-		if info[0] in dep["id"]:
-			dep["presencas"] = int(info[2])
-			dep["total_sessoes"] = int(info[3])
+    info = line.split(",")
+    if info[0] in deputados_dict.keys():
+        deputados_dict[info[0]]["presencas"] = int(info[2])
+        deputados_dict[info[0]]["total_sessoes"] = int(info[3])
+    for dep in ranking:
+        if info[0] in dep["id"]:
+            dep["presencas"] = int(info[2])
+            dep["total_sessoes"] = int(info[3])
 
 
 f.close()
+
+timeline_deputados = {}
+with open('data/gerados-hackfest/gasto_mensal_por_deputado.csv') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter=",")
+    for row in reader:
+        if row['idecadastro'] not in timeline_deputados:
+            timeline_deputados[row['idecadastro']] = []
+        dep = {}
+        dep[row['mes']+"/"+row['ano']] = [float(row['total']), float(row['cota_mensal'])]
+        timeline_deputados[row['idecadastro']].append(dep)
+
+with open('data/gerados-hackfest/presenca_mensal_por_deputado_para_votacoes.csv') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter=",")
+    for row in reader:
+        if row['id_dep'] != 'NA' and row['id_dep'] in timeline_deputados.keys():
+            for dep in timeline_deputados[row['id_dep']]:
+                if dep.keys()[0] == row['mesv']+"/"+row['anov']:
+                    dep[dep.keys()[0]].append(row['coef'])
+                    dep[dep.keys()[0]].append(row['total_deputado'])
+                    dep[dep.keys()[0]].append(row['total_mes'])
+
+#/timeline?id=
+@app.route('/timeline')
+def timeline_presenca_gastos():
+    key = request.args.get('id').lower()
+    return json.dumps(timeline_deputados[key], ensure_ascii=False).encode('utf-8')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
