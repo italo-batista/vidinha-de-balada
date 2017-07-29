@@ -3,7 +3,7 @@
 import ConfigParser
 import sqlalchemy
 import datetime
-import sys
+import sys, os
 import operator
 from unidecode import unidecode
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -56,6 +56,9 @@ else:
 	mesPassado = now.month - 1
 	ano = now.year
 
+	mesPassado = 03
+	ano = 2016
+
 categoria_alimentacao = 'Alimentação'
 categoria_escritorio = 'Escritório'
 categoria_divulgacao = 'Divulgação de atividade parlamentar'
@@ -98,18 +101,18 @@ class Deputado(mysql.Model):
 class Gasto(mysql.Model):
     __tablename__ = 'gastos'
 
-    id = mysql.Column(mysql.String(10), primary_key=True)
     idDeputado = mysql.Column(mysql.String(7), nullable=False)
     mesEmissao = mysql.Column(mysql.Integer)
     anoEmissao = mysql.Column(mysql.Integer)
-    nomeCategoria = mysql.Column(mysql.String(10), nullable=False)
-    nomeFornecedor = mysql.Column(mysql.String(15), nullable=False)
-    valor = mysql.Column(mysql.Float)
     cnpj = mysql.Column(mysql.String(15))
-    idEmpresa = mysql.Column(mysql.Integer)
+    nomeFornecedor = mysql.Column(mysql.String(15), nullable=False)
+    nomeCategoria = mysql.Column(mysql.String(10), nullable=False)
+    idEmpresa = mysql.Column(mysql.String(10), nullable=False)
+    valor = mysql.Column(mysql.Float)
+    id = mysql.Column(mysql.String(10), primary_key=True)
 
     def __repr__(self):
-        return '<Gasto (%s, %s, %s, %s, %s, %s, %s, %d) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj, self.idEmpresa)
+        return '<Gasto (%s, %s, %s, %s, %s, %s, %s, %s, %s) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj, self.idEmpresa, self.id)
 
 class SessoesMes(mysql.Model):
     __tablename__ = 'sessoesMes'
@@ -209,21 +212,25 @@ def getDeputado(nome):
 
 @app.route('/empresasParceiras/<id>', methods=['GET'])
 def getEmpresasParceiras(id):
-	data = Gasto.query.filter_by(idDeputado = id)
+
+	data = Gasto.query.filter_by(idDeputado = id).all()
+
 
 	data_all = {}
 	categorias = {}
 
 	for gasto in data:
 		chave = gasto.idEmpresa
-		if(chave not in data_all.keys):
-			data_all[chave] = [gasto.valor]
+		if(chave not in data_all.keys()):
+			data_all[chave] = gasto.valor
 			categorias[chave] = [gasto.nomeCategoria]
 		else:
 			data_all[chave] += gasto.valor
 			if(gasto.nomeCategoria not in categorias[chave]):
 				categorias[chave].append(gasto.nomeCategoria)
-				
+		print gasto.nomeCategoria
+		print categorias
+
 	parceiras = {}
 	n = 0
 	while n < 10:
@@ -231,9 +238,9 @@ def getEmpresasParceiras(id):
 		parceiras[max_val] = [data_all[max_val], categorias[max_val]]
 		data_all.pop(max_val)
 		n += 1
+	print parceiras
 
-
-	return jsonify(empresasParceiras = pareceiras)
+	return jsonify(empresasParceiras = parceiras)
 
 @app.route('/timelineDeputado/<id>', methods=['GET'])
 def getTimelineDeputado(id):
@@ -338,6 +345,8 @@ def getPerfilDeputado(id):
 	'total_sessoes': sessoes_total,
 	'Total' : total_gastos
 	}
+
+	return jsonify(json)
 
 # TOP 10
 

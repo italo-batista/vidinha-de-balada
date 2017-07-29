@@ -333,9 +333,8 @@ cria_tabela_gastos_empresas = function(dados, empresas) {
     group_by(idecadastro, numAno, numMes, txtCNPJCPF, txtFornecedor, nossas_categorias, idEmpresa) %>%
     summarise(total = sum(vlrLiquido))
   
-  #tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
+  tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
   
-
   names(tabela_gastos_empresas)[2:3] = c("ano", "mes")
   
   return(tabela_gastos_empresas)
