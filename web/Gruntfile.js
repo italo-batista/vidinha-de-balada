@@ -9,8 +9,12 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
-    cdnify: 'grunt-google-cdn'
+    cdnify: 'grunt-google-cdn',
+    deploy: 'grunt-ssh-deploy',
+    secret: 'secret.json'
   });
+
+//  require('fs').readFileSync('/home/jeffersonrpn/.ssh/id_rsa');
 
   // Configurable paths for the application
   var appConfig = {
@@ -23,6 +27,37 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+
+    // Load credentials
+    secret: grunt.file.exists('secret.json') ? grunt.file.readJSON('secret.json') : '',
+
+    environments: {
+      options: {
+        local_path: 'dist',
+        current_symlink: 'html'
+      },
+      dev: {
+        options: {
+          host: '<%= secret.development.host %>',
+          username: '<%= secret.development.username %>',
+          password: '<%= secret.development.password %>',
+          port: '<%= secret.development.port %>',
+          deploy_path: '<%= secret.development.deploy_path %>',
+          debug: true,
+          releases_to_keep: '5'
+        }
+      },
+      prod: {
+        options: {
+          host: '<%= secret.production.host %>',
+          username: '<%= secret.production.username %>',
+          password: '<%= secret.production.password %>',
+          port: '<%= secret.production.port %>',
+          deploy_path: '<%= secret.production.deploy_path %>',
+          releases_to_keep: '5'
+        }
+      }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -331,7 +366,7 @@ module.exports = function (grunt) {
     ngtemplates: {
       dist: {
         options: {
-          module: 'newVidinhaApp',
+          module: 'baladaApp',
           htmlmin: '<%= htmlmin.dist.options %>',
           usemin: 'scripts/scripts.js'
         },

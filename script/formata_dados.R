@@ -2,13 +2,14 @@ library(readr)
 library(dplyr)
 options(scipen = 50)
 
+# retorna um data frame com resumo mensal dos gastos de cada deputado
 
-cria_tabela_final_mensal = function(dados){
+cria_tabela_final_gastos = function(dados){
   # antes de usar essa funcao o data frame dados deve estar no formato gerado pela
   # funcao prepara_tabela_final
 
   tabela_final_mensal = dados %>%
-    filter(vlrLiquido > 0) %>%
+    filter(vlrLiquido >= 0) %>%
     select(txNomeParlamentar, idecadastro, sgUF,  numAno, numMes, vlrLiquido) %>%
     group_by(txNomeParlamentar, idecadastro, sgUF, numAno, numMes) %>%
     summarise(total = sum(vlrLiquido)) %>%
@@ -18,6 +19,16 @@ cria_tabela_final_mensal = function(dados){
 
   return(tabela_final_mensal)
 
+}
+
+formata_data_votacoes = function(votacoes){
+  votacoes$diav = as.numeric(format(as.Date(votacoes$data, "%d/%m/%Y"), "%d")) 
+  votacoes$mesv = as.numeric(format(as.Date(votacoes$data, "%d/%m/%Y"), "%m"))
+  votacoes$anov = as.numeric(format(as.Date(votacoes$data, "%d/%m/%Y"), "%Y"))
+  
+  votacoes = votacoes %>% select(-data)
+  
+  return(votacoes)
 }
 
 cria_tabela_final_categoria = function(dados){
@@ -36,11 +47,18 @@ cria_tabela_final_categoria = function(dados){
   return(tabela_final_categoria)
 }
 
+# retorna csv referente a presença dos deputados para votações em cada mês
+
 cria_tabela_final_votacoes = function(votacoes){
 
   votacoes = votacoes %>%
     group_by(id_dep) %>%
     mutate(nome = first(nome))
+  
+  votacoes = votacoes %>%
+    arrange(id_dep, anov, mesv, -diav) %>%
+    group_by(id_dep, anov, mesv) %>%
+    mutate(partido = first(partido))
 
   sessoes = votacoes %>%
     filter(anov > 2014) %>%
@@ -51,47 +69,50 @@ cria_tabela_final_votacoes = function(votacoes){
 
   tabela_final_votacoes = votacoes %>%
     filter(anov > 2014) %>%
-    group_by(nome, id_dep, uf, anov, mesv, diav) %>%
+    group_by(id_dep, anov, mesv, diav) %>%
     distinct() %>%
-    group_by(nome, id_dep, uf, anov, mesv) %>%
-    summarise(total_deputado = n()) %>%
-    inner_join(sessoes) %>%
-    mutate(coef = total_deputado/total_mes)
+    group_by(id_dep, anov, mesv) %>%
+    summarise(total_deputado = n())
+  
+  tabela_final_votacoes = tabela_final_votacoes %>%
+    select(mesv, anov, id_dep, total_deputado)
 
   return(tabela_final_votacoes)
 
 }
 
-cria_tabela_gastos_presenca = function(tabela_final_votacoes, tabela_final_mensal){
+# cria_tabela_gastos_presenca = function(tabela_final_votacoes, tabela_final_mensal){
+#   ### TODO: adicionar partido quando o vereador não esteve presença no mês
+#   names(tabela_final_mensal) = c("nome", "id", "uf", "ano", "mes", "total_gasto", "cota_mensal", "coef_gasto")
+#   names(tabela_final_votacoes) = c("nome", "id", "partido", "uf","ano", "mes", "total_presenca", "total_mes", "coef_presenca")
+# 
+#   sessoes = votacoes %>%
+#     filter(anov > 2014) %>%
+#     group_by(anov, mesv, diav) %>%
+#     distinct() %>%
+#     group_by(anov, mesv) %>%
+#     summarise(total_mes = n())
+# 
+#   tabela_gasto_presenca = tabela_final_mensal %>%
+#                           full_join(tabela_final_votacoes[,2:9])
+# 
+#   tabela_gasto_presenca$total_presenca[is.na(tabela_gasto_presenca$total_presenca)] = 0
+#   tabela_gasto_presenca$coef_presenca[is.na(tabela_gasto_presenca$coef_presenca)] = 0
+# 
+#   names(sessoes) = c("ano", "mes", "total_presenca_mes")
+# 
+#   tabela_gasto_presenca = tabela_gasto_presenca %>%
+#                           left_join(sessoes)
+#   tabela_gasto_presenca$total_presenca_mes[is.na(tabela_gasto_presenca$total_presenca_mes)] = 0
+#   tabela_gasto_presenca$total_mes = tabela_gasto_presenca$total_presenca_mes
+#   tabela_gasto_presenca = tabela_gasto_presenca %>%
+#                           ungroup() %>%
+#                           select(-total_presenca_mes)
+# 
+#   return(tabela_gasto_presenca)
+# }
 
-  names(tabela_final_mensal) = c("nome", "id", "uf", "ano", "mes", "total_gasto", "cota_mensal", "coef_gasto")
-  names(tabela_final_votacoes) = c("nome", "id", "uf","ano", "mes", "total_presenca", "total_mes", "coef_presenca")
-
-  sessoes = votacoes %>%
-    filter(anov > 2014) %>%
-    group_by(anov, mesv, diav) %>%
-    distinct() %>%
-    group_by(anov, mesv) %>%
-    summarise(total_mes = n())
-
-  tabela_gasto_presenca = tabela_final_mensal %>%
-                          full_join(tabela_final_votacoes[,2:8])
-
-  tabela_gasto_presenca$total_presenca[is.na(tabela_gasto_presenca$total_presenca)] = 0
-  tabela_gasto_presenca$coef_presenca[is.na(tabela_gasto_presenca$coef_presenca)] = 0
-
-  names(sessoes) = c("ano", "mes", "total_presenca_mes")
-
-  tabela_gasto_presenca = tabela_gasto_presenca %>%
-                          left_join(sessoes)
-  tabela_gasto_presenca$total_presenca_mes[is.na(tabela_gasto_presenca$total_presenca_mes)] = 0
-  tabela_gasto_presenca$total_mes = tabela_gasto_presenca$total_presenca_mes
-  tabela_gasto_presenca = tabela_gasto_presenca %>%
-                          ungroup() %>%
-                          select(-total_presenca_mes)
-
-  return(tabela_gasto_presenca)
-}
+# retorna csv com a soma de todos os gastos e todas as cotas em cada ano
 
 cria_tabela_gasto_total_anos = function(tabela_final_mensal) {
 
@@ -152,7 +173,10 @@ cria_tabela_6_gastos = function(dados){
 
 }
 
-cria_tabela_6_gastos_mensal = function(dados){
+# retorna data frame com o total gasto em cada uma das principais categorias a cada mês.
+# a coluna toal é referente ao total gasto em todas as categorias (inclusive as que não estão nessa tabela)
+
+cria_tabela_6_gastos_mensal = function(dados, tabela_final_mensal){
   
   tabela_6_gastos_mensal = dados %>%
   #  filter(vlrLiquido >= 0) %>%
@@ -192,11 +216,17 @@ cria_tabela_6_gastos_mensal = function(dados){
   
   tabela_6_gastos_mensal[is.na(tabela_6_gastos_mensal)] = 0
   
-  tabela_6_gastos_mensal$total = rowSums(tabela_6_gastos_mensal[,5:10] )
+  tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
+    left_join(tabela_final_mensal %>%
+                group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
+                summarise("total" = sum(total)))
+  
+ # tabela_6_gastos_mensal$total = rowSums(tabela_6_gastos_mensal[,5:10] )
   
   return(tabela_6_gastos_mensal)
   
 }
+
 cria_top_estourados_estado = function(estado, tabela_final_mensal) {
 
   estourados = tabela_final_mensal%>%
@@ -217,5 +247,141 @@ cria_top_estourados = function(tabela_final_mensal) {
     slice(1:10)
 
   return(estourados)
+  
+}
 
+#########################################################################################
+
+# retorna um data frame de 3 colunas com ano, mes e quantidade e sessões
+
+cria_sessoes_mensal = function(votacoes) {
+  sessoes = votacoes %>%
+    filter(anov > 2014) %>%
+    # group_by(anov, mesv, diav) %>%
+    # distinct() %>%
+    # group_by(anov, mesv) %>%
+    # summarise(total_mes = n())
+  
+    select(anov, mesv, diav) %>% 
+    group_by(anov, mesv, diav) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(anov, mesv) %>% 
+    group_by(anov, mesv) %>% 
+    summarise(total_mes = n())
+  
+  sessoes = sessoes %>%
+    select(mesv, anov, total_mes)
+  
+  
+
+  return(sessoes)
+}
+
+# retorna um data frame de duas colunas com cnpj e nome de empresas
+# empresas sem cnpj tem este campo zerado
+# para empresas que possuem mais de um nome para o mesmo cnpj, apenas um deles foi selecionado e atribuído para todos
+
+cria_empresas = function(dados){
+  empresas = dados %>%
+    filter(!is.na(txtCNPJCPF)) %>%
+    select(txtCNPJCPF, txtFornecedor) %>%
+    group_by(txtCNPJCPF) %>%
+    mutate(txtFornecedor = first(txtFornecedor)) %>%
+    group_by(txtCNPJCPF, txtFornecedor) %>%
+  #  summarise(n = n())
+    distinct()
+
+  empresas.na = dados %>%
+    filter(is.na(txtCNPJCPF)) %>%
+    select(txtCNPJCPF, txtFornecedor) %>%
+    group_by(txtFornecedor) %>% 
+    distinct() %>%
+    mutate(txtCNPJCPF = "00000000000000")
+  
+  empresas = empresas %>%
+    rbind(empresas.na)
+  
+  empresas$id = rownames(empresas)
+  
+  return(empresas)  
+}
+
+# retorna data frame com cada gastos.
+# Há colunas para nome, idecadastro, UF,  ano, mes, valor, Empresa, cnpj e categoria
+#idDocumento: idDeputado: mesEmissao:	anoEmissao: nomeCategoria: idCategoria: nomeFornecedor: valor: cnpj: 
+cria_tabela_gastos_empresas = function(dados, empresas) {
+
+  
+  tabela_gastos_empresas =  dados %>%
+    filter(!is.na(txtCNPJCPF)) %>%
+    select(idecadastro,numAno, numMes, vlrLiquido, txtCNPJCPF, nossas_categorias) %>%
+    left_join(empresas)
+  
+  tabela_gastos_empresas.na =  dados %>%
+    filter(is.na(txtCNPJCPF)) %>%
+    select(idecadastro, numAno, numMes, vlrLiquido, txtFornecedor, nossas_categorias) %>%
+    left_join(empresas %>% filter(txtCNPJCPF == "00000000000000"))
+  
+  tabela_gastos_empresas = tabela_gastos_empresas %>%
+    rbind(tabela_gastos_empresas.na) %>%
+    group_by(idecadastro, numAno, numMes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
+    summarise(total = sum(vlrLiquido))
+  
+  tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
+  
+  names(tabela_gastos_empresas)[2:3] = c("ano", "mes")
+  
+  return(tabela_gastos_empresas)
+}
+
+cria_tabela_info_deputados = function(info_deputados, twitter_profiles, dados){
+  names(twitter_profiles)[3] = c("idecadastro")
+  names(info_deputados)[1] = c("idecadastro")
+  
+  ultimos_partidos = dados %>%
+    ungroup() %>%
+    arrange(idecadastro, -numAno, -numMes) %>%
+    group_by(idecadastro, txNomeParlamentar) %>%
+    summarise(sgPartido = first(sgPartido))
+  
+  names(ultimos_partidos)[1] = c("idecadastro")
+  
+  tabela_info_pessoais = dados %>% select(idecadastro, txNomeParlamentar, sgUF) %>% distinct() %>%
+    left_join(ultimos_partidos) %>%
+    left_join(info_deputados %>% select(idecadastro, urlFoto, fone, email)) %>%
+    left_join(twitter_profiles %>% select(idecadastro, twitter_profile))
+  
+  tabela_info_pessoais = tabela_info_pessoais %>%
+    select(idecadastro, txNomeParlamentar, sgPartido, sgUF, urlFoto, twitter_profile, fone, email)
+  
+  # (id, nome, partidoAtual, uf, foto, twitter, telefone, email, dataNasc);
+  # "idecadastro","txNomeParlamentar","sgUF","sgPartido","urlFoto","fone","email","twitter_profile"
+  
+  return(tabela_info_pessoais)
+}
+
+
+cria_ganhadores_selos = function(tabela_6_gastos_mensal, tabela_final_votacoes){
+  
+  ganhadores_selos = tabela_6_gastos_mensal %>% select(-total) %>%
+    gather("categoria", "valor", 5:10) %>%
+    group_by(numAno, numMes, categoria) %>%
+    mutate("mediana" = median(valor)) %>%
+    filter(valor > mediana)
+  
+  return(ganhadores_selos)
+  
+  # mediana_gastos = tabela_6_gastos_mensal %>%
+  #   ungroup() %>%
+  #   select(-idecadastro, -txNomeParlamentar, -total) %>%
+  #   group_by(numAno, numMes) %>%
+  #   summarise("Alimentação" = median(`Alimentação`),
+  #          "Combustíveis" = median(`Combustíveis`),
+  #          "Locação de veículos" = median(`Locação de veículos`),
+  #          "Passagens aéreas" = median(`Passagens aéreas`),
+  #          "Escritório" = median(`Escritório`),
+  #          "Divulgação de atividade parlamentar" = median(`Divulgação de atividade parlamentar`)) %>%
+  #   gather("categoria", "valor", 3:8)
+  
 }

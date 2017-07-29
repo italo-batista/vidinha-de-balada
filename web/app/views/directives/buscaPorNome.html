@@ -1,11 +1,11 @@
-<div class="diretiva-busca row">
-<div class="resultado-busca">
-  <input class="barra-busca" type="text" ng-model="nome" ng-show="mostrarBarraDeBusca">
-  <ul ng-show="mostrarBarraDeBusca && nome" class="listagem-busca">
-    <li ng-repeat="deputado in resultado | filter:nome">
-      <a ui-sref="perfil({id: deputado.id})" ng-click="ativarBusca()">{{deputado.nome}}</a>
-    </li>
-  </ul>
-</div>
-<a class="botao-busca" ng-click="ativarBusca()">Buscar</a></div>
+<div class="diretiva-busca">
+  <label for="resultado-busca"><span class="glyphicon glyphicon-search"></span></label>
+  <div id="resultado-busca" class="resultado-busca">
+    <input id="busca" class="busca" type="text" ng-model="nome" placeholder="Pesquisar Deputado">
+    <ul ng-show="nome" class="listagem-busca">
+      <li ng-repeat="deputado in resultado | filter:nome">
+        <a ui-sref="perfil({id: deputado.id})" ng-click="ativarBusca()">{{deputado.nome}}</a>
+      </li>
+    </ul>
+  </div>
 </div>

@@ -13,16 +13,7 @@
               scope.resultado = res.data;
             })
           }
-
-          scope.ativarBusca = function() {
-            scope.mostrarBarraDeBusca = !scope.mostrarBarraDeBusca;
-            if (!scope.mostrarBarraDeBusca) {
-              scope.resultado = [];
-              scope.nome = '';
-            } else {
-              scope.buscaNome();
-            }
-          }
+          scope.buscaNome();
         }
       }
   })
