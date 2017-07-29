@@ -4,7 +4,7 @@ options(scipen = 50)
 
 library(readr)
 
-dados_gastos = cria_data_frame_2015_2017() %>% filter(!is.na(numMes), !is.na(numAno))
+dados_gastos = cria_data_frame_2015_2017() %>% filter(nuLegislatura > 2014, !is.na(numMes), !is.na(numAno))
 cotas = read_csv("../data/final/cota_por_estado.csv")
 #votacoes = read_csv("../data/final/votacoes2.csv")
 votacoes = read_csv("https://raw.githubusercontent.com/nazareno/dados-da-camara-federal/master/dados/votacoes.csv") %>%
