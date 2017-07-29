@@ -308,7 +308,7 @@ cria_empresas = function(dados){
   empresas = empresas %>%
     rbind(empresas.na)
   
-  empresas$id = rownames(empresas)
+  empresas$idEmpresa = rownames(empresas)
   
   return(empresas)  
 }
@@ -318,7 +318,6 @@ cria_empresas = function(dados){
 #idDocumento: idDeputado: mesEmissao:	anoEmissao: nomeCategoria: idCategoria: nomeFornecedor: valor: cnpj: 
 cria_tabela_gastos_empresas = function(dados, empresas) {
 
-  
   tabela_gastos_empresas =  dados %>%
     filter(!is.na(txtCNPJCPF)) %>%
     select(idecadastro,numAno, numMes, vlrLiquido, txtCNPJCPF, nossas_categorias) %>%
@@ -331,11 +330,12 @@ cria_tabela_gastos_empresas = function(dados, empresas) {
   
   tabela_gastos_empresas = tabela_gastos_empresas %>%
     rbind(tabela_gastos_empresas.na) %>%
-    group_by(idecadastro, numAno, numMes, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
+    group_by(idecadastro, numAno, numMes, txtCNPJCPF, txtFornecedor, nossas_categorias, idEmpresa) %>%
     summarise(total = sum(vlrLiquido))
   
-  tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
+  #tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
   
+
   names(tabela_gastos_empresas)[2:3] = c("ano", "mes")
   
   return(tabela_gastos_empresas)
