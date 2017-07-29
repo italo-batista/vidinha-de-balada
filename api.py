@@ -3,7 +3,7 @@
 import ConfigParser
 import sqlalchemy
 import datetime
-import sys
+import sys, os
 from unidecode import unidecode
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import Flask, jsonify, request
@@ -26,7 +26,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:PASSWORD@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Pesquisas@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
@@ -54,6 +54,9 @@ if now.month == 1:
 else:
 	mesPassado = now.month - 1
 	ano = now.year
+	
+	mesPassado = 03
+	ano = 2016
 	
 categoria_alimentacao = 'Alimentação'
 categoria_escritorio = 'Escritório'
@@ -97,14 +100,15 @@ class Deputado(mysql.Model):
 class Gasto(mysql.Model):
     __tablename__ = 'gastos'
 
-    id = mysql.Column(mysql.String(10), primary_key=True)
     idDeputado = mysql.Column(mysql.String(7), nullable=False)
     mesEmissao = mysql.Column(mysql.Integer)
     anoEmissao = mysql.Column(mysql.Integer)
-    nomeCategoria = mysql.Column(mysql.String(10), nullable=False)
-    nomeFornecedor = mysql.Column(mysql.String(15), nullable=False)
-    valor = mysql.Column(mysql.Float)
     cnpj = mysql.Column(mysql.String(15))
+    nomeFornecedor = mysql.Column(mysql.String(15), nullable=False)
+    nomeCategoria = mysql.Column(mysql.String(10), nullable=False)
+    idEmpresa = mysql.Column(mysql.String(10), nullable=False)
+    valor = mysql.Column(mysql.Float)
+    id = mysql.Column(mysql.String(10), primary_key=True)
 
     def __repr__(self):
         return '<Gasto (%s, %s, %s, %s, %s, %s, %s) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj)
@@ -307,6 +311,8 @@ def getPerfilDeputado(id):
 	'total_sessoes': sessoes_total,
 	'Total' : total_gastos
 	}
+	
+	return jsonify(json)
 
 # TOP 10
 
@@ -321,6 +327,8 @@ def maisGastadores10(query_gastos):
 	gastos = []
 	
 	for gasto in query_gastos:
+		
+		print "--------------->" ,gasto
 		
 		if (gasto.idDeputado in deputados_id):
 			index = deputados_id.index(gasto.idDeputado)

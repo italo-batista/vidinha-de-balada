@@ -9,7 +9,7 @@ load data local infile '/home/italohmb/repositories/vidinha-de-balada/script/tab
 load data local infile '/home/italohmb/repositories/vidinha-de-balada/script/empresas.csv' into table empresas fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
-    (cnpj, nome, id);
+    (cnpj, nome, idEmpresa);
 
 
 load data local infile '/home/italohmb/repositories/vidinha-de-balada/script/sessoes_mensal.csv' into table sessoesMes fields terminated by ','
@@ -33,7 +33,7 @@ load data local infile '/home/italohmb/repositories/vidinha-de-balada/script/tab
 load data local infile '/home/italohmb/repositories/vidinha-de-balada/script/tabela_gastos_empresas.csv' into table gastos fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
-    (idDeputado, anoEmissao, mesEmissao, cnpj, nomeFornecedor, nomeCategoria, valor, id);
+    (idDeputado, anoEmissao, mesEmissao, cnpj, nomeFornecedor, nomeCategoria, idEmpresa, valor, id);
 
 
 /*
