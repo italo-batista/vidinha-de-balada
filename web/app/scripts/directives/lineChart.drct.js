@@ -68,8 +68,8 @@ app.directive('lineChart', function ($parse, RESTAPI) {
             return +c.valor
           })
         ]);
-	//Muda escala de gráfico
-	//Se quiser que o 100% de presença seja igual à cota mensal
+        //Muda escala de gráfico
+        //Se quiser que o 100% de presença seja igual à cota mensal
         //var yp = d3.scaleLinear().range([height, y(cota_mensal)]);
         var yp = d3.scaleLinear().range([height, 0]);
         yp.domain([0, 1]);
@@ -87,7 +87,7 @@ app.directive('lineChart', function ($parse, RESTAPI) {
 
         g.append("text")
           .attr("y", y(cota_mensal)-5)
-          .attr("x", function(){ return x(dataMax)})
+          .attr("x", function(){ return x(dataMax)-5})
           .attr('text-anchor', 'end')
           .attr("fill", "#fff")
           .attr("font-size", "15px")
@@ -164,12 +164,12 @@ app.directive('lineChart', function ($parse, RESTAPI) {
         g.append("g")
           .attr("class", "axis axis--x")
           .attr("transform", "translate(0," + height + ")")
-          .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%m/%Y")))
+          .call(d3.axisBottom(x).tickSize(0).tickFormat(d3.timeFormat("%m/%Y")))
           .style("font-size", "16px")
           .style("font-family", "'Montserrat', sans-serif");
 
         g.append("g")
-          .attr("class", "axis axis--y")
+          .attr("class", "axis axis--y gastos")
           .style("font", "14px sans-serif")
           .call(d3.axisLeft(y).tickSize(0))
           .style("font-size", "16px")
@@ -178,9 +178,24 @@ app.directive('lineChart', function ($parse, RESTAPI) {
           .attr("transform", "rotate(-90)")
           .attr("y", 6)
           .attr("dy", "0.71em")
-          .attr("fill", "#000")
           .text("Gasto total mensal, salários mínimos")
           .style("font-family", "'Montserrat', sans-serif");
+
+        g.append("g")
+          .attr("class", "axis axis--y")
+          .style("font", "14px sans-serif")
+          .attr("transform", "translate( " + width + ", 0 )")
+          .call(d3.axisRight(yp).tickSize(0).tickFormat(""))
+          .style("font-size", "16px")
+          .style("font-family", "'Montserrat', sans-serif")
+          .append("text")
+          .attr("transform", "rotate(270)")
+          .attr("y", -20)
+          .attr("x", -135)
+          .attr("dy", "0.71em")
+          .attr("fill", "#ff4e81")
+          .text("Presença mensal")
+          .style("font-family", "'Montserrat', sans-serif");;
         })
       }
     }

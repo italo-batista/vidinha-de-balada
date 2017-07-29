@@ -196,6 +196,16 @@ h4 > .glyphicon {
   fill: #fff;
 }
 
+.gastos > text,
+.gastos .tick > text {
+  stroke: none;
+  fill: #ff4e81;
+}
+
+.gastos > path {
+  stroke: #ff4e81;
+}
+
 .estouro {
   font-size: 2em;
 }
