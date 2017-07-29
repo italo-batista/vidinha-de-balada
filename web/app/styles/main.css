@@ -17,7 +17,7 @@ a:hover,
 }
 
 .header {
-  height: 60vh;
+  height: 170px;
   background-color: #61397B;
 }
 
@@ -349,26 +349,20 @@ h4 > .glyphicon {
 }
 
 footer {
-  margin-top: 70px;
-  padding-top: 0px;
-  padding-bottom: 15px;
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   background-color: #61397B;
 }
-.footer-colour {
-    margin: 0;
-    padding: 0;
-}
-
-.footer-colour .fil0,
-.footer-colour .fil1 {
-  color: #fff;
-  fill: #fff
+.footer-logo {
+    padding: 5px;
 }
 
 .footer-line {
   margin-top: 0;
   margin-bottom: 0;
 }
+
 
 #share-buttons img {
   width: 60px;
@@ -377,4 +371,27 @@ footer {
   box-shadow: 0;
   display: inline;
   align-content: center;
+}
+
+.logo {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.footer-text {
+  float: right;
+}
+
+.sobre {
+  background-color: #61397B;
+  padding: 20px;
+  text-align: center;
+}
+
+.sobre-info {
+  padding-top: 20px;
+}
+
+.equipe {
+  margin-top: 20px;
 }
