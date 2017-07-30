@@ -104,16 +104,13 @@ h4 > .glyphicon {
 }
 
 .card {
-  background-color: #463066;
+  background-color: #522E61;
   margin-bottom: 40px;
 }
 
 @media (min-width: 992px) {
   .card {
-    margin-bottom: 20px;
-  }
-  .card-odd {
-    margin-top: 40px;
+    margin-bottom: 40px;
   }
 }
 
@@ -124,7 +121,7 @@ h4 > .glyphicon {
   border-radius: 50%;
   margin-top: -30px;
   margin-left: -15px;
-  background-color: #463066;
+  background-color: #522E61;
   font-weight: bold;
   font-size: 1.5em;
   line-height: 60px;
@@ -174,11 +171,6 @@ h4 > .glyphicon {
   text-align: center;
   font-weight: bold;
   font-size: 0.8em;
-}
-
-.card-content {
-  font-weight: bold;
-  font-size: 1.3em;
 }
 
 .categorias {
@@ -233,10 +225,6 @@ h4 > .glyphicon {
   margin: auto;
 }
 
-.text-small {
-  font-size: 0.9em;
-}
-
 .nav-colour {
   background-color: #463066;
   border: 0px;
@@ -276,7 +264,8 @@ h4 > .glyphicon {
 }
 
 .font-c {
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .font-d {
@@ -305,6 +294,11 @@ h4 > .glyphicon {
 
 .font-i {
   font-size: 48px;
+  font-weight: bold;
+}
+
+.font-l {
+  font-size: 14px;
   font-weight: bold;
 }
 

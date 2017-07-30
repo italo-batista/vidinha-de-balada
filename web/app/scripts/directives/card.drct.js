@@ -16,6 +16,18 @@
               scope.IsVisible = scope.IsVisible ? false : true;
 
           }
+
+          scope.maiorGasto = function(categoria) {
+            var categorias = {
+              'Divulgação de atividade parlamentar': 'divulgacao',
+              'Combustíveis': 'combustivel',
+              'Alimentação': 'alimento',
+              'Escritório': 'escritorio',
+              'Locação de veículos': 'locacao',
+              'Passagens aéreas': 'passagem'
+            }
+            return categorias[scope.deputado.Maior_gasto_categoria] == categoria;
+          }
         }
       }
     });

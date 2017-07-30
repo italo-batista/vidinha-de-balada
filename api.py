@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding: utf-8
+import json
 import ConfigParser
 import sqlalchemy
 import datetime
@@ -174,9 +175,27 @@ class Empresa(mysql.Model):
 def hello():
     return "Hello World!"
 
+#@app.route('/gasto_anual')
+#def getGasto(ano):
+#	pass
+
+gastos_anos = {}
+f = open('data/gerados-hackfest/gasto_total_anos.csv')
+f.readline()
+
+for line in f:
+    gasto_anual = line.split(",")
+    valores = [float(gasto_anual[1]), float(gasto_anual[2])]
+    gastos_anos[gasto_anual[0]] = valores
+
+f.close()
+
+
+#/gasto_anual?ano=
 @app.route('/gasto_anual')
-def getGasto(ano):
-	pass
+def anual():
+    key =request.args.get('ano').lower()
+    return json.dumps(gastos_anos[key], ensure_ascii=False).encode('utf-8')
 
 @app.route('/cotas', methods=['GET'])
 def getCotas():
@@ -476,10 +495,10 @@ def top10():
 		'Posicao': deputado_posicao,
 		'Partido' : deputado_partido,
 		'UF' : deputado_uf,
-		'Cota UF' : deputado_cota_uf,
+		'Cota_UF' : deputado_cota_uf,
 		'Gastos' : gastos_categorias,
-		'Maior gasto categoria' : maior_gasto[0],
-		'Maior gasto valor' : maior_gasto[1]
+		'Maior_gasto_categoria' : maior_gasto[0],
+		'Maior_gasto_valor' : maior_gasto[1]
 		}
 
 		json.append(deputado_json)
