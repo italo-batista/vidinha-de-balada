@@ -295,7 +295,12 @@ def getTimelineDeputado(id):
 			timeline[mes].append("-")
 			timeline[mes].append(cota.cota)
 
-	return jsonify(timelineDeputado=timeline)
+	timelineDeputado = []
+
+	for i in timeline:
+		timelineDeputado.append({"data": i, "total_gasto": timeline[i][0], "total_presenca": timeline[i][1], "sessoes_total": timeline[i][2], "cota": timeline[i][3]})
+
+	return jsonify(timelineDeputado)
 
 def somaGastosTotais(query_gasto_categoria):
 	gastoTotal = 0
