@@ -26,7 +26,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:PASSWORD@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:NG#e7rh#Pnpi@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
@@ -54,10 +54,10 @@ if now.month == 1:
 else:
 	mesPassado = now.month - 1
 	ano = now.year
-	
+
 	mesPassado = 03
 	ano = 2016
-	
+
 categoria_alimentacao = 'Alimentação'
 categoria_escritorio = 'Escritório'
 categoria_divulgacao = 'Divulgação de atividade parlamentar'
@@ -312,7 +312,7 @@ def getPerfilDeputado(id):
 	'total_sessoes': sessoes_total,
 	'Total' : total_gastos
 	}
-	
+
 	return jsonify(json)
 
 # TOP 10
