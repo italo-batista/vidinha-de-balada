@@ -1,6 +1,6 @@
 Flask
 flask_cors
 gunicorn
-pyodbc
 flask_limiter
 Flask-SQLAlchemy==1.0
+unidecode
