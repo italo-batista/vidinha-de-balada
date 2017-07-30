@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="card" ng-show="ctrl.deputado.nome">
     <div class="card-head">
@@ -14,32 +15,74 @@
       </div>
     </div>
     <div class="card-body">
+
+      <div class="row">
+        <div class="row">
+        <h4 class="font-e title-grafico">Mês - Ano 
+         <a href="#" data-toggle="tooltip" title="Confira o quanto foi gasto no último mês de atividade parlamentar. Este deputado gastou mais em passagens? Em combustível?"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        </div>
+
+        <div class="col-xs-4">
+        Cota Mensal: <br/>
+        <span class="card-content">{{ deputado.cota_mensal | currency:'R$ ' }}</span> <br/>
+        Valor gasto: <br/>
+        <!--<strong class="estouro">-->
+        <span class="card-content">{{ deputado.total | currency:'R$ ' }}</span>
+        <!--</strong>-->
+        </div>
+
+         <div class="col-xs-4 ">
+        <span class="icon-alimento col-sm-offset-2" ng-if="true"></span>
+        <span class="icon-combustivel col-sm-offset-2" ng-if="false"></span>
+        <span class="icon-locacao col-sm-offset-2" ng-if="false"></span>
+        <span class="icon-passagem col-sm-offset-2" ng-if="false"></span>
+        <span class="icon-escritorio col-sm-offset-2" ng-if="false"></span>
+        <span class="icon-divulgacao col-sm-offset-2" ng-if="false"></span>
+        <br/>
+        Nome categoria <br/>
+        </div>
+
+         <div class="col-xs-4">
+        presença/faltas <br/>
+        
+        Persença / Faltas
+        </div>
+      </div>
+      <br/>
       <div class="categorias">
         <div class="categoria">
-          <p>{{ ctrl.deputado['Combustível'] | currency:'R$ ' }}</p>
+          <span class="card-content"><p>{{ ctrl.deputado['Combustível'] | currency:'R$ ' }}</p></span>
+          <span class="icon-combustivel"></span>
           <p>Combustível</p>
         </div>
         <div class="categoria">
-          <p>{{ ctrl.deputado['Locação de veículos'] | currency:'R$ ' }}</p>
+          <span class="card-content"><p>{{ ctrl.deputado['Locação de veículos'] | currency:'R$ ' }}</p></span>
+          <span class="icon-locacao"></span>
           <p>Locação de veículos</p>
         </div>
         <div class="categoria">
-          <p>{{ ctrl.deputado['Alimentação'] | currency:'R$ ' }}</p>
+          <span class="card-content"><p>{{ ctrl.deputado['Alimentação'] | currency:'R$ ' }}</p></span>
+          <span class="icon-alimento"></span>
           <p>Alimentação</p>
         </div>
         <div class="categoria">
-            <p>{{ ctrl.deputado['Passagens aéreas'] | currency:'R$ ' }}</p>
+            <span class="card-content"><p>{{ ctrl.deputado['Passagens aéreas'] | currency:'R$ ' }}</p></span>
+            <span class="icon-passagem"></span>
             <p>Passagens aéreas</p>
         </div>
         <div class="categoria">
-            <p>{{ ctrl.deputado['Escritório'] | currency:'R$ ' }}</p>
+            <span class="card-content"><p>{{ ctrl.deputado['Escritório'] | currency:'R$ ' }}</p></span>
+            <span class="icon-escritorio"></span>
             <p>Escritório</p>
         </div>
         <div class="categoria">
-            <p>{{ ctrl.deputado['Divulgação de atividade parlamentar'] | currency:'R$ ' }}</p>
+            <span class="card-content"><p>{{ ctrl.deputado['Divulgação de atividade parlamentar'] | currency:'R$ ' }}</p></span>
+            <span class="icon-divulgacao"></span>
             <p>Divulgação de atividades</p>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col-md-6 col-md-offset-6">
           <!--<radar-chart id="radar-chart" deputado="ctrl.id"></radar-chart>-->
@@ -47,4 +90,107 @@
       </div>
       </div>
     </div>
+
+
+    <div class="card">
+      <div class="row">
+        <h4 class="font-e title-grafico">Presenças & Gastos 
+         <a href="#" data-toggle="tooltip" title="Veja a quantia gasta ao longo do mantado do deputado, e também a razão na qual o deputado compareceu nas sessões realizadas pela câmara ao longo dos meses (número de comparecimentos / número total de sessões)."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+      </div>
+
+
+      <div class="row">
+
+        <div class="col-md-12">
+          <line-chart id="line-chart" deputado="ctrl.id"></line-chart>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4 class="font-e title-grafico">Empresas parceiras <a href="#" data-toggle="tooltip" title="Aqui você pode conferir quem são as empresas queridinhas deste deputado! E aí, também gosta de alguma? :D"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+    </div>
+
+    <div class="card">
+      <h4 class="font-e title-grafico">Coleção de selos <a href="#" data-toggle="tooltip" title="Veja todos os selos acumulados pelo deputado ao longo do seu mandato."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+
+      <div class="row selos">
+        <div class="col-xs-2 col-xs-offset-1">
+          <a ui-sref="home"><img src="images/selos/camarote.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+        <div class="col-xs-2">
+          <a ui-sref="home"><img src="images/selos/gaspar.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+        <div class="col-xs-2">
+          <a ui-sref="home"><img src="images/selos/gaveta.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+        <div class="col-xs-2">
+          <a ui-sref="home"><img src="images/selos/guloso.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+        <div class="col-xs-2">
+          <a ui-sref="home"><img src="images/selos/moderado.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+      </div>
+
+      <div class="row selos">
+        <div class="col-xs-2 col-xs-offset-1">
+          <a ui-sref="home"><img src="images/selos/panfleto.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+        <div class="col-xs-2">
+          <a ui-sref="home"><img src="images/selos/ponto.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+        <div class="col-xs-2">
+          <a ui-sref="home"><img src="images/selos/tanque.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+        <div class="col-xs-2">
+          <a ui-sref="home"><img src="images/selos/taxi.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+        <div class="col-xs-2">
+          <a ui-sref="home"><img src="images/selos/turista.png" height="100" width="100"></img></a>
+          <br/><span class="card-content">Olar</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <h4 class="font-c share">Compartilhe!</h4>
+      <div class="row" id="share-buttons">
+        
+          <div class="col-xs-3 headline">
+            <a href="http://www.facebook.com/sharer.php?u=http://vidinhadebalada.com" target="_blank">
+                <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+            </a>
+          </div>
+            
+          <div class="col-xs-3 headline">
+            <a href="https://plus.google.com/share?url=http://vidinhadebalada.com" target="_blank">
+                <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" />
+            </a>
+          </div>
+          
+          <div class="col-xs-3 headline">
+            <a href="http://reddit.com/submit?url=http://vidinhadebalada.com&amp;title=Fique de olho no seu deputado! - Vidinha de Balada" target="_blank">
+                <img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
+            </a>
+          </div>
+
+          <div class="col-xs-3 headline">
+            <a href="https://twitter.com/share?url=http://vidinhadebalada.com&amp;text=Fique%de%olho%no%seu%deputado%Vidinha%de%Balada&amp;hashtags=VidinhaDeBalada" target="_blank">
+                <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
+            </a>
+          </div>
+
+      </div>
+    </div>
+
 </div>

@@ -17,7 +17,7 @@ a:hover,
 }
 
 .header {
-  height: 60vh;
+  height: 170px;
   background-color: #61397B;
 }
 
@@ -170,6 +170,17 @@ h4 > .glyphicon {
   padding: 20px;
 }
 
+.card-exp {
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.card-content {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
 .categorias {
   display: flex;
   justify-content: space-between;
@@ -297,21 +308,19 @@ h4 > .glyphicon {
   font-weight: bold;
 }
 
-footer {
-  margin-top: 70px;
-  padding-top: 0px;
+.title-grafico {
+  text-align: center;
   padding-bottom: 15px;
-  background-color: #61397B;
-}
-.footer-colour {
-    margin: 0;
-    padding: 0;
 }
 
-.footer-colour .fil0,
-.footer-colour .fil1 {
-  color: #fff;
-  fill: #fff
+footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #61397B;
+}
+.footer-logo {
+    padding: 5px;
 }
 
 .footer-line {
@@ -404,4 +413,87 @@ footer {
    color:    #463066;
    font-weight: lighter;
    font-size: 14px;
+}
+
+.logo {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.selos {
+  text-align: center;
+  padding-bottom: 24px;
+  padding-top: 15px;
+}
+
+.footer-text {
+  float: right;
+}
+
+.sobre {
+  background-color: #61397B;
+  padding: 20px;
+  text-align: center;
+}
+
+.sobre-info {
+  padding-top: 20px;
+}
+
+.equipe {
+  margin-top: 20px;
+}
+
+.transformable {
+    -webkit-transition: height 500ms linear;
+    -moz-transition: height 500ms linear;
+    -o-transition: height 500ms linear;
+    -ms-transition: height 500ms linear;
+    transition: height 500ms linear;
+
+}
+
+.small {
+    height:0px;
+}
+
+.big {
+    height:150px;
+}
+
+.procedure-details {
+    max-height: 150px;
+    -webkit-transition: height 1000ms linear;
+    -moz-transition: height 1000ms linear;
+    -o-transition: height 1000ms linear;
+    -ms-transition: height 1000ms linear;
+    transition: height 1000ms linear;
+    overflow: hidden;
+}
+
+.small2 {
+    height: 0px;
+    -webkit-transition: height 300ms linear;
+    -moz-transition: height 300ms linear;
+    -o-transition: height 300ms linear;
+    -ms-transition: height 300ms linear;
+    transition: height 300ms linear;
+
+}
+
+.share {
+  padding-top: 20px;
+  padding-left: 30px;
+
+}
+
+#share-buttons img {
+  width: 60px;
+  padding: 5px;
+  padding-bottom: 20px;
+  border: 0;
+  box-shadow: 0;
+  display: inline;
+  align-content: center;
+  text-align: center;
 }
