@@ -27,7 +27,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:NG#e7rh#Pnpi@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:pass@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
@@ -327,7 +327,7 @@ def getPerfilDeputado(id):
 
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
 	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens
-	
+
 	cota_uf = Cota.query.get(deputado.uf).cota
 
 	json = {
@@ -339,7 +339,7 @@ def getPerfilDeputado(id):
 	'Cota' : cota_uf,
 
 	'Total gastos' : total_gastos,
-	
+
 	'Alimentação' : gasto_alimentacao,
 	'Escritório' : gasto_escritorio,
 	'Divulgação de atividade parlamentar' : gasto_divulgacao,
