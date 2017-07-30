@@ -79,7 +79,7 @@ CREATE TABLE gastos (
 	idEmpresa VARCHAR(10),
 	valor FLOAT,
 	id VARCHAR(10),
-	
+
 	PRIMARY KEY (id),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -89,7 +89,7 @@ CREATE TABLE selosDeputado (
 	idDeputado VARCHAR(7) NOT NULL,
 	mes INT(2),
 	ano INT(4),
-	idCategoria VARCHAR(10) NOT NULL,
+	idCategoria VARCHAR(40) NOT NULL,
 
 	PRIMARY KEY (idDeputado, mes, ano, idCategoria),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
