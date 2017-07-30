@@ -138,7 +138,7 @@ class SelosDeputado(mysql.Model):
     idDeputado = mysql.Column(mysql.String(7), primary_key=True)
     mes = mysql.Column(mysql.Integer, primary_key=True)
     ano = mysql.Column(mysql.Integer, primary_key=True)
-    idCategoria = mysql.Column(mysql.String(10), primary_key=True)
+    idCategoria = mysql.Column(mysql.String(40), primary_key=True)
 
     def __repr__(self):
         return '<SelosDeputado (%s, %s, %s, %s) >' % (self.idDeputado, self.mes, self.ano, self.idCategoria)
@@ -188,6 +188,18 @@ def getGasto():
 			
 
 # Perfil
+def getDeputadoSelos(query_selos):
+	json = []
+	for selo in query_selos:
+		json.append([selo.idDeputado, selo.mes, selo.ano, selo.idCategoria])
+	return json
+
+@app.route('/selosDeputado/<id>', methods=['GET'])
+def getSelos(id):
+	q_selos = SelosDeputado.query.filter_by(idDeputado = id).all()
+	selos = getDeputadoSelos(q_selos)
+	return jsonify(selos)
+
 
 @app.route('/buscaDeputado/<nome>', methods=['GET'])
 def buscadoDeputados(nome):
@@ -197,7 +209,7 @@ def buscadoDeputados(nome):
 
 	for deputado in data:
 		if(unidecode(nome.upper()) in unidecode(deputado.nome.upper())):
-			data_all.append(deputado.id)
+			data_all.append({'nome' : deputado.nome, 'id': deputado.id})
 
 	return jsonify(deputadosId=data_all)
 
@@ -220,15 +232,15 @@ def getEmpresasParceiras(id):
 			if(gasto.nomeCategoria not in categorias[chave]):
 				categorias[chave].append(gasto.nomeCategoria)
 
-	parceiras = {}
+	parceiras = []
 	n = 0
 	while (n < 10 and len(data_all) > 0):
 		max_val = max(data_all.iteritems(), key=operator.itemgetter(1))[0]
-		parceiras[max_val] = [data_all[max_val], categorias[max_val]]
+		parceiras.append({'id':max_val, 'valor': data_all[max_val], 'categorias': categorias[max_val]})
 		data_all.pop(max_val)
 		n += 1
 
-	return jsonify(empresasParceiras = parceiras)
+	return jsonify(parceiras)
 
 @app.route('/timelineDeputado/<id>', methods=['GET'])
 def getTimelineDeputado(id):
@@ -274,7 +286,12 @@ def getTimelineDeputado(id):
 			timeline[mes].append("-")
 			timeline[mes].append(cota.cota)
 
-	return jsonify(timelineDeputado=timeline)
+	timelineDeputado = []
+
+	for i in timeline:
+		timelineDeputado.append({"data": i, "total_gasto": timeline[i][0], "total_presenca": timeline[i][1], "sessoes_total": timeline[i][2], "cota": timeline[i][3]})
+
+	return jsonify(timelineDeputado)
 
 def somaGastosTotais(query_gasto_categoria):
 	gastoTotal = 0
@@ -318,7 +335,7 @@ def getPerfilDeputado(id):
 
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
 	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens
-	
+
 	cota_uf = Cota.query.get(deputado.uf).cota
 
 	json = {
@@ -457,6 +474,7 @@ def top10():
 
 	return jsonify(json)
 
+# Na VM, define altere o valor do host e da porta.
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 3000))
     app.debug = True
