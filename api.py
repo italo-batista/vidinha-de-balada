@@ -231,7 +231,7 @@ def getEmpresasParceiras(id):
 
 	parceiras = {}
 	n = 0
-	while n < 10:
+	while (n < 10 and len(data_all) > 0):
 		max_val = max(data_all.iteritems(), key=operator.itemgetter(1))[0]
 		parceiras[max_val] = [data_all[max_val], categorias[max_val]]
 		data_all.pop(max_val)
