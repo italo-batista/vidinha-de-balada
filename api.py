@@ -13,16 +13,10 @@ from flask import Flask, jsonify, request
 # needed to install:
 # 	sudo apt-get install python-mysqldb
 #	sudo pip install mysql-python
-
+#
 # use this material:
 # http://blog.cloudoki.com/getting-started-with-restful-apis-using-the-flask-microframework-for-python/
 
-# other links:
-#	http://www.roblayton.com/2015/04/creating-python-flask-crud-api-with.html
-#	http://www.roblayton.com/2015/04/connecting-python-script-to-mysql.html
-#	https://github.com/jigyasa-grover/RESTful-API-using-Python-Flask-MySQL
-
-#oi bb
 # Config --------------------------------------------------------------
 
 app = Flask(__name__)

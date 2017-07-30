@@ -4,3 +4,4 @@ gunicorn
 flask_limiter
 Flask-SQLAlchemy==1.0
 unidecode
+mysql-python
