@@ -25,7 +25,7 @@
             // e https://www.dieese.org.br/analisecestabasica/2017/201705cestabasica.pdf
             function setAno(ano) {
                 vm.anoSelecionado = ano;
-                $http.get(RESTAPI + "gasto_anual?ano=" + vm.anoSelecionado).then(function (res) {
+                $http.get(RESTAPI + "gastometro/" + vm.anoSelecionado).then(function (res) {
                     vm.total = res.data[0];
                     vm.salariosMinimos = Math.round(vm.total / 937000);
                     vm.casasPopulares = Math.round(vm.total / 152500);

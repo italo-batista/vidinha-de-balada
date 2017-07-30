@@ -9,6 +9,9 @@ import operator
 from unidecode import unidecode
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import Flask, jsonify, request
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 # Needed to install:
 # 	sudo apt-get install python-mysqldb
@@ -16,6 +19,7 @@ from flask import Flask, jsonify, request
 #
 # Use this material:
 # http://flask-sqlalchemy.pocoo.org/2.1/queries/#
+# http://flask.pocoo.org/docs/0.12/patterns/sqlalchemy/
 # http://blog.cloudoki.com/getting-started-with-restful-apis-using-the-flask-microframework-for-python/
 
 # Config --------------------------------------------------------------
@@ -25,6 +29,8 @@ app = Flask(__name__)
 # MySQL configurations
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:pass@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+engine = create_engine("mysql://root:pass@localhost/vidinha_balada?charset=utf8", encoding='utf8')
 
 mysql = SQLAlchemy(app)
 mysql.init_app(app)
@@ -159,51 +165,17 @@ class Empresa(mysql.Model):
 
 # Gastômetro
 
-gastos_anos = {}
-f = open('data/gerados-hackfest/gasto_total_anos.csv')
-f.readline()
-
-for line in f:
-    gasto_anual = line.split(",")
-    valores = [float(gasto_anual[1]), float(gasto_anual[2])]
-    gastos_anos[gasto_anual[0]] = valores
-
-f.close()
-
-#/gasto_anual?ano=
-@app.route('/gasto_anual')
-def anual():
-    key =request.args.get('ano').lower()
-    return json.dumps(gastos_anos[key], ensure_ascii=False).encode('utf-8')
-
-def somaGastosAnos(query_gastos):
-	anos = []
-	gastos = []
-
-	for gasto in query_gastos:
-
-		if (gasto.anoEmissao in anos):
-			index = anos.index(gasto.anoEmissao)
-			gastos[index] = gastos[index] + gasto.valor
-		else:
-			anos.append(gasto.anoEmissao)
-			gastos.append(gasto.valor)
-
-	tam = len(anos)
+@app.route('/gastometro/<ano>')
+def getGasto(ano):
+	connection = engine.connect()
+	result = connection.execute('select sum(valor) from gastos where anoEmissao =' + ano)
 	json = []
-
-	for i in xrange(tam):
-		json.append({"ano" : anos[i], "valor": gastos[i]})
-
-	return json
-
-@app.route('/gastometro')
-def getGasto():
-	query_gastos = Gasto.query.all()
-	json = somaGastosAnos(query_gastos)
+	for row in result:
+		json.append(row[0])
 	
+	connection.close()
 	return jsonify(json)
-			
+
 
 # Perfil
 
