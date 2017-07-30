@@ -411,7 +411,7 @@ footer {
 }
 
 .procedure-details {
-    max-height: 100px;
+    max-height: 150px;
     -webkit-transition: height 1000ms linear;
     -moz-transition: height 1000ms linear;
     -o-transition: height 1000ms linear;
