@@ -1,11 +1,11 @@
 <div ng-class="'card'">
   <div class="card-number">{{("0" + ($parent.$index + 1)).slice(-2)}}</div>
   <div class="card-head">
-    <a ui-sref="perfil({id: deputado.id})">{{ deputado.nome }}</a>
+    <a ui-sref="perfil({id: deputado.Id})">{{ deputado.nome }}</a>
   </div>
   <div class="card-subhead">
     <div class="card-img">
-      <a ui-sref="perfil({id: deputado.id})">
+      <a ui-sref="perfil({id: deputado.Id})">
         <img ng-src="{{ deputado.urlfoto }}" alt="{{ deputado.nome }}" width="100%">
       </a>
     </div>

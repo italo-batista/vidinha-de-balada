@@ -103,6 +103,11 @@ h4 > .glyphicon {
   margin-bottom: 50px;
 }
 
+.perfil-card {
+  background-color: #522E61;
+  margin-top: 20px;
+}
+
 .card {
   background-color: #522E61;
   margin-bottom: 40px;

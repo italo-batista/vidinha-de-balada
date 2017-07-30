@@ -1,52 +1,36 @@
-
-<div class="container">
-  <div class="card" ng-show="ctrl.deputado.nome">
+<div class="container sobre">
+  <div class="col-sm-10 col-sm-offset-1">
+  <div class="perfil-card" ng-show="ctrl.deputado.nome">
     <div class="card-head">
-      {{ ctrl.deputado.nome }}
+      <a ui-sref="perfil({id: ctrl.deputado.Id})">{{ ctrl.deputado.nome }}</a>
     </div>
     <div class="card-subhead">
       <div class="card-img">
-        <a ui-sref="perfil({id: ctrl.deputado.id})">
-          <img ng-src="{{ ctrl.deputado.urlfoto }}" alt="{{ ctrl.deputado.nome }}" width="100%">
+        <a ui-sref="perfil({id: ctrl.deputado.Id})">
+          <img ng-src="{{ ctrl.deputado.urlfoto }}" alt="{{ ctrl.deputado.Nome }}" width="100%">
         </a>
       </div>
       <div class="card-subtitle">
-        {{ ctrl.deputado.uf }}
+        {{ ctrl.deputado.UF }}
       </div>
     </div>
     <div class="card-body">
-
       <div class="row">
         <div class="row">
-        <h4 class="font-e title-grafico">Mês - Ano 
-         <a href="#" data-toggle="tooltip" title="Confira o quanto foi gasto no último mês de atividade parlamentar. Este deputado gastou mais em passagens? Em combustível?"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <h4 class="font-e title-grafico">Mês - Ano
+         <span data-toggle="tooltip" title="Confira o quanto foi gasto no último mês de atividade parlamentar. Este deputado gastou mais em passagens? Em combustível?"><span class="glyphicon glyphicon-info-sign"></span></span></h4>
         </div>
 
         <div class="col-xs-4">
-        Cota Mensal: <br/>
-        <span class="card-content">{{ deputado.cota_mensal | currency:'R$ ' }}</span> <br/>
-        Valor gasto: <br/>
-        <!--<strong class="estouro">-->
-        <span class="card-content">{{ deputado.total | currency:'R$ ' }}</span>
-        <!--</strong>-->
+          <span class="font-c">Cota Mensal:</span><br/>
+          <span class="font-b">{{ ctrl.deputado.Cota | currency:'R$ ' }}</span>
+          <br/>
+          <span class="font-c">Valor gasto:</span><br/>
+          <!--<strong class="estouro">-->
+          <span class="font-b">{{ ctrl.deputado['Total gastos'] | currency:'R$ ' }}</span>
+          <!--</strong>-->
         </div>
 
-         <div class="col-xs-4 ">
-        <span class="icon-alimento col-sm-offset-2" ng-if="true"></span>
-        <span class="icon-combustivel col-sm-offset-2" ng-if="false"></span>
-        <span class="icon-locacao col-sm-offset-2" ng-if="false"></span>
-        <span class="icon-passagem col-sm-offset-2" ng-if="false"></span>
-        <span class="icon-escritorio col-sm-offset-2" ng-if="false"></span>
-        <span class="icon-divulgacao col-sm-offset-2" ng-if="false"></span>
-        <br/>
-        Nome categoria <br/>
-        </div>
-
-         <div class="col-xs-4">
-        presença/faltas <br/>
-        
-        Persença / Faltas
-        </div>
       </div>
       <br/>
       <div class="categorias">
@@ -83,36 +67,30 @@
       </div>
 
 
-      <div class="row">
-        <div class="col-md-12">
-          <line-chart id="line-chart" deputado="ctrl.id"></line-chart>
-        </div>
-      </div>
       </div>
     </div>
 
 
-    <div class="card">
+    <div class="perfil-card">
       <div class="row">
-        <h4 class="font-e title-grafico">Presenças & Gastos 
-         <a href="#" data-toggle="tooltip" title="Veja a quantia gasta ao longo do mantado do deputado, e também a razão na qual o deputado compareceu nas sessões realizadas pela câmara ao longo dos meses (número de comparecimentos / número total de sessões)."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <h4 class="font-e title-grafico">Presenças & Gastos
+         <span data-toggle="tooltip" title="Veja a quantia gasta ao longo do mandato do deputado, e também a razão na qual o deputado compareceu nas sessões realizadas pela câmara ao longo dos meses (número de comparecimentos / número total de sessões)."><span class="glyphicon glyphicon-info-sign"></span></span></h4>
       </div>
 
 
       <div class="row">
-
         <div class="col-md-12">
-          <line-chart id="line-chart" deputado="ctrl.id"></line-chart>
+          <line-chart id="timeline-chart" deputado="ctrl.id"></line-chart>
         </div>
       </div>
     </div>
 
-    <div class="card">
-      <h4 class="font-e title-grafico">Empresas parceiras <a href="#" data-toggle="tooltip" title="Aqui você pode conferir quem são as empresas queridinhas deste deputado! E aí, também gosta de alguma? :D"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+    <div class="perfil-card">
+      <h4 class="font-e title-grafico">Empresas parceiras <span data-toggle="tooltip" title="Aqui você pode conferir quem são as empresas queridinhas deste deputado! E aí, também gosta de alguma? :D"><span class="glyphicon glyphicon-info-sign"></span></span></h4>
     </div>
 
-    <div class="card">
-      <h4 class="font-e title-grafico">Coleção de selos <a href="#" data-toggle="tooltip" title="Veja todos os selos acumulados pelo deputado ao longo do seu mandato."><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+    <div class="perfil-card">
+      <h4 class="font-e title-grafico">Coleção de selos <span data-toggle="tooltip" title="Veja todos os selos acumulados pelo deputado ao longo do seu mandato."><span class="glyphicon glyphicon-info-sign"></span></span></h4>
 
       <div class="row selos">
         <div class="col-xs-2 col-xs-offset-1">
@@ -162,22 +140,22 @@
 
     </div>
 
-    <div class="card">
+    <div class="perfil-card">
       <h4 class="font-c share">Compartilhe!</h4>
       <div class="row" id="share-buttons">
-        
+
           <div class="col-xs-3 headline">
             <a href="http://www.facebook.com/sharer.php?u=http://vidinhadebalada.com" target="_blank">
                 <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
             </a>
           </div>
-            
+
           <div class="col-xs-3 headline">
             <a href="https://plus.google.com/share?url=http://vidinhadebalada.com" target="_blank">
                 <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" />
             </a>
           </div>
-          
+
           <div class="col-xs-3 headline">
             <a href="http://reddit.com/submit?url=http://vidinhadebalada.com&amp;title=Fique de olho no seu deputado! - Vidinha de Balada" target="_blank">
                 <img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
@@ -192,5 +170,5 @@
 
       </div>
     </div>
-
+  </div>
 </div>
