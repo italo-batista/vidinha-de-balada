@@ -1,3 +1,4 @@
+USE vidinha_balada;
 
 load data local infile '/home/ubuntu/data/tabela_info_deputados.csv' into table deputado fields terminated by ','
   enclosed by '"'
@@ -32,7 +33,7 @@ load data local infile '/home/ubuntu/data/tabela_final_votacoes.csv' into table 
 load data local infile '/home/ubuntu/data/tabela_gastos_empresas.csv' into table gastos fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
-    (idDeputado, anoEmissao, mesEmissao, cnpj, nomeFornecedor, nomeCategoria, valor, idEmpresa);
+    (idDeputado, anoEmissao, mesEmissao, cnpj, nomeFornecedor, nomeCategoria, idEmpresa, valor, id);
 
 
 /*

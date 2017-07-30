@@ -363,18 +363,16 @@ footer {
   margin-bottom: 0;
 }
 
-#share-buttons img {
-  width: 60px;
-  padding: 5px;
-  border: 0;
-  box-shadow: 0;
-  display: inline;
-  align-content: center;
-}
 
 .logo {
   padding-top: 30px;
   text-align: center;
+}
+
+.selos {
+  text-align: center;
+  padding-bottom: 24px;
+  padding-top: 15px;
 }
 
 .footer-text {
@@ -432,4 +430,19 @@ footer {
 
 }
 
+.share {
+  padding-top: 20px;
+  padding-left: 30px;
 
+}
+
+#share-buttons img {
+  width: 60px;
+  padding: 5px;
+  padding-bottom: 20px;
+  border: 0;
+  box-shadow: 0;
+  display: inline;
+  align-content: center;
+  text-align: center;
+}
