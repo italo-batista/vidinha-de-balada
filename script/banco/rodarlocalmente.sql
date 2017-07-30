@@ -41,10 +41,9 @@ load data local infile 'xxx' into table emendasPropostasDeputado fields terminat
   enclosed by '"'
   lines terminated by '\n'
     (mes, ano, idDeputado, quantidade);
+*/
 
-
-load data local infile 'xxx' into table selosDeputado fields terminated by ','
+load data local infile '/Users/michelly/Desktop/projetos/vidinha-de-balada/script/ganhadores_selos.csv' into table selosDeputado fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
     (idDeputado, mes, ano, idCategoria);
-*/
