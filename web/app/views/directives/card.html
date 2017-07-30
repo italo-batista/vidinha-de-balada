@@ -46,15 +46,13 @@
     <br/><br/>
 
 
-
-    <div class="row">
         
-        <div ng-hide="IsVisible">
+        <div class="transformable" ng-class="{'small':IsVisible, 'big':!IsVisible}" ng-show="!IsVisible" >
           
-          <h4 class="text-center">Como usou a cota:</h4>
+          <h4 class="text-center" >Como usou a cota:</h4>
 
 
-          <div class="row">
+          <div class="procedure-details" ng-class="{'small2':IsVisible, 'big':!IsVisible}" ng-show="!IsVisible" >
             <div class="col-xs-4 col-md-2 text-center"><span class="icon-alimento"></span> <p class="text-small">R$&nbsp;22mil</p></div>
             <div class="col-xs-4 col-md-2 text-center"><span class="icon-combustivel"></span> <p class="text-small">R$&nbsp;22mil</p></div>
             <div class="col-xs-4 col-md-2 text-center"><span class="icon-locacao"></span> <p class="text-small">R$&nbsp;22mil</p></div>
@@ -65,14 +63,13 @@
 
         </div>
 
-        <div ng-click="hide()" class="card-exp">
+        <div  ng-click="hide()" class="card-exp" >
         <span class="glyphicon glyphicon-chevron-up" ng-show="!IsVisible"></span> <br/>
         <span ng-show="IsVisible"> + </span> <span ng-show="!IsVisible"> - </span>  DETALHES <br/>
          <span class="glyphicon glyphicon-chevron-down" ng-show="IsVisible"></span>
         </div>
         
 
-    </div>
 
 
     

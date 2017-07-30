@@ -368,3 +368,41 @@ footer {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.transformable {
+    -webkit-transition: height 500ms linear;
+    -moz-transition: height 500ms linear;
+    -o-transition: height 500ms linear;
+    -ms-transition: height 500ms linear;
+    transition: height 500ms linear;
+
+}
+
+.small {
+    height:0px;
+}
+
+.big {
+    height:150px;
+}
+
+.procedure-details {
+    max-height: 100px;
+    -webkit-transition: height 1000ms linear;
+    -moz-transition: height 1000ms linear;
+    -o-transition: height 1000ms linear;
+    -ms-transition: height 1000ms linear;
+    transition: height 1000ms linear;
+    overflow: hidden;
+}
+
+.small2 {
+    height: 0px;
+    -webkit-transition: height 300ms linear;
+    -moz-transition: height 300ms linear;
+    -o-transition: height 300ms linear;
+    -ms-transition: height 300ms linear;
+    transition: height 300ms linear;
+
+}
+
