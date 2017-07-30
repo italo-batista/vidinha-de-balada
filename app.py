@@ -20,7 +20,7 @@ sys.setdefaultencoding('utf8')
 
 #colunas CSV
 txNomeParlamentar = 0
-idecadastro	 = 1
+idecadastro  = 1
 sgUF = 2
 ano = 3
 mes = 4
@@ -139,7 +139,7 @@ def buscaCategoria():
     out = []
 
     for gasto in collection:
-    	if keys[0] in str(gasto.nossas_categorias).lower():
+        if keys[0] in str(gasto.nossas_categorias).lower():
             matches = {
                 'txNomeParlamentar' : gasto.txNomeParlamentar,
                 'idecadastro' : gasto.idecadastro,
@@ -174,7 +174,7 @@ def buscaid():
     out = []
 
     for gasto in collection:
-    	if keys[0] in str(gasto.idecadastro):
+        if keys[0] in str(gasto.idecadastro):
             matches = {
                 'txNomeParlamentar' : gasto.txNomeParlamentar,
                 'idecadastro' : gasto.idecadastro,
@@ -271,7 +271,7 @@ with open('data/gerados-hackfest/top_10_estourados_brasil.csv') as csvfile:
 
 @app.route('/top10')
 def top10():
-	return json.dumps(ranking, ensure_ascii=False).encode('utf-8'  )
+    return json.dumps(ranking, ensure_ascii=False).encode('utf-8'  )
 
 
 with open('data/gerados-hackfest/busca.csv') as csvfile:
@@ -287,14 +287,14 @@ with open('data/gerados-hackfest/busca.csv') as csvfile:
 
 @app.route('/todos')
 def deputados():
-	return json.dumps(deputados_dict,  ensure_ascii=False).encode('utf-8')
+    return json.dumps(deputados_dict,  ensure_ascii=False).encode('utf-8')
 
 #busca deputado a partir do seu ID
 #/deputado?id=
 @app.route('/deputado')
 def deputado_por_id():
-	key = request.args.get('id').lower()
-	return json.dumps(deputados_dict[key], ensure_ascii=False).encode('utf-8')
+    key = request.args.get('id').lower()
+    return json.dumps(deputados_dict[key], ensure_ascii=False).encode('utf-8')
 
 
 gastos_anos = {}
@@ -302,9 +302,9 @@ f = open('data/gerados-hackfest/gasto_total_anos.csv')
 f.readline()
 
 for line in f:
-	gasto_anual = line.split(",")
-	valores = [float(gasto_anual[1]), float(gasto_anual[2])]
-	gastos_anos[gasto_anual[0]] = valores
+    gasto_anual = line.split(",")
+    valores = [float(gasto_anual[1]), float(gasto_anual[2])]
+    gastos_anos[gasto_anual[0]] = valores
 
 f.close()
 
@@ -312,24 +312,38 @@ f.close()
 #/gasto_anual?ano=
 @app.route('/gasto_anual')
 def anual():
-	key =request.args.get('ano').lower()
-	return json.dumps(gastos_anos[key], ensure_ascii=False).encode('utf-8')
+    key =request.args.get('ano').lower()
+    return json.dumps(gastos_anos[key], ensure_ascii=False).encode('utf-8')
 
 f = open('data/gerados-hackfest/total_presenca_anos_somados.csv')
 f.readline()
 
 for line in f:
-	info = line.split(",")
-	if info[0] in deputados_dict.keys():
-		deputados_dict[info[0]]["presencas"] = int(info[2])
-		deputados_dict[info[0]]["total_sessoes"] = int(info[3])
-	for dep in ranking:
-		if info[0] in dep["id"]:
-			dep["presencas"] = int(info[2])
-			dep["total_sessoes"] = int(info[3])
+    info = line.split(",")
+    if info[0] in deputados_dict.keys():
+        deputados_dict[info[0]]["presencas"] = int(info[2])
+        deputados_dict[info[0]]["total_sessoes"] = int(info[3])
+    for dep in ranking:
+        if info[0] in dep["id"]:
+            dep["presencas"] = int(info[2])
+            dep["total_sessoes"] = int(info[3])
 
 
 f.close()
+
+#/busca?nome=
+@app.route("/busca")
+def busca_deputado_por_nome():
+    nome = request.args.get('nome').lower()
+    resultados = []
+    deputado = {}
+    for key,value in deputados_dict.iteritems():
+        if nome in value['Nome'].lower():
+            deputado['nome'] = value['Nome']
+            deputado['id'] = key
+            resultados.append(deputado)
+            deputado = {}
+    return json.dumps(resultados, ensure_ascii=False).encode('utf-8')
 
 timeline_deputados = {}
 with open('data/gerados-hackfest/gasto_mensal_por_deputado.csv') as csvfile:

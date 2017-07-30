@@ -75,8 +75,8 @@
                 setAno(vm.anoMaximo);
                 $http.get(RESTAPI + "top10").then(function (res) {
                     res.data.forEach(function (d) {
-                        d.nome = d.nome.replace('"', '').replace('\"', '');
-                        d.uf = d.uf.replace('"', '').replace('\"', '');
+                        d.nome = d.Nome.replace('"', '').replace('\"', '');
+                        d.uf = d.UF.replace('"', '').replace('\"', '');
 
                         if (d.urlfoto === "NA") {
                             d.urlfoto = "http://www.camara.leg.br/internet/deputado/bandep/" + d.id + ".jpg";
@@ -90,6 +90,21 @@
             }
 
             init();
+
+            $(document).ready(function () {
+
+            var menu = $('.menu');
+            var origOffsetY = menu.offset().top;
+
+            function scroll() {
+                if ($(window).scrollTop() >= origOffsetY) {
+                    $('.menu').addClass('navbar-fixed-top');
+                } else {
+                    $('.menu').removeClass('navbar-fixed-top');
+                }
+            }
+            document.onscroll = scroll;
+});
 
         });
 })();
