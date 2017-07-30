@@ -8,13 +8,13 @@
         link: function(scope, element, attrs) {
           scope.nome = '';
           scope.buscaNome = function() {
-            $http.get(RESTAPI+"busca?nome="+scope.nome).then(function(res) {
-              scope.resultado = res.data;
+            $http.get(RESTAPI+"buscaDeputado?nome="+scope.nome).then(function(res) {
+              scope.resultado = res.data.deputadosId;
             })
           }
 
           scope.buscaNome();
-          
+
           $(document).bind('click', function(event){
             var isClickedElementChildOfPopup = element
                 .find(event.target)

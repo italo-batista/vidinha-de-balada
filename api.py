@@ -3,7 +3,8 @@
 import ConfigParser
 import sqlalchemy
 import datetime
-import sys
+import sys, os
+import operator
 from unidecode import unidecode
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import Flask, jsonify, request
@@ -26,7 +27,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:jandira@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:pass@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
@@ -54,7 +55,10 @@ if now.month == 1:
 else:
 	mesPassado = now.month - 1
 	ano = now.year
-	
+
+	mesPassado = 03
+	ano = 2016
+
 categoria_alimentacao = 'Alimentação'
 categoria_escritorio = 'Escritório'
 categoria_divulgacao = 'Divulgação de atividade parlamentar'
@@ -97,17 +101,18 @@ class Deputado(mysql.Model):
 class Gasto(mysql.Model):
     __tablename__ = 'gastos'
 
-    id = mysql.Column(mysql.String(10), primary_key=True)
     idDeputado = mysql.Column(mysql.String(7), nullable=False)
     mesEmissao = mysql.Column(mysql.Integer)
     anoEmissao = mysql.Column(mysql.Integer)
-    nomeCategoria = mysql.Column(mysql.String(10), nullable=False)
-    nomeFornecedor = mysql.Column(mysql.String(15), nullable=False)
-    valor = mysql.Column(mysql.Float)
     cnpj = mysql.Column(mysql.String(15))
+    nomeFornecedor = mysql.Column(mysql.String(15), nullable=False)
+    nomeCategoria = mysql.Column(mysql.String(10), nullable=False)
+    idEmpresa = mysql.Column(mysql.String(10), nullable=False)
+    valor = mysql.Column(mysql.Float)
+    id = mysql.Column(mysql.String(10), primary_key=True)
 
     def __repr__(self):
-        return '<Gasto (%s, %s, %s, %s, %s, %s, %s) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj)
+        return '<Gasto (%s, %s, %s, %s, %s, %s, %s, %s, %s) >' % (self.idDeputado, self.mesEmissao, self.anoEmissao, self.nomeCategoria, self.nomeFornecedor, self.valor, self.cnpj, self.id, self.idEmpresa)
 
 class SessoesMes(mysql.Model):
     __tablename__ = 'sessoesMes'
@@ -147,7 +152,7 @@ class SelosDeputado(mysql.Model):
     idDeputado = mysql.Column(mysql.String(7), primary_key=True)
     mes = mysql.Column(mysql.Integer, primary_key=True)
     ano = mysql.Column(mysql.Integer, primary_key=True)
-    idCategoria = mysql.Column(mysql.String(10), primary_key=True)
+    idCategoria = mysql.Column(mysql.String(40), primary_key=True)
 
     def __repr__(self):
         return '<SelosDeputado (%s, %s, %s, %s) >' % (self.idDeputado, self.mes, self.ano, self.idCategoria)
@@ -160,7 +165,7 @@ class Empresa(mysql.Model):
     idEmpresa = mysql.Column(mysql.Integer, primary_key=True)
 
     def __repr__(self):
-        return '<Empresa (%s, %s) >' % (self.cnpj, self.nome)
+        return '<Empresa (%s, %s, %d) >' % (self.cnpj, self.nome, self.idEmpresa)
 
 
 # Routes --------------------------------------------------------------
@@ -192,18 +197,60 @@ def getCota(uf):
 
 
 # Perfil
+def getDeputadoSelos(query_selos):
+	json = []
+	for selo in query_selos:
+		json.append([selo.idDeputado, selo.mes, selo.ano, selo.idCategoria])
+	return json
 
-@app.route('/buscaEmpresasDeputado/<nome>', methods=['GET'])
-def getEmpresasDeputado(nome):
+@app.route('/selosDeputado/<id>', methods=['GET'])
+def getSelos(id):
+	q_selos = SelosDeputado.query.filter_by(idDeputado = id).all()
+	selos = getDeputadoSelos(q_selos)
+	return jsonify(selos)
+
+
+@app.route('/buscaDeputado', methods=['GET'])
+def getDeputado():
+	nome = request.args.get('nome')
 	data = Deputado.query.all()
 
 	data_all = []
 
 	for deputado in data:
 		if(unidecode(nome.upper()) in unidecode(deputado.nome.upper())):
-			data_all.append(deputado.id)
+			data_all.append({'nome' : deputado.nome, 'id': deputado.id})
 
-	return jsonify(empresasDeputado=data_all)
+	return jsonify(deputadosId=data_all)
+
+@app.route('/empresasParceiras/<id>', methods=['GET'])
+def getEmpresasParceiras(id):
+
+	data = Gasto.query.filter_by(idDeputado = id).all()
+
+
+	data_all = {}
+	categorias = {}
+
+	for gasto in data:
+		chave = gasto.idEmpresa
+		if(chave not in data_all.keys()):
+			data_all[chave] = gasto.valor
+			categorias[chave] = [gasto.nomeCategoria]
+		else:
+			data_all[chave] += gasto.valor
+			if(gasto.nomeCategoria not in categorias[chave]):
+				categorias[chave].append(gasto.nomeCategoria)
+
+	parceiras = []
+	n = 0
+	while (n < 10 and len(data_all) > 0):
+		max_val = max(data_all.iteritems(), key=operator.itemgetter(1))[0]
+		parceiras.append({'id':max_val, 'valor': data_all[max_val], 'categorias': categorias[max_val]})
+		data_all.pop(max_val)
+		n += 1
+
+	return jsonify(parceiras)
 
 @app.route('/timelineDeputado/<id>', methods=['GET'])
 def getTimelineDeputado(id):
@@ -233,12 +280,11 @@ def getTimelineDeputado(id):
 
 	for sessao in query_sessoes:
 		chave = str(sessao.ano) + "/" + str(sessao.mes)
-		print chave
+
 		if(chave != "0/0"):
 			if(chave not in timeline.keys()):
 				timeline[chave] = [0,0, sessao.quantidadeSessoes, cota.cota]
 			else:
-				print (len(timeline[chave]))
 				if(len(timeline[chave]) == 1):
 					timeline[chave].append(0)
 				timeline[chave].append(sessao.quantidadeSessoes)
@@ -250,7 +296,12 @@ def getTimelineDeputado(id):
 			timeline[mes].append("-")
 			timeline[mes].append(cota.cota)
 
-	return jsonify(timelineDeputado=timeline)
+	timelineDeputado = []
+
+	for i in timeline:
+		timelineDeputado.append({"data": i, "total_gasto": timeline[i][0], "total_presenca": timeline[i][1], "sessoes_total": timeline[i][2], "cota": timeline[i][3]})
+
+	return jsonify(timelineDeputado)
 
 def somaGastosTotais(query_gasto_categoria):
 	gastoTotal = 0
@@ -272,14 +323,14 @@ def somaPresencas(query_presencas):
 
 @app.route('/deputados/<id>', methods=['GET'])
 def getPerfilDeputado(id):
-			
+
 	deputado = Deputado.query.filter_by(id=id).first()
-	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao).all()
-	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio).all()
-	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao).all()
-	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao).all()
-	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel).all()
-	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens).all()
+	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens, mesEmissao=mesPassado, anoEmissao=ano).all()
 	query_presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id).all()
 	query_sessoes_total = SessoesMes.query.all()
 
@@ -295,19 +346,28 @@ def getPerfilDeputado(id):
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
 	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens
 
+	cota_uf = Cota.query.get(deputado.uf).cota
+
 	json = {
-	'Nome' : deputado.nome.decode("utf-8"),
+	'Nome' : deputado.nome,
 	'urlfoto' : deputado.foto,
+	'Id' : deputado.id,
+	'Partido' : deputado.partidoAtual,
+	'UF' : deputado.uf,
+	'Cota' : cota_uf,
+
+	'Total gastos' : total_gastos,
+
 	'Alimentação' : gasto_alimentacao,
 	'Escritório' : gasto_escritorio,
 	'Divulgação de atividade parlamentar' : gasto_divulgacao,
 	'Locação de veículos' : gasto_locacao,
 	'Combustível' : gasto_combustivel,
-	'Passagens aéreas' : gasto_passagens,
-	'presencas' : presencas_deputado,
-	'total_sessoes': sessoes_total,
-	'Total' : total_gastos
+	'Passagens aéreas' : gasto_passagens
 	}
+
+	return jsonify(json)
+
 
 # TOP 10
 
@@ -320,73 +380,73 @@ def somaGastosCategoria(query_gasto_categoria):
 def maisGastadores10(query_gastos):
 	deputados_id = []
 	gastos = []
-	
+
 	for gasto in query_gastos:
-		
+
 		if (gasto.idDeputado in deputados_id):
 			index = deputados_id.index(gasto.idDeputado)
 			gastos[index] = gastos[index] + gasto.valor
 		else:
 			deputados_id.append(gasto.idDeputado)
 			gastos.append(gasto.valor)
-	
+
 	tam = len(deputados_id)
 	deputadoGasto = []
-	
+
 	for i in xrange(tam):
 		tupla = (gastos[i], deputados_id[i])
 		deputadoGasto.append(tupla)
-		
+
 	tops = sorted(deputadoGasto, key=lambda x: x[0], reverse=True)
 	top10 = []
 	for i in range(10):
 		top10.append(tops[i])
-				
+
 	return top10
-	    
+
 @app.route("/top10", methods=['GET'])
 def top10():
 	query_gastos = Gasto.query.filter_by(mesEmissao=mesPassado, anoEmissao=ano).all()
 	top10 = maisGastadores10(query_gastos)
-	
+
 	json = []
-	
+
 	for i in range(len(top10)):
 		deputado = top10[i]
-		
+
 		# info deputado
-		
+
 		deputado_id = deputado[1]
 		deputado_gasto_total = deputado[0]
 		deputado_posicao = i + 1
-		
+
 		deputado_obj = Deputado.query.get(deputado_id)
-		
+
 		deputado_nome = deputado_obj.nome
 		deputado_partido = deputado_obj.partidoAtual
 		deputado_foto = deputado_obj.foto
 		deputado_uf = deputado_obj.uf
 		deputado_cota_uf = Cota.query.get(deputado_uf).cota
-		
+
 		deputado_presencas = SessoesMesDeputado.query.filter_by(idDeputado=deputado_id, mes=mesPassado, ano=ano).first().quantidadeParticipacoes
 		sessoes_totais = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first().quantidadeSessoes
-		
+
 		# gastos categorias
-		
+
 		query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_alimentacao, mesEmissao=mesPassado, anoEmissao=ano).all()
 		query_gasto_escritorio = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_escritorio, mesEmissao=mesPassado, anoEmissao=ano).all()
 		query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_divulgacao, mesEmissao=mesPassado, anoEmissao=ano).all()
 		query_gasto_locacao = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_locacao, mesEmissao=mesPassado, anoEmissao=ano).all()
 		query_gasto_combustivel = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_combustivel, mesEmissao=mesPassado, anoEmissao=ano).all()
 		query_gasto_passagens = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_passagens, mesEmissao=mesPassado, anoEmissao=ano).all()
-		
+
 		gasto_alimentacao = somaGastosCategoria(query_gasto_alimentacao)
 		gasto_escritorio = somaGastosCategoria(query_gasto_escritorio)
 		gasto_divulgacao = somaGastosCategoria(query_gasto_divulgacao)
 		gasto_locacao = somaGastosCategoria(query_gasto_locacao)
 		gasto_combustivel = somaGastosCategoria(query_gasto_combustivel)
 		gasto_passagens = somaGastosCategoria(query_gasto_passagens)
-		
+
 		gastos_categorias = {
 		categoria_alimentacao : gasto_alimentacao,
 		categoria_combustivel : gasto_combustivel,
@@ -395,17 +455,17 @@ def top10():
 		categoria_locacao : gasto_locacao,
 		categoria_passagens : gasto_passagens
 		}
-		
-		meus_gastos = [(categoria_alimentacao, gasto_alimentacao), 
-		(categoria_combustivel, gasto_combustivel), 
-		(categoria_divulgacao, gasto_divulgacao), 
-		(categoria_escritorio, gasto_escritorio), 
+
+		meus_gastos = [(categoria_alimentacao, gasto_alimentacao),
+		(categoria_combustivel, gasto_combustivel),
+		(categoria_divulgacao, gasto_divulgacao),
+		(categoria_escritorio, gasto_escritorio),
 		(categoria_locacao, gasto_locacao),
 		(categoria_passagens, gasto_passagens)
 		]
-		
+
 		maior_gasto = sorted(meus_gastos, key=lambda x: x[1], reverse=True)[0]
-		
+
 		deputado_json = {
 		'Id' : deputado_id,
 		'Nome': deputado_nome,
@@ -421,10 +481,10 @@ def top10():
 		'Maior gasto categoria' : maior_gasto[0],
 		'Maior gasto valor' : maior_gasto[1]
 		}
-		
+
 		json.append(deputado_json)
-	
-	return jsonify(json) 
-					
+
+	return jsonify(json)
+
 if __name__ == "__main__":
     app.run(debug=True)

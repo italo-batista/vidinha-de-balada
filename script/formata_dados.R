@@ -1,5 +1,6 @@
 library(readr)
 library(dplyr)
+library(tidyr)
 options(scipen = 50)
 
 # retorna um data frame com resumo mensal dos gastos de cada deputado
@@ -333,9 +334,8 @@ cria_tabela_gastos_empresas = function(dados, empresas) {
     group_by(idecadastro, numAno, numMes, txtCNPJCPF, txtFornecedor, nossas_categorias, idEmpresa) %>%
     summarise(total = sum(vlrLiquido))
   
-  #tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
+  tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
   
-
   names(tabela_gastos_empresas)[2:3] = c("ano", "mes")
   
   return(tabela_gastos_empresas)
@@ -376,6 +376,7 @@ cria_ganhadores_selos = function(tabela_6_gastos_mensal, tabela_final_votacoes){
     mutate("mediana" = median(valor)) %>%
     filter(valor > mediana)
   
+  ganhadores_selos = ganhadores_selos %>% select(idecadastro, numMes, numAno, categoria)
   return(ganhadores_selos)
   
   # mediana_gastos = tabela_6_gastos_mensal %>%
