@@ -12,8 +12,21 @@
               scope.resultado = res.data;
             })
           }
-          
+
           scope.buscaNome();
+          
+          $(document).bind('click', function(event){
+            var isClickedElementChildOfPopup = element
+                .find(event.target)
+                .length > 0;
+
+            if (isClickedElementChildOfPopup)
+                return;
+
+            scope.$apply(function(){
+                scope.nome = '';
+            });
+          });
         }
       }
   })
