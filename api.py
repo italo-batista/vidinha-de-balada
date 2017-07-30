@@ -12,22 +12,16 @@ from flask import Flask, jsonify, request
 # needed to install:
 # 	sudo apt-get install python-mysqldb
 #	sudo pip install mysql-python
-
+#
 # use this material:
 # http://blog.cloudoki.com/getting-started-with-restful-apis-using-the-flask-microframework-for-python/
 
-# other links:
-#	http://www.roblayton.com/2015/04/creating-python-flask-crud-api-with.html
-#	http://www.roblayton.com/2015/04/connecting-python-script-to-mysql.html
-#	https://github.com/jigyasa-grover/RESTful-API-using-Python-Flask-MySQL
-
-#oi bb
 # Config --------------------------------------------------------------
 
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:PASSWORD@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Pesquisas@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 mysql = SQLAlchemy(app)
@@ -39,12 +33,6 @@ with app.app_context():
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-def force_decode(string, codecs=['utf8', 'cp1252']):
-    for i in codecs:
-        try:
-            return string.decode(i)
-        except:
-            pass
 
 # Init ----------------------------------------------------------------
 
@@ -66,8 +54,6 @@ categoria_locacao = 'Locação de veículos'
 categoria_combustivel = 'Combustíveis'
 categoria_passagens = 'Passagens aéreas'
 
-def init():
-	pass
 
 # Models --------------------------------------------------------------
 
@@ -170,36 +156,41 @@ class Empresa(mysql.Model):
 
 # Routes --------------------------------------------------------------
 
-@app.route("/")
-def hello():
-    return "Hello World!"
+# Gastômetro
 
-@app.route('/gasto_anual')
-def getGasto(ano):
-	pass
+def somaGastosAnos(query_gastos):
+	anos = []
+	gastos = []
 
-@app.route('/cotas', methods=['GET'])
-def getCotas():
-    data = Cota.query.all()
+	for gasto in query_gastos:
 
-    data_all = []
+		if (gasto.anoEmissao in anos):
+			index = anos.index(gasto.anoEmissao)
+			gastos[index] = gastos[index] + gasto.valor
+		else:
+			anos.append(gasto.anoEmissao)
+			gastos.append(gasto.valor)
 
-    for cota in data:
-        data_all.append([cota.uf, cota.cota])
+	tam = len(anos)
+	json = []
 
-    return jsonify(cotas=data_all)
+	for i in xrange(tam):
+		json.append({"ano" : anos[i], "valor": gastos[i]})
 
-@app.route('/cota/<uf>', methods=['GET'])
-def getCota(uf):
-	cota = Cota.query.filter_by(uf=uf).first_or_404()
-	data_all = [cota.uf, cota.cota]
-	return jsonify(cotas=data_all)
+	return json
 
+@app.route('/gastos')
+def getGasto():
+	query_gastos = Gasto.query.all()
+	json = somaGastosAnos(query_gastos)
+	
+	return jsonify(json)
+			
 
 # Perfil
 
 @app.route('/buscaDeputado/<nome>', methods=['GET'])
-def getDeputado(nome):
+def buscadoDeputados(nome):
 	data = Deputado.query.all()
 
 	data_all = []
@@ -337,9 +328,7 @@ def getPerfilDeputado(id):
 	'Partido' : deputado.partidoAtual,
 	'UF' : deputado.uf,
 	'Cota' : cota_uf,
-
 	'Total gastos' : total_gastos,
-	
 	'Alimentação' : gasto_alimentacao,
 	'Escritório' : gasto_escritorio,
 	'Divulgação de atividade parlamentar' : gasto_divulgacao,
@@ -469,4 +458,6 @@ def top10():
 	return jsonify(json)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 3000))
+    app.debug = True
+    app.run(host='0.0.0.0', port=port)
