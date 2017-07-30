@@ -1,30 +1,34 @@
-<div class="container">
-  <div class="headline" ng-show="ctrl.total > 0">
-    <p class="seletor-ano">
-      <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()"><span class="glyphicon glyphicon-chevron-left"></span></a>
-      {{ctrl.anoSelecionado}}
-      <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()"><span class="glyphicon glyphicon-chevron-right"></span></a>
-    </p>
-    <p class="headline-title">
-      <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
-    </p>
-    <p>foram gastos com a <br>Cota para exercício da atividade parlamentar apenas em <strong>{{ctrl.anoSelecionado}}</strong></p>
-  </div>
-  <div class="text-carousel text-center">
-    Isso equivale à cerca de <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000"></span>
-    <!-- <ol class="carousel-indicators">
-      <li class="active"></li>
-      <li></li>
-      <li></li>
-    </ol> -->
-  </div>
+<div class="container corpo">
+    <div class="gastometro">
+      <div class="headline" ng-show="ctrl.total > 0">
+        <h4 class="font-b">Gastômetro <a href="#" data-toggle="tooltip" title="Navegue e descubra o total gasto pelos deputados ao longo dos anos!"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <p class="seletor-ano">
+          <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()"><span class="glyphicon glyphicon-chevron-left font-c"></span></a>
+          <span class="font-c">{{ctrl.anoSelecionado}}</span>
+          <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()"><span class="glyphicon glyphicon-chevron-right font-c"></span></a>
+        </p>
+        <p class="headline-title font-d">
+          <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
+        </p>
+      </div>
+      <div class="text-carousel text-center font-a" ng-show="ctrl.total > 0">
+        Isso equivale à cerca de <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000" class="font-e"></span>
+        <!-- <ol class="carousel-indicators">
+          <li class="active"></li>
+          <li></li>
+          <li></li>
+        </ol> -->
+      </div>
+    </div>
 
-</div>
-
-<div class="content">
-  <div class="container">
-    <h1 class="text-center">Os 10 mais #estourados</h1>
-    <br>
-    <card-deputado deputado="deputado" ng-repeat="deputado in ctrl.deputados"></card-deputado>
+  <div class="content-inverse top">
+    <div class="container">
+      <h1 class="main-title text-center font-i">Top 10 gastadores</h1>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1" ng-repeat="deputado in ctrl.deputados">
+          <card-deputado deputado="deputado"></card-deputado>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

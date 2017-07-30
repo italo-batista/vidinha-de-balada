@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     secret: 'secret.json'
   });
 
-//  require('fs').readFileSync('/home/jeffersonrpn/.ssh/id_rsa');
+  //  require('fs').readFileSync('/home/jeffersonrpn/.ssh/id_rsa');
 
   // Configurable paths for the application
   var appConfig = {

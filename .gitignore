@@ -7,3 +7,4 @@
 /web/.tmp
 /web/secret.json
 .Rproj.user
+.DS_Store
