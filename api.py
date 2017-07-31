@@ -43,16 +43,30 @@ sys.setdefaultencoding('utf8')
 
 # Init ----------------------------------------------------------------
 
-now = datetime.datetime.now()
-if now.month == 1:
-	mesPassado = 12
-	ano = now.year - 1
-else:
-	mesPassado = now.month - 1
-	ano = now.year
+# Define ultimo mes/ano
+	
+connection = engine.connect()
 
-	mesPassado = 03
-	ano = 2016
+mGastos = connection.execute('select max(mesEmissao) from gastos where anoEmissao = (select max(anoEmissao) from gastos)').first()[0]
+aGastos = connection.execute('select max(anoEmissao) from gastos').first()[0]
+mSessoes = connection.execute('select max(mes) from sessoesMesDeputado where ano = (select max(ano) from sessoesMesDeputado);').first()[0]
+aSessoes = connection.execute('select max(ano) from sessoesMesDeputado').first()[0]
+
+if (aGastos == aSessoes):
+	mesPassado = min([mGastos, mSessoes])
+	ano = aGastos
+else:
+	anoMax = min([aGastos, aSessoes])
+	if (anoMax == aSessoes):
+		mesPassado = mSessoes
+		ano = aSessoes
+	else:
+		mesPassado = mGastos
+		ano = aGastos
+		
+connection.close()	
+
+# Variáveis
 
 categoria_alimentacao = 'Alimentação'
 categoria_escritorio = 'Escritório'
