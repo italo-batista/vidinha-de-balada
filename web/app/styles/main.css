@@ -25,10 +25,11 @@ a:hover,
   text-align: center;
 }
 
-.gastometro {
+.sessao {
   padding-bottom: 40px;
   padding-top: 40px;
   background-color: #61397B;
+  margin-bottom: 20px;
 }
 
 h4 > .glyphicon {
@@ -50,15 +51,6 @@ h4 > .glyphicon {
   .headline-title {
     font-size: 24px;
   }
-}
-
-.content {
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
-
-.content-inverse {
-  background-color: #573C82;
 }
 
 .axis--x path {
@@ -103,7 +95,6 @@ h4 > .glyphicon {
 }
 
 .main-title {
-  margin-top: 50px;
   margin-bottom: 50px;
 }
 
@@ -262,11 +253,6 @@ h4 > .glyphicon {
 
 .glyphicon {
     font-size: 14px;
-}
-
-.top {
-  background-color: #61397B;
-  margin-top: 20px;
 }
 
 .font-a {
