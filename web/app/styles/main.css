@@ -25,26 +25,30 @@ a:hover,
   text-align: center;
 }
 
-.headline-title {
-  font-size: 5em;
-}
-
 .gastometro {
   padding-bottom: 40px;
   padding-top: 40px;
   background-color: #61397B;
 }
 
-.call-to-action {
-}
-
 h4 > .glyphicon {
   font-size: 14px;
 }
 
+.headline-title {
+  font-size: 52px;
+  font-weight: bold;
+}
+
+@media only screen and (max-width : 640px) {
+  .headline-title {
+    font-size: 32px;
+  }
+}
+
 @media only screen and (max-width : 320px) {
   .headline-title {
-    font-size: 1.8em;
+    font-size: 24px;
   }
 }
 
@@ -258,10 +262,6 @@ h4 > .glyphicon {
 
 .glyphicon {
     font-size: 14px;
-}
-
-.corpo {
-  background-color: #4B4B4D;
 }
 
 .top {

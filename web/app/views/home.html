@@ -1,18 +1,21 @@
-<div class="container corpo">
+<div class="container">
     <div class="gastometro">
       <div class="headline" ng-show="ctrl.total > 0">
-        <h4 class="font-b">Gastômetro <a href="#" data-toggle="tooltip" title="Navegue e descubra o total gasto pelos deputados ao longo dos anos!"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+        <h4 class="font-b">Gastômetro <a data-toggle="tooltip" title="Gasto total com atitivade parlamentar em {{ctrl.anoSelecionado}}"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
         <p class="seletor-ano">
           <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()"><span class="glyphicon glyphicon-chevron-left font-c"></span></a>
           <span class="font-c">{{ctrl.anoSelecionado}}</span>
           <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()"><span class="glyphicon glyphicon-chevron-right font-c"></span></a>
         </p>
-        <p class="headline-title font-d">
+        <p class="headline-title">
           <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
         </p>
       </div>
       <div class="text-carousel text-center font-a" ng-show="ctrl.total > 0">
-        Isso equivale à cerca de <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000" class="font-e"></span>
+        Isso equivale à cerca de
+        <p>
+          <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000" class="font-e"></span>
+        </p>
         <!-- <ol class="carousel-indicators">
           <li class="active"></li>
           <li></li>
