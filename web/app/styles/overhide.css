@@ -1,11 +1,43 @@
-.btn-default {
-    color: #fff;
-    background: none;
-    border-color: #fff;
+.navbar-inverse {
+  background-color: #463066;
+  border: #463066;
 }
 
-.btn-lg, .btn-group-lg > .btn {
-    border-radius: 4px;
+.navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+}
+
+.input-group-inverse > .input-group-addon {
+  color: #ffffff;
+  background: none;
+}
+
+.input-group-inverse > .input-group-addon {
+  color: #ffffff;
+  background: none;
+  border: none;
+}
+.form-control-inverse {
+  color: #ffffff;
+  background: none;
+  border: none;
+  border-bottom: solid 2px #ffffff;
+
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.form-control-inverse:focus {
+  border-color: #FF4E81;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: #ffffff;
+  background-color: #61397B;
 }
 
 .font-j {
