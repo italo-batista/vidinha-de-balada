@@ -2,6 +2,6 @@ Flask
 flask_cors
 gunicorn
 flask_limiter
-Flask-SQLAlchemy==1.0
+Flask-SQLAlchemy==2.2
 unidecode
 mysql-python

@@ -7,11 +7,15 @@ import datetime
 import sys, os
 import operator
 from unidecode import unidecode
-from flask.ext.sqlalchemy import SQLAlchemy
+#from flask.ext.sqlalchemy import SQLAlchemy
+import flask_sqlalchemy._compat
 from flask import Flask, jsonify, request
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+#from sqlalchemy.ext.declarative import declarative_base
+
+from sqlalchemy import MetaData
+from flask_sqlalchemy import SQLAlchemy
 
 # Needed to install:
 # 	sudo apt-get install python-mysqldb
@@ -482,6 +486,7 @@ def top10():
 
 # Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
+    #port = int(os.environ.get('PORT', 5000))
     app.debug = True
-    app.run(host='127.0.0.1', port=port)
+    #app.run(host='127.0.0.1', port=port)
+    app.run()
