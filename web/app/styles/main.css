@@ -16,6 +16,12 @@ a:hover,
   color: #fff;
 }
 
+a.link-inverse:hover,
+a.link-inverse:focus,
+a.link-inverse:active {
+  color: #ffffff;
+}
+
 .header {
   height: 170px;
   background-color: #463066;

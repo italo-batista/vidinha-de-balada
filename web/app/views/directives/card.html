@@ -7,7 +7,7 @@
 
       <div ng-class="'card'">
         <div class="card-head">
-          <a ui-sref="perfil({id: deputado.Id})">{{ deputado.nome }}</a>
+          <a class="link-inverse" ui-sref="perfil({id: deputado.Id})">{{ deputado.nome }}</a>
         </div>
         <div class="card-body">
           <div class="row">
@@ -75,8 +75,8 @@
             </div>
           </div>
           <div  ng-click="hide()" class="card-exp">
-            <span class="glyphicon glyphicon-chevron-up" ng-show="!isVisible"></span> <br/>
             <span ng-show="isVisible"> + </span> <span ng-show="!isVisible"> - </span>  DETALHES <br/>
+            <span class="glyphicon glyphicon-chevron-up" ng-show="!isVisible"></span>
             <span class="glyphicon glyphicon-chevron-down" ng-show="isVisible"></span>
           </div>
 
