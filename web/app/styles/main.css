@@ -366,6 +366,10 @@ footer {
   background-color: #61397B;
 }
 
+a.icone {
+  text-decoration: none;
+}
+
 .icone-lg {
   font-size: 3.5em;
 }

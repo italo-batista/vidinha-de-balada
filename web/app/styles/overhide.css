@@ -1,3 +1,8 @@
+a:hover,
+a:focus {
+    color: #FF4E81;
+}
+
 .navbar-inverse {
   background-color: #463066;
   border: #463066;
