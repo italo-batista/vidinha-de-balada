@@ -10,6 +10,7 @@ from unidecode import unidecode
 #from flask.ext.sqlalchemy import SQLAlchemy
 import flask_sqlalchemy._compat
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 #from sqlalchemy.ext.declarative import declarative_base
@@ -29,12 +30,13 @@ from flask_sqlalchemy import SQLAlchemy
 # Config --------------------------------------------------------------
 
 app = Flask(__name__)
+CORS(app)
 
 # MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:pass@localhost/vidinha_balada?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/vidinha_balada?charset=utf8'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-engine = create_engine("mysql://root:pass@localhost/vidinha_balada?charset=utf8", encoding='utf8')
+engine = create_engine("mysql://root:root@localhost/vidinha_balada?charset=utf8", encoding='utf8')
 
 mysql = SQLAlchemy(app)
 mysql.init_app(app)
@@ -48,7 +50,7 @@ sys.setdefaultencoding('utf8')
 # Init ----------------------------------------------------------------
 
 # Define ultimo mes/ano
-	
+
 connection = engine.connect()
 
 mGastos = connection.execute('select max(mesEmissao) from gastos where anoEmissao = (select max(anoEmissao) from gastos)').first()[0]
@@ -67,8 +69,8 @@ else:
 	else:
 		mesPassado = mGastos
 		ano = aGastos
-		
-connection.close()	
+
+connection.close()
 
 # Variáveis
 
@@ -190,7 +192,7 @@ def getGasto(ano):
 	json = []
 	for row in result:
 		json.append(row[0])
-	
+
 	connection.close()
 	return jsonify(json)
 
