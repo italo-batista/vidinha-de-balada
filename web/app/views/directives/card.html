@@ -35,12 +35,12 @@
             </div>
             <div class="col-md-3 text-center">
               <div class="selo-primary selo-lg">
-                <span class="icon-alimento" ng-if="maiorGasto('alimento')"></span>
-                <span class="icon-combustivel" ng-if="maiorGasto('combustivel')"></span>
-                <span class="icon-locacao" ng-if="maiorGasto('locacao')"></span>
-                <span class="icon-passagem" ng-if="maiorGasto('passagem')"></span>
-                <span class="icon-escritorio" ng-if="maiorGasto('escritorio')"></span>
-                <span class="icon-divulgacao" ng-if="maiorGasto('divulgacao')"></span>
+                <span class="icone-lg icon-alimento" ng-if="maiorGasto('alimento')"></span>
+                <span class="icone-lg icon-combustivel" ng-if="maiorGasto('combustivel')"></span>
+                <span class="icone-lg icon-locacao" ng-if="maiorGasto('locacao')"></span>
+                <span class="icone-lg icon-passagem" ng-if="maiorGasto('passagem')"></span>
+                <span class="icone-lg icon-escritorio" ng-if="maiorGasto('escritorio')"></span>
+                <span class="icone-lg icon-divulgacao" ng-if="maiorGasto('divulgacao')"></span>
               </div>
               <p class="font-b">{{deputado.Maior_gasto_valor | currency:'R$ '}}</p>
             </div>
@@ -54,22 +54,22 @@
           <div class="transformable" ng-class="{'small':isVisible, 'big':!isVisible}">
             <h4 class="text-center" >Como usou a cota:</h4>
             <div class="row">
-              <div class="col-xs-4 col-md-2 text-center"><span class="icon-alimento"></span>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-alimento"></span>
                 <p class="font-l">{{deputado.Gastos['Alimentação'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icon-combustivel"></span>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-combustivel"></span>
                 <p class="font-l">{{deputado.Gastos['Combustíveis'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icon-locacao"></span>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-locacao"></span>
                 <p class="font-l">{{deputado.Gastos['Locação de veículos'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icon-passagem"></span>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-passagem"></span>
                 <p class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icon-escritorio"></span>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-escritorio"></span>
                 <p class="font-l">{{deputado.Gastos['Escritório'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icon-divulgacao"></span>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-divulgacao"></span>
                 <p class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</p>
               </div>
             </div>

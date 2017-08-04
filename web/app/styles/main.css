@@ -317,15 +317,13 @@ footer {
   margin-top: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  background-color: #61397B;
-}
-.footer-logo {
-    padding: 5px;
+  background-color: #463066;
 }
 
 .footer-line {
-  margin-top: 0;
-  margin-bottom: 0;
+  border-bottom: solid 2px #ffffff;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .resultado-busca {
@@ -359,7 +357,7 @@ footer {
   font-size: 28px;
 }
 
-.selo-lg > [class^="icon-"] {
+.selo-lg > .icone-lg {
   display: block;
   margin-top: 8px;
 }
@@ -368,8 +366,12 @@ footer {
   background-color: #61397B;
 }
 
-.footer-text {
-  float: right;
+.icone-lg {
+  font-size: 3.5em;
+}
+
+.icone-sm {
+  font-size: 2em;
 }
 
 .sobre {
