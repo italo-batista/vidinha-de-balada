@@ -32,11 +32,14 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 CORS(app)
 
-# MySQL configurations
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/vidinha_balada?charset=utf8'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
+password = 'pass'
+config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
-engine = create_engine("mysql://root:root@localhost/vidinha_balada?charset=utf8", encoding='utf8')
+# MySQL configurations
+app.config['SQLALCHEMY_DATABASE_URI'] = config_path
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+engine = create_engine(config_path, encoding='utf8')
 
 mysql = SQLAlchemy(app)
 mysql.init_app(app)
@@ -182,6 +185,19 @@ class Empresa(mysql.Model):
 
 
 # Routes --------------------------------------------------------------
+
+# Mes/Ano dos dados
+
+@app.route('/dadosData')
+def getDataDados():
+
+	json = {
+	'mes' : mesPassado,
+	'ano' : ano
+	}
+	
+	return jsonify(json)
+
 
 # Gastômetro
 
