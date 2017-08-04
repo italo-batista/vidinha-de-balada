@@ -37,7 +37,7 @@ h4 > .glyphicon {
 }
 
 .headline-title {
-  font-size: 52px;
+  font-size: 70px;
   font-weight: bold;
 }
 
@@ -114,6 +114,10 @@ h4 > .glyphicon {
   }
 }
 
+.card-line {
+  border-top: solid 2px #ffffff;
+}
+
 .card-number {
   float: left;
   width: 60px;
@@ -137,12 +141,11 @@ h4 > .glyphicon {
 
 .card-subhead {
   display: flex;
-  padding-left: 20px;
 }
 
 .card-img {
-  width: 114px;
-  height: 114px;
+  width: 120px;
+  height: 120px;
   overflow: hidden;
   border-radius: 50%;
   margin-top: -52px;
@@ -171,6 +174,13 @@ h4 > .glyphicon {
   text-align: center;
   font-weight: bold;
   font-size: 0.8em;
+  cursor: pointer;
+}
+
+@media only screen and (max-width : 990px) {
+  .card-text {
+    text-align: center;
+  }
 }
 
 .categorias {
@@ -183,11 +193,6 @@ h4 > .glyphicon {
   .categorias {
     display: block;
   }
-}
-
-.categoria {
-  font-size: 0.8em;
-  text-align: center;
 }
 
 .tick > line,
@@ -265,12 +270,12 @@ h4 > .glyphicon {
 }
 
 .font-c {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: normal;
 }
 
 .font-d {
-  font-size: 52px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -280,7 +285,7 @@ h4 > .glyphicon {
 }
 
 .font-f {
-  font-size: 89px;
+  font-size: 54px;
 }
 
 .font-g {
@@ -339,6 +344,30 @@ footer {
   padding-top: 15px;
 }
 
+.selo-lg {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 50%;
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.selo-lg > strong {
+  font-size: 28px;
+}
+
+.selo-lg > [class^="icon-"] {
+  display: block;
+  margin-top: 8px;
+}
+
+.selo-primary {
+  background-color: #61397B;
+}
+
 .footer-text {
   float: right;
 }
@@ -358,40 +387,24 @@ footer {
 }
 
 .transformable {
-    -webkit-transition: height 500ms linear;
-    -moz-transition: height 500ms linear;
-    -o-transition: height 500ms linear;
-    -ms-transition: height 500ms linear;
-    transition: height 500ms linear;
+  -webkit-transition: height 0.25s linear;
+  -moz-transition: height 0.25s linear;
+  -o-transition: height 0.25s linear;
+  -ms-transition: height 0.25s linear;
+  transition: height 0.25s linear;
 
+  height: 150px;
+  overflow: hidden;
+}
+
+@media only screen and (max-width : 320px) {
+  .transformable {
+    height: 250px;
+  }
 }
 
 .small {
-    height:0px;
-}
-
-.big {
-    height:150px;
-}
-
-.procedure-details {
-    max-height: 150px;
-    -webkit-transition: height 1000ms linear;
-    -moz-transition: height 1000ms linear;
-    -o-transition: height 1000ms linear;
-    -ms-transition: height 1000ms linear;
-    transition: height 1000ms linear;
-    overflow: hidden;
-}
-
-.small2 {
-    height: 0px;
-    -webkit-transition: height 300ms linear;
-    -moz-transition: height 300ms linear;
-    -o-transition: height 300ms linear;
-    -ms-transition: height 300ms linear;
-    transition: height 300ms linear;
-
+  height: 0px;
 }
 
 .share {
