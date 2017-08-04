@@ -378,16 +378,6 @@ a.icone {
   font-size: 2em;
 }
 
-.sobre {
-  background-color: #61397B;
-  padding: 20px;
-  text-align: center;
-}
-
-.sobre-info {
-  padding-top: 20px;
-}
-
 .equipe {
   margin-top: 20px;
 }
@@ -413,6 +403,33 @@ a.icone {
   height: 0px;
 }
 
+.galeria-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.galeria-titulo {
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.galeria-subtitulo {
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 0;
+  text-align: center;
+}
+
+@media only screen and (min-width : 990px) {
+  .galeria-imagem {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+}
 .share {
   padding-top: 20px;
   padding-left: 30px;
