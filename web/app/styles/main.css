@@ -100,7 +100,8 @@ h4 > .glyphicon {
   color: #081F2C;
 }
 
-.main-title {
+.rank-filter {
+  margin-top: 50px;
   margin-bottom: 50px;
 }
 
