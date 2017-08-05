@@ -34,7 +34,7 @@ a.link-inverse:active {
 .sessao {
   padding-bottom: 40px;
   padding-top: 40px;
-  background-color: #61397B;
+  background-color: #573C82;
   margin-bottom: 20px;
 }
 
@@ -105,12 +105,12 @@ h4 > .glyphicon {
 }
 
 .perfil-card {
-  background-color: #522E61;
+  background-color: #463066;
   margin-top: 20px;
 }
 
 .card {
-  background-color: #522E61;
+  background-color: #463066;
   margin-bottom: 40px;
 }
 
@@ -131,7 +131,7 @@ h4 > .glyphicon {
   border-radius: 50%;
   margin-top: -30px;
   margin-left: -15px;
-  background-color: #522E61;
+  background-color: #463066;
   font-weight: bold;
   font-size: 1.5em;
   line-height: 60px;
@@ -209,7 +209,7 @@ h4 > .glyphicon {
 }
 
 .card-lg-body {
-  background-color: #522E61;
+  background-color: #463066;
   padding: 20px;
 }
 
@@ -381,7 +381,7 @@ footer {
 }
 
 .selo-primary {
-  background-color: #61397B;
+  background-color: #573C82;
 }
 
 a.icone {

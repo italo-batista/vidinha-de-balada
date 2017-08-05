@@ -47,7 +47,7 @@ a:focus {
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   color: #ffffff;
-  background-color: #61397B;
+  background-color: #573C82;
 }
 
 .font-j {
@@ -55,8 +55,8 @@ a:focus {
 }
 
 .table-bordered {
-  border: solid 4px #522E61;
-  background-color: #61397B;
+  border: solid 4px #463066;
+  background-color: #573C82;
 }
 
 .table-bordered > thead > tr > th,
@@ -65,7 +65,7 @@ a:focus {
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-  border: solid 4px #522E61;
+  border: solid 4px #463066;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
