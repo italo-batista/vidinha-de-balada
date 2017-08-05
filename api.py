@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = 'pass'
+password = ''
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -196,7 +196,7 @@ def getDataDados():
 	'mes' : mesPassado,
 	'ano' : ano
 	}
-	
+
 	return jsonify(json)
 
 
@@ -253,10 +253,10 @@ def getEmpresasParceiras(id):
 	for gasto in data:
 		chave = gasto.idEmpresa
 		if(chave not in data_all.keys()):
-			data_all[chave] = gasto.valor
+			data_all[chave] = [gasto.valor, gasto.cnpj, gasto.nomeFornecedor]
 			categorias[chave] = [gasto.nomeCategoria]
 		else:
-			data_all[chave] += gasto.valor
+			data_all[chave][0] += gasto.valor
 			if(gasto.nomeCategoria not in categorias[chave]):
 				categorias[chave].append(gasto.nomeCategoria)
 
@@ -264,7 +264,7 @@ def getEmpresasParceiras(id):
 	n = 0
 	while (n < 10 and len(data_all) > 0):
 		max_val = max(data_all.iteritems(), key=operator.itemgetter(1))[0]
-		parceiras.append({'id':max_val, 'valor': data_all[max_val], 'categorias': categorias[max_val]})
+		parceiras.append({'id':max_val, 'valor': data_all[max_val][0], 'cnpj': data_all[max_val][1], 'empresa': data_all[max_val][2], 'categorias': categorias[max_val]})
 		data_all.pop(max_val)
 		n += 1
 
@@ -343,12 +343,13 @@ def somaPresencas(query_presencas):
 def getPerfilDeputado(id):
 
 	deputado = Deputado.query.filter_by(id=id).first()
-	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_total = Gasto.query.filter_by(idDeputado=id).all()
+	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao).all()
+	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio).all()
+	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao).all()
+	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao).all()
+	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel).all()
+	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens).all()
 	query_presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id).all()
 	query_sessoes_total = SessoesMes.query.all()
 
@@ -362,7 +363,7 @@ def getPerfilDeputado(id):
 	sessoes_total = somaPresencas(query_sessoes_total)
 
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
-	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens
+	total_gastos = somaGastosTotais(query_gasto_total)
 
 	cota_uf = Cota.query.get(deputado.uf).cota
 

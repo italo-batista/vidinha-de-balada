@@ -12,6 +12,11 @@ a:focus {
     color: #ffffff;
 }
 
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #FF4E81;
+}
+
 .input-group-inverse > .input-group-addon {
   color: #ffffff;
   background: none;
@@ -42,16 +47,20 @@ a:focus {
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   color: #ffffff;
-  background-color: #61397B;
+  background-color: #573C82;
 }
 
 .font-j {
   font-size: 11px;
 }
 
+.table-inverse {
+  background-color: #463066;
+}
+
 .table-bordered {
-  border: solid 4px #522E61;
-  background-color: #61397B;
+  border: solid 4px #463066;
+  background-color: #573C82;
 }
 
 .table-bordered > thead > tr > th,
@@ -60,9 +69,17 @@ a:focus {
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-  border: solid 4px #522E61;
+  border: solid 4px #463066;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
   border-bottom-width: 2px;
+}
+
+.table-row-featured {
+  background-color: #ff4e81;
+}
+
+.table > tbody > tr > td.table-row-featured {
+  vertical-align: middle;
 }

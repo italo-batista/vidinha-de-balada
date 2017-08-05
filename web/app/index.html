@@ -14,26 +14,9 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/icons.css">
-    <link rel="stylesheet" href="styles/fonts2.css">
     <link rel="stylesheet" href="styles/overhide.css">
     <!-- endbuild -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
-    <!-- START simplesharebuttons.com/plus meta data -->
-    <!-- simplesharebuttons.com/plus opengraph share details -->
-    <meta property="og:title" content="Fique de olho no seu deputado! - Vidinha de Balada"/>
-    <meta property="og:type" content="article"/>
-    <meta property="og:description" content="Acompanhe se o deputado que você elegeu está levando uma verdadeira Vidinha de Badala utilizando o dinheiro do contribuinte! Inscreva-se no perfil do deputado que tem curiosidade e receba relatórios mensais sobre seus gastos!"/>
-    <meta property="og:image" content="http://i.imgur.com/rwtdSTH.png"/>
-    <!-- simplesharebuttons.com/plus twitter share details -->
-    <meta name="twitter:title" content="Fique de olho no seu deputado! - Vidinha de Balada">
-    <meta name="twitter:description" content="Acompanhe se o deputado que você elegeu está levando uma verdadeira Vidinha de Badala utilizando o dinheiro do contribuinte! Inscreva-se no perfil do deputado que tem curiosidade e receba relatórios mensais sobre seus gastos!">
-    <meta name="twitter:image:src" content="http://i.imgur.com/rwtdSTH.png">
-    <!-- simplesharebuttons.com/plus google+ share details -->
-    <meta itemprop="name" content="Fique de olho no seu deputado! - Vidinha de Balada">
-    <meta itemprop="description" content="Acompanhe se o deputado que você elegeu está levando uma verdadeira Vidinha de Badala utilizando o dinheiro do contribuinte! Inscreva-se no perfil do deputado que tem curiosidade e receba relatórios mensais sobre seus gastos!">
-    <meta itemprop="image" content="http://i.imgur.com/rwtdSTH.png">
-    <!-- END simplesharebuttons.com/plus meta data -->
 
   </head>
   <body ng-app="baladaApp">
@@ -45,7 +28,7 @@
     <div class="header">
       <div class="container">
         <div class="row">
-          <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4 logo">
+          <div class="col-sm-4 col-sm-offset-4 logo">
             <a ui-sref="home"><img src="images/logo.png" height="106" width="186"></img></a>
           </div>
         </div>
@@ -54,16 +37,26 @@
 
     <nav class="navbar navbar-inverse menu">
       <div class="container">
-        <form class="navbar-form navbar-right">
-          <div class="form-group">
-            <busca-por-nome/>
-          </div>
-        </form>
-        <ul class="nav navbar-nav navbar-left nav-text">
-          <li><a ui-sref="home">HOME</a></li>
-          <li><a ui-sref="sobre">SOBRE</a></li>
-          <li><a ui-sref="contato">CONTATO</a></li>
-        </ul>
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-principal" aria-expanded="false">
+            <span class="sr-only">Menu</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="menu-principal">
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <busca-por-nome/>
+            </div>
+          </form>
+          <ul class="nav navbar-nav navbar-left nav-text">
+            <li><a ui-sref="home">HOME</a></li>
+            <li><a ui-sref="sobre">SOBRE</a></li>
+            <li><a ui-sref="contato">CONTATO</a></li>
+          </ul>
+        </div>
       </div>
     </nav>
 
@@ -95,6 +88,7 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/angular-locale-pt-br/angular-locale_pt-br.js"></script>
+    <script src="bower_components/angular-socialshare/dist/angular-socialshare.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -108,6 +102,7 @@
         <script src="scripts/directives/countTo.drct.js"></script>
         <script src="scripts/directives/textCarousel.drct.js"></script>
         <script src="scripts/directives/busca.drct.js"></script>
+        <script src="scripts/filters/cnpj.ftr.js"></script>
         <!-- endbuild -->
 
     <script>

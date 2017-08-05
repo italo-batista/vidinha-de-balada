@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-  .module('baladaApp', ['ui.router'])
+  .module('baladaApp', ['ui.router', '720kb.socialshare'])
   .constant('RESTAPI', 'http://vidinhadebalada.com/api/')
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
