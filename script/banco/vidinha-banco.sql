@@ -101,8 +101,10 @@ CREATE TABLE usuariosInscritos (
 	idCadastro INT(4) NOT NULL,
 	nome VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
+	idDeputado VARCHAR(7) NOT NULL,
 
-	PRIMARY KEY (idCadastro)
+	PRIMARY KEY (idCadastro),
+	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
