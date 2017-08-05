@@ -189,16 +189,28 @@ h4 > .glyphicon {
   }
 }
 
-.categorias {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
+.card-lg {
+  margin-bottom: 20px;
 }
 
-@media only screen and (max-width : 320px) {
-  .categorias {
-    display: block;
-  }
+.card-lg-head {
+  background-color: #ff4e81;
+  padding: 30px 20px;
+  font-size: 1.5em;
+}
+
+.card-lg-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: none;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.card-lg-body {
+  background-color: #522E61;
+  padding: 20px;
 }
 
 .tick > line,
