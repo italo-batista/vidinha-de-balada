@@ -62,6 +62,13 @@ write.table(tabela_info_deputados, "tabela_info_deputados.csv", row.names = F, c
  ganhadores_selos = cria_ganhadores_selos(tabela_6_gastos_mensal, tabela_final_gastos)
 write.table(ganhadores_selos, "ganhadores_selos.csv", row.names = F, col.names = F, sep=",")
 
+tabela_selos_presencas = cria_tabela_selos_presencas(tabela_final_gastos, tabela_final_votacoes, sessoes_mensal)
+write.table(tabela_selos_presencas, "tabela_selos_presencas.csv", row.names = F, col.names = F, sep=",")
+
+tabela_selos_cota = cria_tabela_selos_cota(tabela_final_gastos)
+write.table(tabela_selos_cota, "tabela_selos_cota.csv", row.names = F, col.names = F, sep=",")
+
+
 
 #rm(tabela_info_deputados, tabela_gastos_empresas, empresas, sessoes_mensal,tabela_final_votacoes)
 #rm(tabela_6_gastos_mensal, tabela_final_gastos, tabela_gasto_total_anos, tabela_info_pessoais,twitter_profiles, dados_gastos, info_deputados, votacoes)
