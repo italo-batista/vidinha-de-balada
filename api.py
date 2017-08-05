@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = 'pass'
+password = ''
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -195,7 +195,7 @@ def getDataDados():
 	'mes' : mesPassado,
 	'ano' : ano
 	}
-	
+
 	return jsonify(json)
 
 
@@ -252,10 +252,10 @@ def getEmpresasParceiras(id):
 	for gasto in data:
 		chave = gasto.idEmpresa
 		if(chave not in data_all.keys()):
-			data_all[chave] = gasto.valor
+			data_all[chave] = [gasto.valor, gasto.cnpj, gasto.nomeFornecedor]
 			categorias[chave] = [gasto.nomeCategoria]
 		else:
-			data_all[chave] += gasto.valor
+			data_all[chave][0] += gasto.valor
 			if(gasto.nomeCategoria not in categorias[chave]):
 				categorias[chave].append(gasto.nomeCategoria)
 
@@ -263,7 +263,7 @@ def getEmpresasParceiras(id):
 	n = 0
 	while (n < 10 and len(data_all) > 0):
 		max_val = max(data_all.iteritems(), key=operator.itemgetter(1))[0]
-		parceiras.append({'id':max_val, 'valor': data_all[max_val], 'categorias': categorias[max_val]})
+		parceiras.append({'id':max_val, 'valor': data_all[max_val][0], 'cnpj': data_all[max_val][1], 'empresa': data_all[max_val][2], 'categorias': categorias[max_val]})
 		data_all.pop(max_val)
 		n += 1
 
