@@ -87,6 +87,29 @@ categoria_locacao = 'Locação de veículos'
 categoria_combustivel = 'Combustíveis'
 categoria_passagens = 'Passagens aéreas'
 
+categoria_alimentacao_id = 1
+categoria_escritorio_id = 2
+categoria_divulgacao_id = 3
+categoria_locacao_id = 4
+categoria_combustivel_id = 5
+categoria_passagens_id = 6
+
+def getCategoriaName(idCategoria):
+	idCategoria = int(idCategoria)
+	ids_categoria = {1: categoria_alimentacao,
+	2: categoria_escritorio,
+	3: categoria_divulgacao,
+	4: categoria_locacao,
+	5: categoria_combustivel,
+	6: categoria_passagens}
+	
+	print '\n\n\n\n'
+	print idCategoria
+	print ids_categoria[idCategoria]
+	print '\n\n\n\n'
+	
+	return ids_categoria[idCategoria]
+	
 
 # Models --------------------------------------------------------------
 
@@ -387,6 +410,27 @@ def getPerfilDeputado(id):
 
 	return jsonify(json)
 
+@app.route('/gastosDetalhes/<id>/<idCategoria>', methods=['GET'])
+def getDetalhesGastos(id, idCategoria):
+	
+	categoria = getCategoriaName(idCategoria)
+	
+	query_gasto = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria).all()
+	
+	gastoscat = []
+	for gasto in query_gasto:
+		
+		json = {
+		'Ano' : gasto.anoEmissao,
+		'Mês' : gasto.mesEmissao,
+		'Fornecedor' : gasto.nomeFornecedor,
+		'Categoria' : gasto.nomeCategoria,
+		'Valor' : gasto.valor
+		}
+		
+		gastoscat.append(json)
+		
+	return jsonify(gastoscat)
 
 # TOP 10
 
@@ -464,9 +508,6 @@ def top10(filterType, value):
 		deputado_id = deputado.id
 		deputado_gasto_total = getGastoMesTotalDeputado(deputado_id)
 		deputado_posicao = i + 1
-
-		print deputado_id
-		print ''
 
 		deputado_obj = Deputado.query.get(deputado_id)
 
