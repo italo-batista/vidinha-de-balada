@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = ''
+password = 'pass'
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -72,6 +72,8 @@ else:
 	else:
 		mesPassado = mGastos
 		ano = aGastos
+if (ano == datetime.date.today().year and mesPassado == datetime.date.today().month):
+	mesPassado = mesPassado - 1
 
 connection.close()
 
