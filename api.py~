@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = 'pass'
+password = ''
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -72,11 +72,8 @@ else:
 	else:
 		mesPassado = mGastos
 		ano = aGastos
-if (ano == datetime.date.today().year and mesPassado == datetime.date.today().month):
-	mesPassado = mesPassado - 1
 
 connection.close()
-
 
 # Variáveis
 
@@ -272,6 +269,26 @@ def getEmpresasParceiras(id):
 
 	return jsonify(parceiras)
 
+
+@app.route('/gastosDetalhes/<id>/<categoria>', methods=['GET'])
+def getDetalhesGastos(id, categoria):
+	query_gasto = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria).all()
+
+	gastoscat = []
+	for gasto in query_gasto:
+		gasto.mesemissao
+		json = {
+		'Ano' : gastos.anoEmissao,
+		'Mês' : gastos.mesEmissao,
+		'Fornecedor' : gastos.nomeFornecedor,
+		'Categoria' : gastos.nomeCategoria,
+		'Valor' : gastos.valor
+		}
+		retorno.append(gasto)
+
+	return jsonify(gastoscat)
+
+
 @app.route('/timelineDeputado/<id>', methods=['GET'])
 def getTimelineDeputado(id):
 	deputado = Deputado.query.filter_by(id=id).first()
@@ -345,13 +362,12 @@ def somaPresencas(query_presencas):
 def getPerfilDeputado(id):
 
 	deputado = Deputado.query.filter_by(id=id).first()
-	query_gasto_total = Gasto.query.filter_by(idDeputado=id).all()
-	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao).all()
-	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio).all()
-	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao).all()
-	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao).all()
-	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel).all()
-	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens).all()
+	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens, mesEmissao=mesPassado, anoEmissao=ano).all()
 	query_presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id).all()
 	query_sessoes_total = SessoesMes.query.all()
 
@@ -365,7 +381,7 @@ def getPerfilDeputado(id):
 	sessoes_total = somaPresencas(query_sessoes_total)
 
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
-	total_gastos = somaGastosTotais(query_gasto_total)
+	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens
 
 	cota_uf = Cota.query.get(deputado.uf).cota
 
@@ -395,78 +411,49 @@ def somaGastosCategoria(query_gasto_categoria):
 	for gasto in query_gasto_categoria:
 		gastoTotal = gastoTotal + gasto.valor
 	return gastoTotal
-		
-def maisGastadores10Id(filterType, value):
-	
-	queryFiltroUF = "gastos.idDeputado in (SELECT id FROM deputado where (uf = \'" + str(value) +"\')) AND " if filterType == "uf" else ""
-	queryFiltroPartido = "gastos.idDeputado in (SELECT id FROM deputado where ( partidoAtual = \'" + str(value) + "\')) AND " if filterType == "partido" else ""
-					
-	ID = 1
-	consulta = ("SELECT (SUM(valor) / "
-					"(SELECT cotas.cota FROM cotas WHERE cotas.uf = "
-					"(SELECT deputado.uf FROM deputado WHERE deputado.id = gastos.idDeputado))) "
-					"AS ranking, "
-					"gastos.idDeputado "
-				"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
-				"GROUP BY (gastos.idDeputado) "
-				"ORDER BY ranking DESC limit 10")
 
-	connection = engine.connect()
-	result = connection.execute(consulta)
-	
-	top_ids = []
-	for row in result:
-		top_ids.append(row[ID])
-		
-	connection.close()
-		
-	return top_ids
+def maisGastadores10(query_gastos):
+	deputados_id = []
+	gastos = []
 
-def get10MaisGastadores(filterType, value):
-	
-	deputados = []
-	ids = maisGastadores10Id(filterType, value)
-	
-	i = 1
-	for idDeputado in ids:
-		if i <= 10:
-			deputado = Deputado.query.filter_by(id=idDeputado).first()	
-			deputados.append(deputado)
-			i += 1
-	
-	return deputados
+	for gasto in query_gastos:
 
-def getGastoMesTotalDeputado(idDeputado):
-	consulta = 'SELECT SUM(valor) FROM gastos WHERE (mesEmissao='+str(mesPassado)+' AND anoEmissao='+str(ano)+' AND idDeputado ='+idDeputado+')'
-	connection = engine.connect()
-	result = connection.execute(consulta)
-	connection.close()
-	
-	for gasto in result: gastoTotal = gasto[0]	
-	return gastoTotal
-	
+		if (gasto.idDeputado in deputados_id):
+			index = deputados_id.index(gasto.idDeputado)
+			gastos[index] = gastos[index] + gasto.valor
+		else:
+			deputados_id.append(gasto.idDeputado)
+			gastos.append(gasto.valor)
+
+	tam = len(deputados_id)
+	deputadoGasto = []
+
+	for i in xrange(tam):
+		tupla = (gastos[i], deputados_id[i])
+		deputadoGasto.append(tupla)
+
+	tops = sorted(deputadoGasto, key=lambda x: x[0], reverse=True)
+	top10 = []
+	for i in range(10):
+		top10.append(tops[i])
+
+	return top10
+
 @app.route("/top10", methods=['GET'])
-def top10Default():
-	NO_FILTER = ""
-	return top10(NO_FILTER, NO_FILTER)
+def top10():
+	query_gastos = Gasto.query.filter_by(mesEmissao=mesPassado, anoEmissao=ano).all()
+	top10 = maisGastadores10(query_gastos)
 
-@app.route("/top10/<filterType>/<value>", methods=['GET'])	
-def top10(filterType, value):
-	
-	top10 = get10MaisGastadores(filterType, value)
-	
 	json = []
+
 	for i in range(len(top10)):
 		deputado = top10[i]
 
 		# info deputado
-		
-		deputado_id = deputado.id
-		deputado_gasto_total = getGastoMesTotalDeputado(deputado_id)
-		deputado_posicao = i + 1
 
-		print deputado_id
-		print ''
+		deputado_id = deputado[1]
+		deputado_gasto_total = deputado[0]
+		deputado_posicao = i + 1
 
 		deputado_obj = Deputado.query.get(deputado_id)
 
@@ -476,11 +463,7 @@ def top10(filterType, value):
 		deputado_uf = deputado_obj.uf
 		deputado_cota_uf = Cota.query.get(deputado_uf).cota
 
-		try: 
-			deputado_presencas = SessoesMesDeputado.query.filter_by(idDeputado=deputado_id, mes=mesPassado, ano=ano).first().quantidadeParticipacoes
-		except:
-			deputado_presencas = 0
-			
+		deputado_presencas = SessoesMesDeputado.query.filter_by(idDeputado=deputado_id, mes=mesPassado, ano=ano).first().quantidadeParticipacoes
 		sessoes_totais = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first().quantidadeSessoes
 
 		# gastos categorias
@@ -507,16 +490,14 @@ def top10(filterType, value):
 		categoria_locacao : gasto_locacao,
 		categoria_passagens : gasto_passagens
 		}
-		
-		gasto_outros = deputado_gasto_total - gasto_alimentacao - gasto_combustivel - gasto_divulgacao - gasto_escritorio - gasto_locacao
+
 		meus_gastos = [
 		(categoria_alimentacao, gasto_alimentacao),
 		(categoria_combustivel, gasto_combustivel),
 		(categoria_divulgacao, gasto_divulgacao),
 		(categoria_escritorio, gasto_escritorio),
 		(categoria_locacao, gasto_locacao),
-		(categoria_passagens, gasto_passagens),
-		("Outros", gasto_outros)
+		(categoria_passagens, gasto_passagens)
 		]
 
 		maior_gasto = sorted(meus_gastos, key=lambda x: x[1], reverse=True)[0]
@@ -540,7 +521,6 @@ def top10(filterType, value):
 		json.append(deputado_json)
 
 	return jsonify(json)
-	
 
 # Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":

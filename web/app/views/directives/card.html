@@ -54,22 +54,22 @@
           <div class="transformable" ng-class="{'small':isVisible, 'big':!isVisible}">
             <h4 class="text-center" >Como usou a cota:</h4>
             <div class="row">
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-alimento"></span>
+              <div class="col-xs-4 col-md-2 text-center" title="Alimentação"><span class="icone-lg icon-alimento"></span>
                 <p class="font-l">{{deputado.Gastos['Alimentação'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-combustivel"></span>
+              <div class="col-xs-4 col-md-2 text-center" title="Combustíveis"><span class="icone-lg icon-combustivel"></span>
                 <p class="font-l">{{deputado.Gastos['Combustíveis'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-locacao"></span>
+              <div class="col-xs-4 col-md-2 text-center" title="Locação de veículos"><span class="icone-lg icon-locacao"></span>
                 <p class="font-l">{{deputado.Gastos['Locação de veículos'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-passagem"></span>
+              <div class="col-xs-4 col-md-2 text-center" title="Passagens aéreas"><span class="icone-lg icon-passagem"></span>
                 <p class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-escritorio"></span>
+              <div class="col-xs-4 col-md-2 text-center" title="Escritório"><span class="icone-lg icon-escritorio"></span>
                 <p class="font-l">{{deputado.Gastos['Escritório'] | currency:'R$ '}}</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-divulgacao"></span>
+              <div class="col-xs-4 col-md-2 text-center" title="Divulgação de atividade parlamentar"><span class="icone-lg icon-divulgacao"></span>
                 <p class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</p>
               </div>
             </div>

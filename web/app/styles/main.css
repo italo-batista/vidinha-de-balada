@@ -34,7 +34,7 @@ a.link-inverse:active {
 .sessao {
   padding-bottom: 40px;
   padding-top: 40px;
-  background-color: #61397B;
+  background-color: #573C82;
   margin-bottom: 20px;
 }
 
@@ -105,12 +105,12 @@ h4 > .glyphicon {
 }
 
 .perfil-card {
-  background-color: #522E61;
+  background-color: #463066;
   margin-top: 20px;
 }
 
 .card {
-  background-color: #522E61;
+  background-color: #463066;
   margin-bottom: 40px;
 }
 
@@ -131,7 +131,7 @@ h4 > .glyphicon {
   border-radius: 50%;
   margin-top: -30px;
   margin-left: -15px;
-  background-color: #522E61;
+  background-color: #463066;
   font-weight: bold;
   font-size: 1.5em;
   line-height: 60px;
@@ -209,7 +209,7 @@ h4 > .glyphicon {
 }
 
 .card-lg-body {
-  background-color: #522E61;
+  background-color: #463066;
   padding: 20px;
 }
 
@@ -381,7 +381,7 @@ footer {
 }
 
 .selo-primary {
-  background-color: #61397B;
+  background-color: #573C82;
 }
 
 a.icone {
@@ -491,4 +491,134 @@ div.tooltip_presenca {
   color: #ff4e81;
   border: 0px;
   pointer-events: none;
+}
+
+.fab {
+  position: fixed;
+  width: 56px;
+  right: 15px;
+  bottom: 15px;
+  margin-left: -28px;
+  z-index: 999;
+}
+
+@media only screen and (min-width : 990px) {
+  .fab {
+    right: -moz-calc(50% - 600px);
+    right: -webkit-calc(50% - 600px);
+    right: -o-calc(50% - 600px);
+    right: calc(50% - 600px);
+  }
+}
+
+.fab:hover .fab-buttons {
+  opacity: 1;
+  visibility: visible;
+}
+
+.fab:hover .fab-buttons__link {
+  transform: scaleY(1) scaleX(1) translateY(-16px) translateX(0px);
+}
+
+.fab-action-button:hover + .fab-buttons .fab-buttons__link:before {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+  transform-origin: right center 0;
+  transition-delay: 0.3s;
+}
+
+.fab-action-button {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 56px;
+  height: 56px;
+  background-color: #ff4e81;
+  border-radius: 50%;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.fab-buttons {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s;
+}
+
+.fab-action-button > span {
+  display: inline-block;
+  padding-top: 14px;
+  padding-left: 14px;
+  font-size: 2em;
+}
+
+.fab-buttons__item {
+  display: block;
+  text-align: center;
+  margin: 12px 0;
+  z-index: 999;
+}
+
+.fab-buttons__link {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  text-decoration: none;
+  background: #4B4B4D;
+  border-radius: 50%;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  transform: scaleY(0.5) scaleX(0.5) translateY(0px) translateX(0px);
+  -moz-transition: .3s;
+  -webkit-transition: .3s;
+  -o-transition: .3s;
+  transition: .3s;
+  color: #ffffff;
+}
+
+.fab-buttons__link > span {
+  display: inline-block;
+  font-size: 2.9em;
+}
+
+[data-tooltip]:before {
+  top: 50%;
+  margin-top: -11px;
+  font-weight: 600;
+  border-radius: 2px;
+  background: #585858;
+  color: #fff;
+  content: attr(data-tooltip);
+  font-size: 12px;
+  text-decoration: none;
+  visibility: hidden;
+  opacity: 0;
+  padding: 4px 7px;
+  margin-right: 12px;
+  position: absolute;
+  transform: scale(0);
+  right: 100%;
+  white-space: nowrap;
+  transform-origin: top right;
+  transition: all .3s cubic-bezier(.25, .8, .25, 1);
+}
+
+[data-tooltip]:hover:before {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+  transform-origin: right center 0;
+}
+
+.icon-material {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
 }
