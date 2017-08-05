@@ -331,12 +331,15 @@ cria_tabela_gastos_empresas = function(dados, empresas) {
   
   tabela_gastos_empresas = tabela_gastos_empresas %>%
     rbind(tabela_gastos_empresas.na) %>%
-    group_by(idecadastro, numAno, numMes, txtCNPJCPF, txtFornecedor, nossas_categorias, idEmpresa) %>%
+    select(idecadastro, numAno, numMes, idEmpresa, txtCNPJCPF, txtFornecedor, nossas_categorias, vlrLiquido) %>%
+    group_by(idecadastro, numAno, numMes, idEmpresa, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
     summarise(total = sum(vlrLiquido))
   
-  tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
+  #tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
+  tabela_gastos_empresas$id = 0
   
   names(tabela_gastos_empresas)[2:3] = c("ano", "mes")
+  #tabela_gastos_empresas = select(idecadastro, numAno, numMes, idEmpresa, txtCNPJCPF, txtFornecedor, nossas_categorias, total, id)
   
   return(tabela_gastos_empresas)
 }
