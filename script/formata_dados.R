@@ -395,3 +395,44 @@ cria_ganhadores_selos = function(tabela_6_gastos_mensal, tabela_final_votacoes){
   #   gather("categoria", "valor", 3:8)
 
 }
+
+cria_tabela_selos_presencas = function(tabela_final_gastos, tabela_final_votacoes, sessoes_mensal){
+  
+  tabela_selos_votacoes = tabela_final_gastos %>% filter(numMes != 1)
+  names(tabela_selos_votacoes)[2] = c("id_dep")
+  names(tabela_selos_votacoes)[4:5] = c("anov", "mesv")
+  
+  
+  tabela_selos_votacoes = sessoes_mensal %>% left_join(tabela_selos_votacoes %>% ungroup() %>% select(id_dep, anov, mesv)) %>%
+    left_join(tabela_final_votacoes)
+  
+  tabela_selos_votacoes$total_deputado[is.na(tabela_selos_votacoes$total_deputado)] = 0
+  
+  tabela_selos_votacoes$selo = NA
+  tabela_selos_votacoes$selo[(tabela_selos_votacoes$total_deputado/tabela_selos_votacoes$total_mes) > 0.75] = "batedor"
+  tabela_selos_votacoes$selo[(tabela_selos_votacoes$total_deputado/tabela_selos_votacoes$total_mes) < 0.25] = "gaspar"
+  tabela_selos_votacoes$selo[is.na(tabela_selos_votacoes$selo)] = "-"
+  
+  tabela_selos_votacoes$id = 0
+  
+  tabela_selos_votacoes = tabela_selos_votacoes %>%
+    select(id_dep, anov, mesv, selo, id)
+  
+  return(tabela_selos_votacoes)
+}
+
+cria_tabela_selos_cota = function(tabela_final_gastos) {
+
+  tabela_selos_cota = tabela_final_gastos %>% ungroup()
+  
+  tabela_selos_cota$selo = NA
+  tabela_selos_cota$selo[tabela_selos_cota$coef > 1] = "camarote"
+  tabela_selos_cota$selo[tabela_selos_cota$coef <= 1] = "moderado"
+  
+  tabela_selos_cota$id = 0
+  
+  tabela_selos_cota = tabela_selos_cota %>%
+    select(idecadastro, numAno, numMes, selo, id)
+  
+  return(tabela_selos_cota)
+}
