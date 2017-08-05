@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = 'pass'
+password = ''
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -53,6 +53,9 @@ sys.setdefaultencoding('utf8')
 # Init ----------------------------------------------------------------
 
 # Define ultimo mes/ano
+
+ano = datetime.date.today().year
+mesPassado = datetime.date.today().month - 1
 
 connection = engine.connect()
 
