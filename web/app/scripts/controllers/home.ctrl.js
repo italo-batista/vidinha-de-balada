@@ -25,7 +25,7 @@
             // e https://www.dieese.org.br/analisecestabasica/2017/201705cestabasica.pdf
             function setAno(ano) {
                 vm.anoSelecionado = ano;
-                $http.get(RESTAPI + "gasto_anual?ano=" + vm.anoSelecionado).then(function (res) {
+                $http.get(RESTAPI + "gastometro/" + vm.anoSelecionado).then(function (res) {
                     vm.total = res.data[0];
                     vm.salariosMinimos = Math.round(vm.total / 937000);
                     vm.casasPopulares = Math.round(vm.total / 152500);
@@ -75,8 +75,8 @@
                 setAno(vm.anoMaximo);
                 $http.get(RESTAPI + "top10").then(function (res) {
                     res.data.forEach(function (d) {
-                        d.nome = d.nome.replace('"', '').replace('\"', '');
-                        d.uf = d.uf.replace('"', '').replace('\"', '');
+                        d.nome = d.Nome.replace('"', '').replace('\"', '');
+                        d.uf = d.UF.replace('"', '').replace('\"', '');
 
                         if (d.urlfoto === "NA") {
                             d.urlfoto = "http://www.camara.leg.br/internet/deputado/bandep/" + d.id + ".jpg";
@@ -85,11 +85,26 @@
                         }
 
                         vm.deputados.push(d);
-                    })
+                    });
                 });
             }
 
             init();
+
+            $(document).ready(function () {
+
+            var menu = $('.menu');
+            var origOffsetY = menu.offset().top;
+
+            function scroll() {
+                if ($(window).scrollTop() >= origOffsetY) {
+                    $('.menu').addClass('navbar-fixed-top');
+                } else {
+                    $('.menu').removeClass('navbar-fixed-top');
+                }
+            }
+            document.onscroll = scroll;
+});
 
         });
 })();

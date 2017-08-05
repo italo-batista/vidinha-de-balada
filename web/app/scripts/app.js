@@ -10,7 +10,7 @@
  */
 angular
   .module('baladaApp', ['ui.router'])
-  .constant('RESTAPI', 'http://127.0.0.1:5000/')
+  .constant('RESTAPI', 'http://vidinhadebalada.com/api/')
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -24,6 +24,14 @@ angular
         templateUrl: 'views/perfil.html',
         controller: 'PerfilCtrl',
         controllerAs: 'ctrl'
+      })
+      .state('sobre', {
+        url: '/sobre',
+        templateUrl: 'views/sobre.html'
+      })
+      .state('contato', {
+        url: '/contato',
+        templateUrl: 'views/contato.html'
       });
     $urlRouterProvider.otherwise('/');
   });

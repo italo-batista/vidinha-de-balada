@@ -1,25 +1,88 @@
-<div class="card" ng-controller="HomeCtrl as vm">
-  <div class="card-head">
-    <a ui-sref="perfil({id: deputado.id})">{{ deputado.nome }}</a>
-  </div>
-  <div class="card-subhead">
-    <div class="card-img">
-      <a ui-sref="perfil({id: deputado.id})">
-        <img ng-src="{{ deputado.urlfoto }}" alt="{{ deputado.nome }}" width="100%">
-      </a>
+<div class="card-line">
+  <div class="row">
+    <div class="col-md-1 text-center font-f">
+      {{$parent.$index + 1}}
     </div>
-    <div class="card-subtitle">
-      {{ deputado.uf }}
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-sm-6 text-center">
+    <div class="col-md-11">
+
+      <div ng-class="'card'">
+        <div class="card-head">
+          <a class="link-inverse" ui-sref="perfil({id: deputado.Id})">{{ deputado.nome }}</a>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3 card-subhead">
+              <div class="card-img">
+                <a ui-sref="perfil({id: deputado.Id})">
+                  <img ng-src="{{ deputado.urlfoto }}" alt="{{ deputado.nome }}" width="100%">
+                </a>
+              </div>
+              <div class="card-subtitle">
+                {{ deputado.uf }}
+              </div>
+            </div>
+            <div class="col-md-3 card-text">
+              <!-- <dl class="dl-horizontal">
+                <dt class="font-c">Cota mensal</dt>
+                <dd class="font-b text-right">{{ deputado.Cota_UF| currency:'R$ ' }}</dd>
+                <dt class="font-c">Valor gasto</dt>
+                <dd class="font-b text-right">{{ deputado.Total | currency:'R$ ' }}</dd>
+              </dl> -->
+              <span class="font-c">Cota mensal</span> <br>
+              <span class="font-d">{{ deputado.Cota_UF| currency:'R$ ' }}</span> <br>
+              <span class="font-c">Valor gasto</span> <br>
+              <span class="font-b">{{ deputado.Total | currency:'R$ ' }}</span>
+            </div>
+            <div class="col-md-3 text-center">
+              <div class="selo-primary selo-lg">
+                <span class="icone-lg icon-alimento" ng-if="maiorGasto('alimento')"></span>
+                <span class="icone-lg icon-combustivel" ng-if="maiorGasto('combustivel')"></span>
+                <span class="icone-lg icon-locacao" ng-if="maiorGasto('locacao')"></span>
+                <span class="icone-lg icon-passagem" ng-if="maiorGasto('passagem')"></span>
+                <span class="icone-lg icon-escritorio" ng-if="maiorGasto('escritorio')"></span>
+                <span class="icone-lg icon-divulgacao" ng-if="maiorGasto('divulgacao')"></span>
+              </div>
+              <p class="font-b">{{deputado.Maior_gasto_valor | currency:'R$ '}}</p>
+            </div>
+            <div class="col-md-3 text-center">
+              <div class="selo-primary selo-lg">
+                <strong>{{deputado.presencas}}</strong>/{{deputado.total_sessoes}}
+              </div>
+              <p>Presenças / sessões</p>
+            </div>
+          </div>
+          <div class="transformable" ng-class="{'small':isVisible, 'big':!isVisible}">
+            <h4 class="text-center" >Como usou a cota:</h4>
+            <div class="row">
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-alimento"></span>
+                <p class="font-l">{{deputado.Gastos['Alimentação'] | currency:'R$ '}}</p>
+              </div>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-combustivel"></span>
+                <p class="font-l">{{deputado.Gastos['Combustíveis'] | currency:'R$ '}}</p>
+              </div>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-locacao"></span>
+                <p class="font-l">{{deputado.Gastos['Locação de veículos'] | currency:'R$ '}}</p>
+              </div>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-passagem"></span>
+                <p class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</p>
+              </div>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-escritorio"></span>
+                <p class="font-l">{{deputado.Gastos['Escritório'] | currency:'R$ '}}</p>
+              </div>
+              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-divulgacao"></span>
+                <p class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</p>
+              </div>
+            </div>
+          </div>
+          <div  ng-click="hide()" class="card-exp">
+            <span ng-show="isVisible"> + </span> <span ng-show="!isVisible"> - </span>  DETALHES <br/>
+            <span class="glyphicon glyphicon-chevron-up" ng-show="!isVisible"></span>
+            <span class="glyphicon glyphicon-chevron-down" ng-show="isVisible"></span>
+          </div>
+
+        </div> <!-- fim do card body -->
       </div>
-      <div class="col-sm-6">
-        <p>Estourou em {{ deputado.mes+" de "+deputado.ano }}</p>
-        <p><strong class="estouro">{{ deputado.total | currency:'R$ ' }}</strong> / {{ deputado.cota_mensal | currency:'R$ ' }}</p>
-      </div>
+
     </div>
   </div>
 </div>

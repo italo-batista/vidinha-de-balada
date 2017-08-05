@@ -13,30 +13,79 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/icons.css">
+    <link rel="stylesheet" href="styles/fonts2.css">
+    <link rel="stylesheet" href="styles/overhide.css">
     <!-- endbuild -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <!-- START simplesharebuttons.com/plus meta data -->
+    <!-- simplesharebuttons.com/plus opengraph share details -->
+    <meta property="og:title" content="Fique de olho no seu deputado! - Vidinha de Balada"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:description" content="Acompanhe se o deputado que você elegeu está levando uma verdadeira Vidinha de Badala utilizando o dinheiro do contribuinte! Inscreva-se no perfil do deputado que tem curiosidade e receba relatórios mensais sobre seus gastos!"/>
+    <meta property="og:image" content="http://i.imgur.com/rwtdSTH.png"/>
+    <!-- simplesharebuttons.com/plus twitter share details -->
+    <meta name="twitter:title" content="Fique de olho no seu deputado! - Vidinha de Balada">
+    <meta name="twitter:description" content="Acompanhe se o deputado que você elegeu está levando uma verdadeira Vidinha de Badala utilizando o dinheiro do contribuinte! Inscreva-se no perfil do deputado que tem curiosidade e receba relatórios mensais sobre seus gastos!">
+    <meta name="twitter:image:src" content="http://i.imgur.com/rwtdSTH.png">
+    <!-- simplesharebuttons.com/plus google+ share details -->
+    <meta itemprop="name" content="Fique de olho no seu deputado! - Vidinha de Balada">
+    <meta itemprop="description" content="Acompanhe se o deputado que você elegeu está levando uma verdadeira Vidinha de Badala utilizando o dinheiro do contribuinte! Inscreva-se no perfil do deputado que tem curiosidade e receba relatórios mensais sobre seus gastos!">
+    <meta itemprop="image" content="http://i.imgur.com/rwtdSTH.png">
+    <!-- END simplesharebuttons.com/plus meta data -->
+
   </head>
   <body ng-app="baladaApp">
+
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="nav-main container-fluid text-right">
-      <ul class="nav nav-pills navbar-right">
-        <li role="presentation"><a ui-sref="ceap">CEAP</a></li>
-        <li role="presentation"><a ui-sref="sobre">O projeto</a></li>
-      </ul>
-    </div>
-
-    <div class="header container text-center">
-      <div class="logo row">
-        <div class="col-sm-4 col-sm-offset-4">
-          <a ui-sref="home"><ng-include src="'views/logo.html'"></ng-include></a>
+    <div class="header">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4 logo">
+            <a ui-sref="home"><img src="images/logo.png" height="106" width="186"></img></a>
+          </div>
         </div>
       </div>
     </div>
 
+    <nav class="navbar navbar-inverse menu">
+      <div class="container">
+        <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <busca-por-nome/>
+          </div>
+        </form>
+        <ul class="nav navbar-nav navbar-left nav-text">
+          <li><a ui-sref="home">HOME</a></li>
+          <li><a ui-sref="sobre">SOBRE</a></li>
+          <li><a ui-sref="contato">CONTATO</a></li>
+        </ul>
+      </div>
+    </nav>
+
     <ui-view></ui-view>
+
+    <footer>
+      <div class="container">
+        <div class="footer-line">
+          <div class="row">
+            <div class="col-xs-2">
+              <a ui-sref="home"><img src="images/branca.png" height="60" width="95" class="footer-logo"></img></a>
+            </div>
+          </div>
+        </div>
+        <div class="row text-right">
+          <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
+              <p>Nos siga e acompanhe essa balada:</p>
+              <a class="icone" href="https://www.facebook.com/Vidinha-de-Balada-1785003711829354/"><span class="icone-sm icon-facebook-with-circle"></span></a>
+          </div>
+        </div>
+      </div>
+  </footer>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -58,6 +107,13 @@
         <script src="scripts/directives/card.drct.js"></script>
         <script src="scripts/directives/countTo.drct.js"></script>
         <script src="scripts/directives/textCarousel.drct.js"></script>
+        <script src="scripts/directives/busca.drct.js"></script>
         <!-- endbuild -->
+
+    <script>
+      $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+      });
+    </script>
 </body>
 </html>
