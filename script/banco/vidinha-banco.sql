@@ -94,3 +94,16 @@ CREATE TABLE selosDeputado (
 	PRIMARY KEY (idDeputado, mes, ano, idCategoria),
 	FOREIGN KEY (idDeputado) REFERENCES deputado(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+CREATE TABLE usuariosInscritos (
+
+	idCadastro INT(4) NOT NULL,
+	nome VARCHAR(50) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+
+	PRIMARY KEY (idCadastro)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+
