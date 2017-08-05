@@ -447,7 +447,7 @@ def top10Default():
 	NO_FILTER = ""
 	return top10(NO_FILTER, NO_FILTER)
 
-@app.route("/top10/filter/<filterType>/<value>", methods=['GET'])	
+@app.route("/top10/<filterType>/<value>", methods=['GET'])	
 def top10(filterType, value):
 	
 	top10 = get10MaisGastadores(filterType, value)
@@ -513,7 +513,7 @@ def top10(filterType, value):
 		(categoria_escritorio, gasto_escritorio),
 		(categoria_locacao, gasto_locacao),
 		(categoria_passagens, gasto_passagens),
-		("Outro", gasto_outros)
+		("Outros", gasto_outros)
 		]
 
 		maior_gasto = sorted(meus_gastos, key=lambda x: x[1], reverse=True)[0]
@@ -538,8 +538,6 @@ def top10(filterType, value):
 
 	return jsonify(json)
 	
-
-
 
 # Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":
