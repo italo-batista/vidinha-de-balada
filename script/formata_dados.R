@@ -10,7 +10,7 @@ cria_tabela_final_gastos = function(dados){
   # funcao prepara_tabela_final
 
   tabela_final_mensal = dados %>%
-    filter(vlrLiquido >= 0) %>%
+    #filter(vlrLiquido >= 0) %>%
     select(txNomeParlamentar, idecadastro, sgUF,  numAno, numMes, vlrLiquido) %>%
     group_by(txNomeParlamentar, idecadastro, sgUF, numAno, numMes) %>%
     summarise(total = sum(vlrLiquido)) %>%
@@ -335,8 +335,8 @@ cria_tabela_gastos_empresas = function(dados, empresas) {
     group_by(idecadastro, numAno, numMes, idEmpresa, txtCNPJCPF, txtFornecedor, nossas_categorias) %>%
     summarise(total = sum(vlrLiquido))
   
-  #tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
-  tabela_gastos_empresas$id = 0
+  tabela_gastos_empresas$id = rownames(tabela_gastos_empresas)
+  #tabela_gastos_empresas$id = 0
   
   names(tabela_gastos_empresas)[2:3] = c("ano", "mes")
   #tabela_gastos_empresas = select(idecadastro, numAno, numMes, idEmpresa, txtCNPJCPF, txtFornecedor, nossas_categorias, total, id)

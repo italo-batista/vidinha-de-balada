@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = 'martha'
+password = ''
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -342,6 +342,7 @@ def somaPresencas(query_presencas):
 def getPerfilDeputado(id):
 
 	deputado = Deputado.query.filter_by(id=id).first()
+	query_gasto_total = Gasto.query.filter_by(idDeputado=id).all()
 	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao).all()
 	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio).all()
 	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao).all()
@@ -361,7 +362,7 @@ def getPerfilDeputado(id):
 	sessoes_total = somaPresencas(query_sessoes_total)
 
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
-	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens
+	total_gastos = somaGastosTotais(query_gasto_total)
 
 	cota_uf = Cota.query.get(deputado.uf).cota
 
