@@ -75,6 +75,7 @@ else:
 
 connection.close()
 
+
 # Variáveis
 
 categoria_alimentacao = 'Alimentação'
@@ -391,48 +392,56 @@ def somaGastosCategoria(query_gasto_categoria):
 	for gasto in query_gasto_categoria:
 		gastoTotal = gastoTotal + gasto.valor
 	return gastoTotal
+		
+def maisGastadores10Id():
+	
+	ID = 1
+	consulta = 'SELECT (SUM(valor) / (SELECT cotas.cota FROM cotas WHERE cotas.uf = (SELECT deputado.uf FROM deputado WHERE deputado.id = gastos.idDeputado))) AS ranking, gastos.idDeputado FROM gastos WHERE (mesEmissao='+str(mesPassado)+' AND anoEmissao='+str(ano)+') GROUP BY (gastos.idDeputado) ORDER BY ranking DESC limit 10'
 
-def maisGastadores10(query_gastos):
-	deputados_id = []
-	gastos = []
+	connection = engine.connect()
+	result = connection.execute(consulta)
+	
+	top10_ids = []
+	for row in result:
+		top10_ids.append(row[ID])
+		
+	connection.close()
+		
+	return top10_ids
 
-	for gasto in query_gastos:
+def get10MaisGastadores():
+	
+	deputados = []
+	ids = maisGastadores10Id()
 
-		if (gasto.idDeputado in deputados_id):
-			index = deputados_id.index(gasto.idDeputado)
-			gastos[index] = gastos[index] + gasto.valor
-		else:
-			deputados_id.append(gasto.idDeputado)
-			gastos.append(gasto.valor)
+	for idDeputado in ids:
+		deputado = Deputado.query.filter_by(id=idDeputado).first()	
+		deputados.append(deputado)
+	
+	return deputados
 
-	tam = len(deputados_id)
-	deputadoGasto = []
-
-	for i in xrange(tam):
-		tupla = (gastos[i], deputados_id[i])
-		deputadoGasto.append(tupla)
-
-	tops = sorted(deputadoGasto, key=lambda x: x[0], reverse=True)
-	top10 = []
-	for i in range(10):
-		top10.append(tops[i])
-
-	return top10
-
+def getGastoMesTotalDeputado(idDeputado):
+	consulta = 'SELECT SUM(valor) FROM gastos WHERE (mesEmissao='+str(mesPassado)+' AND anoEmissao='+str(ano)+' AND idDeputado ='+idDeputado+')'
+	connection = engine.connect()
+	result = connection.execute(consulta)
+	connection.close()
+	
+	for gasto in result: gastoTotal = gasto[0]	
+	return gastoTotal
+	
 @app.route("/top10", methods=['GET'])
 def top10():
-	query_gastos = Gasto.query.filter_by(mesEmissao=mesPassado, anoEmissao=ano).all()
-	top10 = maisGastadores10(query_gastos)
+	
+	top10 = get10MaisGastadores()
 
 	json = []
-
 	for i in range(len(top10)):
 		deputado = top10[i]
 
 		# info deputado
 
-		deputado_id = deputado[1]
-		deputado_gasto_total = deputado[0]
+		deputado_id = deputado.id
+		deputado_gasto_total = getGastoMesTotalDeputado(deputado_id)
 		deputado_posicao = i + 1
 
 		deputado_obj = Deputado.query.get(deputado_id)
