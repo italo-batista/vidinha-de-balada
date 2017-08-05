@@ -116,7 +116,7 @@ CREATE TABLE selosCota (
 	mes VARCHAR(4) NOT NULL,
 	selo VARCHAR(10) NOT NULL,
 
-	PRIMARY KEY (id),
+	PRIMARY KEY (id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE selosPresenca (
@@ -127,6 +127,6 @@ CREATE TABLE selosPresenca (
 	mes VARCHAR(4) NOT NULL,
 	selo VARCHAR(10) NOT NULL,
 
-	PRIMARY KEY (id),
+	PRIMARY KEY (id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
