@@ -39,28 +39,28 @@ tabela_6_gastos_mensal = cria_tabela_6_gastos_mensal(dados_gastos, tabela_final_
 
 # for(i in 1:NROW(cotas)){
 #   temp = cria_top_estourados_estado(cotas$sgUF[i], tabela_final_gastos)
-#   
+#
 #   uf = cotas$sgUF[i]
 #   write.csv(temp, paste("top_10_estourados_", uf, ".csv", sep=""), row.names = F)
 # }
 
 tabela_final_votacoes = cria_tabela_final_votacoes(votacoes)
-write.csv(tabela_final_votacoes, "/dados_gerados/tabela_final_votacoes.csv", row.names = F, col.names = F)
+write.table(tabela_final_votacoes, "tabela_final_votacoes.csv", row.names = F, col.names = F, sep=",")
 
 sessoes_mensal = cria_sessoes_mensal(votacoes)
-write.csv(sessoes_mensal, "/dados_gerados/sessoes_mensal.csv", row.names = F, col.names = F)
+write.table(sessoes_mensal, "sessoes_mensal.csv", row.names = F, col.names = F, sep=",")
 
 empresas = cria_empresas(dados_gastos)
-write.csv(empresas, "/dados_gerados/empresas.csv", row.names = F, col.names = F)
+write.table(empresas, "empresas.csv", row.names = F, col.names = F, sep=",")
 
 tabela_gastos_empresas = cria_tabela_gastos_empresas(dados_gastos, empresas)
-write.csv(tabela_gastos_empresas, "/dados_gerados/tabela_gastos_empresas.csv", row.names = F, col.names = F)
+write.table(tabela_gastos_empresas, "tabela_gastos_empresas.csv", row.names = F, col.names = F, sep=",")
 
 tabela_info_deputados = cria_tabela_info_deputados(info_deputados, twitter_profiles, dados_gastos)
-write.csv(tabela_info_deputados, "/dados_gerados/tabela_info_deputados.csv", row.names = F, col.names = F)
+write.table(tabela_info_deputados, "tabela_info_deputados.csv", row.names = F, col.names = F, sep=",")
 
-ganhadores_selos = cria_ganhadores_selos(tabela_6_gastos_mensal, tabela_final_gastos)
-write.csv(ganhadores_selos, "/dados_gerados/ganhadores_selos.csv", row.names = F, col.names = F)
+ ganhadores_selos = cria_ganhadores_selos(tabela_6_gastos_mensal, tabela_final_gastos)
+write.table(ganhadores_selos, "ganhadores_selos.csv", row.names = F, col.names = F, sep=",")
 
 
 #rm(tabela_info_deputados, tabela_gastos_empresas, empresas, sessoes_mensal,tabela_final_votacoes)
