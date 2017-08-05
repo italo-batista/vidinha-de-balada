@@ -98,7 +98,7 @@ CREATE TABLE selosDeputado (
 
 CREATE TABLE usuariosInscritos (
 
-	idCadastro INT(4) NOT NULL,
+	idCadastro INT(4) NOT NULL AUTO_INCREMENT,
 	nome VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	idDeputado VARCHAR(7) NOT NULL,
