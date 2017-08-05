@@ -47,17 +47,17 @@
           var cota_mensal;
           const salarioMinimo = 937;
           data.forEach(function (d) {
-            d.date = parseTime(d.data);
-            d.valor = (+d.total_gasto)/salarioMinimo;
-            if (d.sessoes_total != '-') {
-              d.presenca = d.total_presenca/d.sessoes_total;
+            if (d.valor != '-') {
+              d.date = parseTime(d.data);
+              d.valor = (+d.total_gasto)/salarioMinimo;
+              if (d.sessoes_total != '-') {
+                d.presenca = d.total_presenca/d.sessoes_total;
+              }
+              cota_mensal = (+d.cota)/salarioMinimo;
             }
-            cota_mensal = (+d.cota)/salarioMinimo;
           });
 
           data.sort(function(a,b){
-            // Turn your strings into dates, and then subtract them
-            // to get a value that is either negative, positive, or zero.
             return b.date - a.date;
           });
 
@@ -73,14 +73,25 @@
               return +c.valor
             })
           ]);
-          //Muda escala de gráfico
-          //Se quiser que o 100% de presença seja igual à cota mensal
-          //var yp = d3.scaleLinear().range([height, y(cota_mensal)]);
+
           var yp = d3.scaleLinear().range([height, 0]);
           yp.domain([0, 1]);
 
           var dataMin = d3.min(data, function (c) {return +c.date});
           var dataMax = d3.max(data, function (c) {return +c.date});
+
+          g.append("g")
+            .attr("class", "axis axis--y gastos")
+            .style("font", "14px sans-serif")
+            .call(d3.axisLeft(y).tickSize(0))
+            .style("font-size", "16px")
+            .style("font-family", "'Montserrat', sans-serif")
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "0.71em")
+            .text("Gasto total mensal, salários mínimos")
+            .style("font-family", "'Montserrat', sans-serif");
 
           g.append("line")
             .style("stroke", "#fff")
@@ -174,19 +185,6 @@
             .style("font-family", "'Montserrat', sans-serif");
 
           g.append("g")
-            .attr("class", "axis axis--y gastos")
-            .style("font", "14px sans-serif")
-            .call(d3.axisLeft(y).tickSize(0))
-            .style("font-size", "16px")
-            .style("font-family", "'Montserrat', sans-serif")
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", "0.71em")
-            .text("Gasto total mensal, salários mínimos")
-            .style("font-family", "'Montserrat', sans-serif");
-
-          g.append("g")
             .attr("class", "axis axis--y")
             .style("font", "14px sans-serif")
             .attr("transform", "translate( " + width + ", 0 )")
@@ -200,8 +198,8 @@
             .attr("dy", "0.71em")
             .attr("fill", "#ff4e81")
             .text("Presença mensal")
-            .style("font-family", "'Montserrat', sans-serif");;
-          })
+            .style("font-family", "'Montserrat', sans-serif");
+          });
         }
       }
       return directiveDefinitionObject;
