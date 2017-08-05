@@ -14,7 +14,7 @@ twitter_profiles = read_csv("../data/final/twitter_profiles.csv")
 info_deputados = read_csv("../data/final/infodeputados.csv")
 
 # esse csv não gera nenhuma tabela no bd
- tabela_final_gastos = cria_tabela_final_gastos(dados_gastos)
+tabela_final_gastos = cria_tabela_final_gastos(dados_gastos)
 # write.csv(tabela_final_gastos, "tabela_final_gastos.csv", row.names = F)
 
 # tabela_final_categoria = cria_tabela_final_categoria(dados_gastos)
@@ -31,7 +31,7 @@ info_deputados = read_csv("../data/final/infodeputados.csv")
 # write.csv(tabela_6_gastos, "tabela_6_gastos.csv", row.names = F)
 
 # esse csv não gera nenhuma tabela no bd
- tabela_6_gastos_mensal = cria_tabela_6_gastos_mensal(dados_gastos, tabela_final_gastos)
+tabela_6_gastos_mensal = cria_tabela_6_gastos_mensal(dados_gastos, tabela_final_gastos)
 # write.csv(tabela_6_gastos_mensal, "tabela_6_gastos_mensal.csv", row.names = F)
 
 # top_estourados = cria_top_estourados(tabela_final_gastos)
@@ -45,22 +45,23 @@ info_deputados = read_csv("../data/final/infodeputados.csv")
 # }
 
 tabela_final_votacoes = cria_tabela_final_votacoes(votacoes)
-write.csv(tabela_final_votacoes, "dados_gerados/tabela_final_votacoes.csv", row.names = F)
+write.csv(tabela_final_votacoes, "/dados_gerados/tabela_final_votacoes.csv", row.names = F, col.names = F)
 
 sessoes_mensal = cria_sessoes_mensal(votacoes)
-write.csv(sessoes_mensal, "dados_gerados/sessoes_mensal.csv", row.names = F)
+write.csv(sessoes_mensal, "/dados_gerados/sessoes_mensal.csv", row.names = F, col.names = F)
 
 empresas = cria_empresas(dados_gastos)
-write.csv(empresas, "dados_gerados/empresas.csv", row.names = F)
+write.csv(empresas, "/dados_gerados/empresas.csv", row.names = F, col.names = F)
 
 tabela_gastos_empresas = cria_tabela_gastos_empresas(dados_gastos, empresas)
-write.csv(tabela_gastos_empresas, "dados_gerados/tabela_gastos_empresas.csv", row.names = F)
+write.csv(tabela_gastos_empresas, "/dados_gerados/tabela_gastos_empresas.csv", row.names = F, col.names = F)
 
 tabela_info_deputados = cria_tabela_info_deputados(info_deputados, twitter_profiles, dados_gastos)
-write.csv(tabela_info_deputados, "dados_gerados/tabela_info_deputados.csv", row.names = F)
+write.csv(tabela_info_deputados, "/dados_gerados/tabela_info_deputados.csv", row.names = F, col.names = F)
 
 ganhadores_selos = cria_ganhadores_selos(tabela_6_gastos_mensal, tabela_final_gastos)
-write.csv(ganhadores_selos, "dados_gerados/ganhadores_selos.csv", row.names = F)
+write.csv(ganhadores_selos, "/dados_gerados/ganhadores_selos.csv", row.names = F, col.names = F)
 
-rm(tabela_info_deputados, tabela_gastos_empresas, empresas, sessoes_mensal,tabela_final_votacoes)
+
+#rm(tabela_info_deputados, tabela_gastos_empresas, empresas, sessoes_mensal,tabela_final_votacoes)
 #rm(tabela_6_gastos_mensal, tabela_final_gastos, tabela_gasto_total_anos, tabela_info_pessoais,twitter_profiles, dados_gastos, info_deputados, votacoes)
