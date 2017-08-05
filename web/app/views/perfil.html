@@ -50,27 +50,27 @@
 
             <h4 class="text-center">Como usou a cota:</h4>
             <div class="row">
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-alimento"></span>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-alimento"></span>
                 <p class="font-e">{{ctrl.deputado['Alimentação'] | currency:'R$ '}}</p>
                 <p>Alimentação</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-combustivel"></span>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-combustivel"></span>
                 <p class="font-e">{{ctrl.deputado['Combustível'] | currency:'R$ '}}</p>
                 <p>Combustível</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-locacao"></span>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-locacao"></span>
                 <p class="font-e">{{ctrl.deputado['Locação de veículos'] | currency:'R$ '}}</p>
                 <p>Locação de veículos</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-passagem"></span>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-passagem"></span>
                 <p class="font-e">{{ctrl.deputado['Passagens aéreas'] | currency:'R$ '}}</p>
                 <p>Passagens aéreas</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-escritorio"></span>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-escritorio"></span>
                 <p class="font-e">{{ctrl.deputado['Escritório'] | currency:'R$ '}}</p>
                 <p>Escritório</p>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-divulgacao"></span>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-divulgacao"></span>
                 <p class="font-e">{{ctrl.deputado['Divulgação de atividade parlamentar'] | currency:'R$ '}}</p>
                 <p>Divulgação</p>
               </div>
@@ -94,20 +94,26 @@
             <p class="text-center">Quais empresas são as mais queridinhas do deputado?</p>
 
             <table class="table table-bordered" ng-show="ctrl.empresasParceiras.length">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>CNPJ</th>
-                  <th>Empresa</th>
-                  <th>Valor total </th>
+              <tbody ng-repeat="empresa in ctrl.empresasParceiras">
+                <tr class="visible-xs">
+                  <td colspan="3" class="table-row-featured text-center font-f">{{$index + 1}}</td>
                 </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="empresa in ctrl.empresasParceiras">
-                  <th scope="row">{{$index + 1}}</th>
-                  <td>{{ 'xxx' }}</td>
-                  <td>{{ 'xxx' }}</td>
-                  <td>{{ empresa.valor | currency:'R$ ' }}</td>
+                <tr>
+                  <td scope="row" rowspan="3" class="table-row-featured text-center font-f hidden-xs">{{$index + 1}}</td>
+                  <td colspan="2" class="font-e">{{ empresa.empresa }}</td>
+                </tr>
+                <tr>
+                  <td>CNPJ {{ empresa.cnpj | cnpj }}</td>
+                  <td colspan="2" class="font-e">{{ empresa.valor | currency:'R$ ' }}</td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <strong>Categorias:</strong>
+                    <span ng-repeat="categoria in empresa.categorias">{{categoria}}{{$last ? '' : ', '}}</span>
+                  </td>
+                </tr>
+                <tr class="table-inverse">
+                  <td colspan="3">&nbsp;</td>
                 </tr>
               </tbody>
             </table>
@@ -152,4 +158,58 @@
     </div>
   </div>
 
+</div>
+
+<div class="fab">
+  <span class="fab-action-button">
+    <span class="icon-share"></span>
+  </span>
+  <ul class="fab-buttons">
+    <li class="fab-buttons__item">
+      <a href=""
+        socialshare
+        socialshare-provider="facebook"
+        socialshare-type="simple sharer"
+        socialshare-title="{{ctrl.socialshare.shortText}}"
+        socialshare-description="{{ctrl.socialshare.longText}}"
+        socialshare-url="{{ctrl.socialshare.url}}"
+        class="fab-buttons__link"
+        data-tooltip="Facebook">
+        <span class="icon-facebook-with-circle"></span>
+      </a>
+    </li>
+      <li class="fab-buttons__item">
+        <a href=""
+          socialshare
+          socialshare-provider="twitter"
+          socialshare-text="{{ctrl.socialshare.shortText}}"
+          socialshare-hashtags="{{ctrl.socialshare.hashtags}}"
+          socialshare-url="{{ctrl.socialshare.url}}"
+          class="fab-buttons__link"
+          data-tooltip="Twitter">
+            <span class="icon-twitter-with-circle"></span>
+      </a>
+    </li>
+    <li class="fab-buttons__item">
+      <a href=""
+        socialshare
+        socialshare-provider="google"
+        socialshare-url="{{ctrl.socialshare.url}}"
+        class="fab-buttons__link"
+        data-tooltip="Google+">
+          <span class="icon-google-with-circle"></span>
+      </a>
+    </li>
+    <li class="fab-buttons__item visible-xs">
+      <a href=""
+        socialshare
+        socialshare-provider="whatsapp"
+        socialshare-url="{{ctrl.socialshare.url}}"
+        socialshare-text="{{ctrl.socialshare.longText}}"
+        class="fab-buttons__link"
+        data-tooltip="Whatsapp">
+          <span class="icon-whatsapp"></span>
+      </a>
+    </li>
+  </ul>
 </div>
