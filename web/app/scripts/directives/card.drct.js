@@ -23,7 +23,8 @@
               'Alimentação': 'alimento',
               'Escritório': 'escritorio',
               'Locação de veículos': 'locacao',
-              'Passagens aéreas': 'passagem'
+              'Passagens aéreas': 'passagem',
+              'Outros': 'outros'
             }
             return categorias[scope.deputado.Maior_gasto_categoria] == categoria;
           }

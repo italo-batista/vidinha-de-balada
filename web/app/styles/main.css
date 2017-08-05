@@ -622,3 +622,8 @@ div.tooltip_presenca {
   width: 40px;
   height: 40px;
 }
+
+.outros {
+  vertical-align: top;
+  font-size: 40px;
+}

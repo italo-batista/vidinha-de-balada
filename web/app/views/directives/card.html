@@ -41,6 +41,7 @@
                 <span class="icone-lg icon-passagem" ng-if="maiorGasto('passagem')"></span>
                 <span class="icone-lg icon-escritorio" ng-if="maiorGasto('escritorio')"></span>
                 <span class="icone-lg icon-divulgacao" ng-if="maiorGasto('divulgacao')"></span>
+                <span class="outros" ng-if="maiorGasto('outros')" title="Outros">...</span>
               </div>
               <p class="font-b">{{deputado.Maior_gasto_valor | currency:'R$ '}}</p>
             </div>
