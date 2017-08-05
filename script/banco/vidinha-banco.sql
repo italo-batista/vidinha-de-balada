@@ -16,7 +16,7 @@ CREATE TABLE deputado (
 	foto VARCHAR(60),
 	twitter VARCHAR(20),
 	telefone VARCHAR(15),
-	email VARCHAR(30),
+	email VARCHAR(50),
 	PRIMARY KEY (id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -31,8 +31,8 @@ CREATE TABLE sessoesMes (
 
 CREATE TABLE empresas (
 
-	cnpj VARCHAR(15),
-	nome VARCHAR(20),
+	cnpj VARCHAR(20),
+	nome VARCHAR(60),
 	idEmpresa VARCHAR(10),
 	PRIMARY KEY (idEmpresa),
 	CONSTRAINT unique_obs UNIQUE (cnpj, nome)
@@ -74,7 +74,7 @@ CREATE TABLE gastos (
 	anoEmissao INT,
 	mesEmissao INT,
 	cnpj VARCHAR(20),
-	nomeFornecedor VARCHAR(15) NOT NULL,
+	nomeFornecedor VARCHAR(60) NOT NULL,
 	nomeCategoria VARCHAR(40) NOT NULL,
 	idEmpresa VARCHAR(10),
 	valor FLOAT,
