@@ -54,6 +54,10 @@ a:focus {
   font-size: 11px;
 }
 
+.table-inverse {
+  background-color: #463066;
+}
+
 .table-bordered {
   border: solid 4px #463066;
   background-color: #573C82;
@@ -70,4 +74,12 @@ a:focus {
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {
   border-bottom-width: 2px;
+}
+
+.table-row-featured {
+  background-color: #ff4e81;
+}
+
+.table > tbody > tr > td.table-row-featured {
+  vertical-align: middle;
 }

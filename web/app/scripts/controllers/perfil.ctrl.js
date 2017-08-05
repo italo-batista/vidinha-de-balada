@@ -17,6 +17,7 @@
         hashtags: ''
       }
       vm.id = $stateParams.id;
+      vm.getCategoria = getCategoria;
 
       function init() {
         $http.get(RESTAPI+"deputados/"+vm.id).then(function(res) {
@@ -42,6 +43,18 @@
         });
       }
       init();
+
+      function getCategoria(categoria) {
+        var categorias = {
+          'Divulgação de atividade parlamentar': 'divulgacao',
+          'Combustíveis': 'combustivel',
+          'Alimentação': 'alimento',
+          'Escritório': 'escritorio',
+          'Locação de veículos': 'locacao',
+          'Passagens aéreas': 'passagem'
+        }
+        return categorias[categoria];
+      }
 
     });
 })();
