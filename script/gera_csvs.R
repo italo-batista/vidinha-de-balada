@@ -14,7 +14,7 @@ twitter_profiles = read_csv("../data/final/twitter_profiles.csv")
 info_deputados = read_csv("../data/final/infodeputados.csv")
 
 # esse csv não gera nenhuma tabela no bd
- tabela_final_gastos = cria_tabela_final_gastos(dados_gastos)
+tabela_final_gastos = cria_tabela_final_gastos(dados_gastos)
 # write.csv(tabela_final_gastos, "tabela_final_gastos.csv", row.names = F)
 
 # tabela_final_categoria = cria_tabela_final_categoria(dados_gastos)
@@ -31,7 +31,7 @@ info_deputados = read_csv("../data/final/infodeputados.csv")
 # write.csv(tabela_6_gastos, "tabela_6_gastos.csv", row.names = F)
 
 # esse csv não gera nenhuma tabela no bd
- tabela_6_gastos_mensal = cria_tabela_6_gastos_mensal(dados_gastos, tabela_final_gastos)
+tabela_6_gastos_mensal = cria_tabela_6_gastos_mensal(dados_gastos, tabela_final_gastos)
 # write.csv(tabela_6_gastos_mensal, "tabela_6_gastos_mensal.csv", row.names = F)
 
 # top_estourados = cria_top_estourados(tabela_final_gastos)
@@ -39,7 +39,7 @@ info_deputados = read_csv("../data/final/infodeputados.csv")
 
 # for(i in 1:NROW(cotas)){
 #   temp = cria_top_estourados_estado(cotas$sgUF[i], tabela_final_gastos)
-#   
+#
 #   uf = cotas$sgUF[i]
 #   write.csv(temp, paste("top_10_estourados_", uf, ".csv", sep=""), row.names = F)
 # }
