@@ -452,9 +452,6 @@ def top10(filterType, value):
 	
 	top10 = get10MaisGastadores(filterType, value)
 	
-	print '\n\n\n\n'
-	print '\n\n\n\n'
-
 	json = []
 	for i in range(len(top10)):
 		deputado = top10[i]
@@ -507,14 +504,16 @@ def top10(filterType, value):
 		categoria_locacao : gasto_locacao,
 		categoria_passagens : gasto_passagens
 		}
-
+		
+		gasto_outros = deputado_gasto_total - gasto_alimentacao - gasto_combustivel - gasto_divulgacao - gasto_escritorio - gasto_locacao
 		meus_gastos = [
 		(categoria_alimentacao, gasto_alimentacao),
 		(categoria_combustivel, gasto_combustivel),
 		(categoria_divulgacao, gasto_divulgacao),
 		(categoria_escritorio, gasto_escritorio),
 		(categoria_locacao, gasto_locacao),
-		(categoria_passagens, gasto_passagens)
+		(categoria_passagens, gasto_passagens),
+		("Outro", gasto_outros)
 		]
 
 		maior_gasto = sorted(meus_gastos, key=lambda x: x[1], reverse=True)[0]
@@ -538,6 +537,9 @@ def top10(filterType, value):
 		json.append(deputado_json)
 
 	return jsonify(json)
+	
+
+
 
 # Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":
