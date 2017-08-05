@@ -8,6 +8,14 @@
       vm.deputado = {};
       vm.empresasParceiras = [];
       vm.selos = [];
+      vm.socialshare = {
+        title: '',
+        longText: '',
+        shortText: '',
+        url: '',
+        media: '',
+        hashtags: ''
+      }
       vm.id = $stateParams.id;
 
       function init() {
@@ -15,6 +23,15 @@
           vm.deputado = res.data;
           vm.deputado.nome = vm.deputado.Nome.replace('"', '').replace('\"', '');
           vm.deputado.urlfoto = vm.deputado.urlfoto.replace('"', '').replace('\"', '');
+          console.log(vm.deputado);
+
+          // Configura os metadados de compartilhamento
+          vm.socialshare.title = vm.deputado.nome+" no Vidinha de Balada";
+          vm.socialshare.shortText = "Veja os gastos da CEAP de "+vm.deputado.nome+" no Vidinha de Balada";
+          vm.socialshare.longText = "Com o que "+vm.deputado.nome+" está gastando?";
+          vm.socialshare.url = "http://vidinhadebalada.com/#!/perfil/"+vm.deputado.Id;
+          vm.socialshare.media = "http://vidinhadebalada.com/images/mediashare.png";
+          vm.socialshare.hashtags = "VidinhaDeBalada";
         });
 
         $http.get(RESTAPI+"empresasParceiras/"+vm.id).then(function(res) {
@@ -23,7 +40,6 @@
 
         $http.get(RESTAPI+"selosDeputado/"+vm.id).then(function(res) {
           vm.selos = res.data;
-          console.log(vm.selos);
         });
       }
       init();
