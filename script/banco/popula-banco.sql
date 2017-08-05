@@ -45,7 +45,13 @@ load data local infile 'xxx' into table emendasPropostasDeputado fields terminat
 */
 
 
-load data local infile '/home/ubuntu/data/ganhadores_selos.csv' into table selosDeputado fields terminated by ','
+load data local infile '/home/ubuntu/data/tabela_selos_cota.csv' into table selosCota fields terminated by ','
+  enclosed by '"'
+  lines terminated by '\n'
+    (id, idDeputado, ano, mes, selo);
+
+
+load data local infile '/home/ubuntu/data/tabela_selos_presencas.csv' into table selosPresenca fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
     (idDeputado, mes, ano, idCategoria);
