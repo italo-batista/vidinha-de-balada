@@ -13,9 +13,13 @@
             })
           }
 
+          scope.limparNome = function() {
+            scope.nome = '';
+          }
+
           scope.buscaNome();
 
-          $(document).bind('click', function(event){
+          $(document).bind('click', function(event) {
             var isClickedElementChildOfPopup = element
                 .find(event.target)
                 .length > 0;

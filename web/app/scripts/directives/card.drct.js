@@ -11,10 +11,9 @@
           deputado: '='
         },
         link: function (scope, element, attrs) {
-          scope.IsVisible = true;
+          scope.isVisible = true;
           scope.hide = function ($scope) {
-              scope.IsVisible = scope.IsVisible ? false : true;
-
+              scope.isVisible = !scope.isVisible;
           }
 
           scope.maiorGasto = function(categoria) {

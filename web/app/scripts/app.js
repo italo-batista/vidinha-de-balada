@@ -9,8 +9,8 @@
  * Main module of the application.
  */
 angular
-  .module('baladaApp', ['ui.router', 'ngAnimate'])
-  .constant('RESTAPI', 'http://127.0.0.1:5000/')
+  .module('baladaApp', ['ui.router'])
+  .constant('RESTAPI', 'http://vidinhadebalada.com/api/')
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {

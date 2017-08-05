@@ -1,13 +1,68 @@
-.btn-default {
-    color: #fff;
-    background: none;
-    border-color: #fff;
+a:hover,
+a:focus {
+    color: #FF4E81;
 }
 
-.btn-lg, .btn-group-lg > .btn {
-    border-radius: 4px;
+.navbar-inverse {
+  background-color: #463066;
+  border: #463066;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+}
+
+.input-group-inverse > .input-group-addon {
+  color: #ffffff;
+  background: none;
+}
+
+.input-group-inverse > .input-group-addon {
+  color: #ffffff;
+  background: none;
+  border: none;
+}
+.form-control-inverse {
+  color: #ffffff;
+  background: none;
+  border: none;
+  border-bottom: solid 2px #ffffff;
+
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.form-control-inverse:focus {
+  border-color: #FF4E81;
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: #ffffff;
+  background-color: #61397B;
 }
 
 .font-j {
   font-size: 11px;
+}
+
+.table-bordered {
+  border: solid 4px #522E61;
+  background-color: #61397B;
+}
+
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+  border: solid 4px #522E61;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td {
+  border-bottom-width: 2px;
 }

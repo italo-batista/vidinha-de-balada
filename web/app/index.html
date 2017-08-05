@@ -37,36 +37,55 @@
 
   </head>
   <body ng-app="baladaApp">
+
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
     <div class="header">
+      <div class="container">
         <div class="row">
           <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4 logo">
             <a ui-sref="home"><img src="images/logo.png" height="106" width="186"></img></a>
           </div>
         </div>
-    </div>
-    <div class="menu">
-      <div class="row">
-        <nav class="navbar nav-colour">
-          <div class="container-fluid col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
-            <form class="navbar-form navbar-left">
-              <div class="form-group">
-                <busca-por-nome/>
-              </div>
-            </form>
-            <ul class="nav navbar-nav navbar-right nav-text">
-              <li><a ui-sref="home()">HOME</a></li>
-              <li><a ui-sref="sobre()">SOBRE</a></li>
-              <li><a ui-sref="contato()">CONTATO</a></li>
-            </ul>
-          </div>
-        </nav>
       </div>
     </div>
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+
+    <nav class="navbar navbar-inverse menu">
+      <div class="container">
+        <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <busca-por-nome/>
+          </div>
+        </form>
+        <ul class="nav navbar-nav navbar-left nav-text">
+          <li><a ui-sref="home">HOME</a></li>
+          <li><a ui-sref="sobre">SOBRE</a></li>
+          <li><a ui-sref="contato">CONTATO</a></li>
+        </ul>
+      </div>
+    </nav>
 
     <ui-view></ui-view>
+
+    <footer>
+      <div class="container">
+        <div class="footer-line">
+          <div class="row">
+            <div class="col-xs-2">
+              <a ui-sref="home"><img src="images/branca.png" height="60" width="95" class="footer-logo"></img></a>
+            </div>
+          </div>
+        </div>
+        <div class="row text-right">
+          <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
+              <p>Nos siga e acompanhe essa balada:</p>
+              <a class="icone" href="https://www.facebook.com/Vidinha-de-Balada-1785003711829354/"><span class="icone-sm icon-facebook-with-circle"></span></a>
+          </div>
+        </div>
+      </div>
+  </footer>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -76,7 +95,6 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/angular-locale-pt-br/angular-locale_pt-br.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -92,34 +110,10 @@
         <script src="scripts/directives/busca.drct.js"></script>
         <!-- endbuild -->
 
-        <script>
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-        </script>
-        <footer>
-          <div class="container">
-            <div class="row">
-              <div class="col-xs-2 col-xs-offset-1 col-sm-2 col-sm-offset-1">
-                <a ui-sref="home"><img src="images/branca.png" height="60" width="95" class="footer-logo"></img></a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1">
-                <hr class="footer-line">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-6 col-xs-offset-5 col-sm-4 col-sm-offset-7">
-                <span class="font-j footer-text">Nos siga e acompanhe essa balada:</span>
-              </div>
-            </div>
-            <div>
-              <div class="col-xs-1 col-xs-offset-10 col-sm-2 col-sm-offset-9">
-                <a class="icon-facebook font-j footer-text" href="https://www.facebook.com/Vidinha-de-Balada-1785003711829354/"></a>
-              </div>
-            </div>
-          </div
-      </footer>
+    <script>
+      $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+      });
+    </script>
 </body>
 </html>
