@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = 'pass'
+password = 'martha'
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -205,13 +205,14 @@ class SelosDeputado(mysql.Model):
 class SelosCota(mysql.Model):
     __tablename__ = 'selosCota'
 
-    idDeputado = mysql.Column(mysql.String(7), primary_key=True)
-    mes = mysql.Column(mysql.Integer, primary_key=True)
-    ano = mysql.Column(mysql.Integer, primary_key=True)
-    selo = mysql.Column(mysql.String(40), primary_key=True)
+    id = mysql.Column(mysql.Integer, primary_key=True)
+    idDeputado = mysql.Column(mysql.String(7))
+    mes = mysql.Column(mysql.Integer)
+    ano = mysql.Column(mysql.Integer)
+    selo = mysql.Column(mysql.String(10))
 
     def __repr__(self):
-        return '<SelosCota (%s, %s, %s, %s) >' % (self.idDeputado, self.mes, self.ano, self.selo)
+        return '<SelosCota (%s,%s, %s, %s, %s) >' % (self.id, self.idDeputado, self.mes, self.ano, self.selo)
 
 class SelosPresenca(mysql.Model):
     __tablename__ = 'selosPresenca'
