@@ -105,14 +105,14 @@ def getCategoriaName(idCategoria):
 	4: categoria_locacao,
 	5: categoria_combustivel,
 	6: categoria_passagens}
-	
+
 	print '\n\n\n\n'
 	print idCategoria
 	print ids_categoria[idCategoria]
 	print '\n\n\n\n'
-	
+
 	return ids_categoria[idCategoria]
-	
+
 
 # Models --------------------------------------------------------------
 
@@ -202,6 +202,28 @@ class SelosDeputado(mysql.Model):
     def __repr__(self):
         return '<SelosDeputado (%s, %s, %s, %s) >' % (self.idDeputado, self.mes, self.ano, self.idCategoria)
 
+class SelosCota(mysql.Model):
+    __tablename__ = 'selosCota'
+
+    idDeputado = mysql.Column(mysql.String(7), primary_key=True)
+    mes = mysql.Column(mysql.Integer, primary_key=True)
+    ano = mysql.Column(mysql.Integer, primary_key=True)
+    selo = mysql.Column(mysql.String(40), primary_key=True)
+
+    def __repr__(self):
+        return '<SelosCota (%s, %s, %s, %s) >' % (self.idDeputado, self.mes, self.ano, self.selo)
+
+class SelosPresenca(mysql.Model):
+    __tablename__ = 'selosPresenca'
+
+    idDeputado = mysql.Column(mysql.String(7), primary_key=True)
+    mes = mysql.Column(mysql.Integer, primary_key=True)
+    ano = mysql.Column(mysql.Integer, primary_key=True)
+    selo = mysql.Column(mysql.String(40), primary_key=True)
+
+    def __repr__(self):
+        return '<SelosPresenca (%s, %s, %s, %s) >' % (self.idDeputado, self.mes, self.ano, self.selo)
+
 class Empresa(mysql.Model):
     __tablename__ = 'empresas'
 
@@ -250,11 +272,25 @@ def getDeputadoSelos(query_selos):
 		json.append([selo.idDeputado, selo.mes, selo.ano, selo.idCategoria])
 	return json
 
+def getDeputadoSelosCotaPresenca(query_selos):
+	json = []
+	for selo in query_selos:
+		json.append([selo.idDeputado, selo.mes, selo.ano, selo.selo])
+	return json
+
 @app.route('/selosDeputado/<id>', methods=['GET'])
 def getSelos(id):
 	q_selos = SelosDeputado.query.filter_by(idDeputado = id).all()
 	selos = getDeputadoSelos(q_selos)
 	return jsonify(selos)
+
+@app.route('/selosCotaPresenca/<id>', methods=['GET'])
+def getSelosCotaPresenca(id):
+	q_selos_cota = SelosCota.query.filter_by(idDeputado = id).all()
+	selos_cota = getDeputadoSelosCotaPresenca(q_selos_cota)
+	q_selos_presenca = SelosPresenca.query.filter_by(idDeputado = id).all()
+	selos_presenca = getDeputadoSelosCotaPresenca(q_selos_presenca)
+	return jsonify(selos_cota + selos_presenca)
 
 @app.route('/buscaDeputado', methods=['GET'])
 def buscaDeputado():
@@ -415,14 +451,14 @@ def getPerfilDeputado(id):
 
 @app.route('/gastosDetalhes/<id>/<idCategoria>', methods=['GET'])
 def getDetalhesGastos(id, idCategoria):
-	
+
 	categoria = getCategoriaName(idCategoria)
-	
+
 	query_gasto = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria).all()
-	
+
 	gastoscat = []
 	for gasto in query_gasto:
-		
+
 		json = {
 		'Ano' : gasto.anoEmissao,
 		'Mês' : gasto.mesEmissao,
@@ -430,9 +466,9 @@ def getDetalhesGastos(id, idCategoria):
 		'Categoria' : gasto.nomeCategoria,
 		'Valor' : gasto.valor
 		}
-		
+
 		gastoscat.append(json)
-		
+
 	return jsonify(gastoscat)
 
 # TOP 10
@@ -442,12 +478,12 @@ def somaGastosCategoria(query_gasto_categoria):
 	for gasto in query_gasto_categoria:
 		gastoTotal = gastoTotal + gasto.valor
 	return gastoTotal
-		
+
 def maisGastadores10Id(filterType, value):
-	
+
 	queryFiltroUF = "gastos.idDeputado in (SELECT id FROM deputado where (uf = \'" + str(value) +"\')) AND " if filterType == "uf" else ""
 	queryFiltroPartido = "gastos.idDeputado in (SELECT id FROM deputado where ( partidoAtual = \'" + str(value) + "\')) AND " if filterType == "partido" else ""
-					
+
 	ID = 1
 	consulta = ("SELECT (SUM(valor) / "
 					"(SELECT cotas.cota FROM cotas WHERE cotas.uf = "
@@ -460,27 +496,27 @@ def maisGastadores10Id(filterType, value):
 
 	connection = engine.connect()
 	result = connection.execute(consulta)
-	
+
 	top_ids = []
 	for row in result:
 		top_ids.append(row[ID])
-		
+
 	connection.close()
-		
+
 	return top_ids
 
 def get10MaisGastadores(filterType, value):
-	
+
 	deputados = []
 	ids = maisGastadores10Id(filterType, value)
-	
+
 	i = 1
 	for idDeputado in ids:
 		if i <= 10:
-			deputado = Deputado.query.filter_by(id=idDeputado).first()	
+			deputado = Deputado.query.filter_by(id=idDeputado).first()
 			deputados.append(deputado)
 			i += 1
-	
+
 	return deputados
 
 def getGastoMesTotalDeputado(idDeputado):
@@ -488,26 +524,26 @@ def getGastoMesTotalDeputado(idDeputado):
 	connection = engine.connect()
 	result = connection.execute(consulta)
 	connection.close()
-	
-	for gasto in result: gastoTotal = gasto[0]	
+
+	for gasto in result: gastoTotal = gasto[0]
 	return gastoTotal
-	
+
 @app.route("/top10", methods=['GET'])
 def top10Default():
 	NO_FILTER = ""
 	return top10(NO_FILTER, NO_FILTER)
 
-@app.route("/top10/<filterType>/<value>", methods=['GET'])	
+@app.route("/top10/<filterType>/<value>", methods=['GET'])
 def top10(filterType, value):
-	
+
 	top10 = get10MaisGastadores(filterType, value)
-	
+
 	json = []
 	for i in range(len(top10)):
 		deputado = top10[i]
 
 		# info deputado
-		
+
 		deputado_id = deputado.id
 		deputado_gasto_total = getGastoMesTotalDeputado(deputado_id)
 		deputado_posicao = i + 1
@@ -520,11 +556,11 @@ def top10(filterType, value):
 		deputado_uf = deputado_obj.uf
 		deputado_cota_uf = Cota.query.get(deputado_uf).cota
 
-		try: 
+		try:
 			deputado_presencas = SessoesMesDeputado.query.filter_by(idDeputado=deputado_id, mes=mesPassado, ano=ano).first().quantidadeParticipacoes
 		except:
 			deputado_presencas = 0
-			
+
 		sessoes_totais = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first().quantidadeSessoes
 
 		# gastos categorias
@@ -551,7 +587,7 @@ def top10(filterType, value):
 		categoria_locacao : gasto_locacao,
 		categoria_passagens : gasto_passagens
 		}
-		
+
 		gasto_outros = deputado_gasto_total - gasto_alimentacao - gasto_combustivel - gasto_divulgacao - gasto_escritorio - gasto_locacao
 		meus_gastos = [
 		(categoria_alimentacao, gasto_alimentacao),
@@ -584,7 +620,7 @@ def top10(filterType, value):
 		json.append(deputado_json)
 
 	return jsonify(json)
-	
+
 
 # Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":
