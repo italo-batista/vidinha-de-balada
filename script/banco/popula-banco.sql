@@ -49,6 +49,7 @@ load data local infile '/home/ubuntu/vidinha-de-balada/script/dados_gerados/ganh
   lines terminated by '\n'
     (idDeputado, mes, ano, idCategoria);
 
+
 load data local infile '/home/ubuntu/vidinha-de-balada/script/dados_gerados/tabela_selos_cota.csv' into table selosCota fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
