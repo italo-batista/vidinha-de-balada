@@ -44,6 +44,10 @@ load data local infile 'xxx' into table emendasPropostasDeputado fields terminat
 
 */
 
+load data local infile '/home/ubuntu/vidinha-de-balada/script/dados_gerados/ganhadores_selos.csv' into table selosDeputado fields terminated by ','
+  enclosed by '"'
+  lines terminated by '\n'
+    (idDeputado, mes, ano, idCategoria);
 
 load data local infile '/home/ubuntu/vidinha-de-balada/script/dados_gerados/tabela_selos_cota.csv' into table selosCota fields terminated by ','
   enclosed by '"'
@@ -55,4 +59,3 @@ load data local infile '/home/ubuntu/vidinha-de-balada/script/dados_gerados/tabe
   enclosed by '"'
   lines terminated by '\n'
     (idDeputado, mes, ano, selo);
-
