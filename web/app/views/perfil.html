@@ -23,13 +23,13 @@
           <div class="card-lg-body">
 
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <span class="font-c">Cota mensal</span> <br>
                 <span class="font-d">{{ ctrl.deputado.Cota | currency:'R$ ' }}</span> <br>
-                <span class="font-c">Valor gasto</span> <br>
+                <span class="font-c">Valor gasto durante o mandato</span> <br>
                 <span class="font-b">{{ ctrl.deputado['Total gastos'] | currency:'R$ ' }}</span>
               </div>
-              <div class="col-md-4 text-center">
+              <div class="col-md-3 text-center">
                 <!-- <div class="selo-primary selo-lg">
                   <span class="icone-lg icon-alimento" ng-if="ctrl.maiorGasto('alimento')"></span>
                   <span class="icone-lg icon-combustivel" ng-if="ctrl.maiorGasto('combustivel')"></span>
@@ -40,7 +40,7 @@
                 </div>
                 <p class="font-b">{{ctrl.deputado.Maior_gasto_valor | currency:'R$ '}}</p> -->
               </div>
-              <div class="col-md-4 text-center">
+              <div class="col-md-3 text-center">
                 <!-- <div class="selo-primary selo-lg">
                   <strong>{{ctrl.deputado.presencas}}</strong>/{{ctrl.deputado.total_sessoes}}
                 </div>
@@ -149,8 +149,25 @@
                 <img src="images/selos/gaveta.png" height="100" width="100">
                 <p class="font-e">{{ ctrl.contagemSelos['Escritório'] }}</p>
               </div>
+              <div class="row selos">
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                  <img src="images/selos/gaspar.png" height="120" width="120">
+                  <p class="font-e">{{ ctrl.contagemSelos['gaspar'] }}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                  <img src="images/selos/ponto.png" height="120" width="120">
+                  <p class="font-e">{{ ctrl.contagemSelos['batedor'] }}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                  <img src="images/selos/camarote.png" height="120" width="120">
+                  <p class="font-e">{{ ctrl.contagemSelos['camarote'] }}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                  <img src="images/selos/moderado.png" height="120" width="120">
+                  <p class="font-e">{{ ctrl.contagemSelos['moderado'] }}</p>
+                </div>
               </div>
-            </div
+            </div>
           </div>
         </div>
 

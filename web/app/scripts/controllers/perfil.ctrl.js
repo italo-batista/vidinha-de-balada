@@ -24,7 +24,11 @@
         'Alimentação': 0,
         'Escritório': 0,
         'Locação de veículos': 0,
-        'Passagens aéreas': 0
+        'Passagens aéreas': 0,
+        'moderado': 0,
+        'camarote': 0,
+        'batedor': 0,
+        'gaspar': 0
       }
 
       function init() {
@@ -48,7 +52,12 @@
 
         $http.get(RESTAPI+"selosDeputado/"+vm.id).then(function(res) {
           vm.selos = res.data;
-          contaSelos();
+          contaSelos(vm.selos);
+        });
+
+        $http.get(RESTAPI+"selosCotaPresenca/"+vm.id).then(function(res) {
+          vm.selosCotaPresenca = res.data;
+          contaSelos(vm.selosCotaPresenca);
         });
       }
       init();
@@ -65,9 +74,11 @@
         return categorias[categoria];
       }
 
-      function contaSelos() {
-        for (var i in vm.selos) {
-          vm.contagemSelos[vm.selos[i][3]] = vm.contagemSelos[vm.selos[i][3]] + 1;
+      function contaSelos(selos) {
+        for (var i in selos) {
+          if (selos[i][3] != '-') {
+            vm.contagemSelos[selos[i][3]] = vm.contagemSelos[selos[i][3]] + 1;
+          }
         }
       };
 
