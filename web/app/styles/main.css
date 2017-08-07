@@ -208,7 +208,7 @@ h4 > .glyphicon {
 }
 
 .card-row {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .card-lg {
@@ -348,6 +348,13 @@ h4 > .glyphicon {
   font-weight: bold;
 }
 
+.font-m {
+  font-size: 12px;
+  font-weight: normal;
+  opacity: 0.5;
+  height: 34px;
+}
+
 .title-grafico {
   text-align: center;
   padding-bottom: 15px;
@@ -429,13 +436,13 @@ a.icone {
   -ms-transition: height 0.25s linear;
   transition: height 0.25s linear;
 
-  height: 150px;
+  height: 180px;
   overflow: hidden;
 }
 
 @media only screen and (max-width : 320px) {
   .transformable {
-    height: 250px;
+    height: 380px;
   }
 }
 

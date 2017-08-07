@@ -53,30 +53,37 @@
           </div>
 
           <div class="transformable" ng-class="{'small':isVisible, 'big':!isVisible}">
-            <h4 class="text-center" >Como usou a cota:</h4>
-            <div class="row">
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-alimento"></span>
-                <p class="font-l">{{deputado.Gastos['Alimentação'] | currency:'R$ '}}</p>
+            <h4 class="text-center card-row">Como usou a cota:</h4>
+            <div class="row card-row">
+              <div class="col-xs-6 col-md-2 text-center">
+                <span class="icone-lg icon-alimento"></span>
+                <div class="font-l">{{deputado.Gastos['Alimentação'] | currency:'R$ '}}</div>
+                <div class="font-m">Alimentação</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-combustivel"></span>
-                <p class="font-l">{{deputado.Gastos['Combustíveis'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-combustivel"></span>
+                <div class="font-l">{{deputado.Gastos['Combustíveis'] | currency:'R$ '}}</div>
+                <div class="font-m">Combustíveis</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-locacao"></span>
-                <p class="font-l">{{deputado.Gastos['Locação de veículos'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-locacao"></span>
+                <div class="font-l">{{deputado.Gastos['Locação de veículos'] | currency:'R$ '}}</div>
+                <div class="font-m">Locação de veículos</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-passagem"></span>
-                <p class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-passagem"></span>
+                <div class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</div>
+                <div class="font-m">Passagens aéreas</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-escritorio"></span>
-                <p class="font-l">{{deputado.Gastos['Escritório'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-escritorio"></span>
+                <div class="font-l">{{deputado.Gastos['Escritório'] | currency:'R$ '}}</div>
+                <div class="font-m">Escritório</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center"><span class="icone-lg icon-divulgacao"></span>
-                <p class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-divulgacao"></span>
+                <div class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</div>
+                <div class="font-m">Divulgação</div>
               </div>
             </div>
           </div>
           <div  ng-click="hide()" class="card-exp">
-            <span ng-show="isVisible"> + </span> <span ng-show="!isVisible"> - </span>  DETALHES
+            DETALHES
             <span class="glyphicon glyphicon-chevron-up" ng-show="!isVisible"></span>
             <span class="glyphicon glyphicon-chevron-down" ng-show="isVisible"></span>
           </div>
