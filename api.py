@@ -276,7 +276,7 @@ def getDeputados():
 
 	data_all = []
 	for deputado in deputados:
-		data_all.append({'id': deputado.id, 'nome' : deputado.nome, 'uf': deputado.uf, 'partido': deputado.partidoAtual})
+		data_all.append({'id': deputado.id, 'nome' : deputado.nome, 'uf': deputado.uf, 'partido': deputado.partidoAtual, deputado.twitter, deputado.telefone, deputado.email})
 
 	return jsonify(data_all)
 	
@@ -450,6 +450,9 @@ def getPerfilDeputado(id):
 	'Nome' : deputado.nome,
 	'urlfoto' : deputado.foto,
 	'Id' : deputado.id,
+	'Twitter' : deputado.twitter, 
+	'Fone' : deputado.telefone, 
+	'Email' : deputado.email,
 	'Partido' : deputado.partidoAtual,
 	'UF' : deputado.uf,
 	'Cota' : cota_uf,
