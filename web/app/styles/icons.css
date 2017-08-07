@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?84k9e6');
-  src:  url('fonts/icomoon.eot?84k9e6#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?84k9e6') format('truetype'),
-    url('fonts/icomoon.woff?84k9e6') format('woff'),
-    url('fonts/icomoon.svg?84k9e6#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?8coyuj');
+  src:  url('fonts/icomoon.eot?8coyuj#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?8coyuj') format('truetype'),
+    url('fonts/icomoon.woff?8coyuj') format('woff'),
+    url('fonts/icomoon.svg?8coyuj#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-banknote:before {
+  content: "\e90d";
+}
+.icon-outro:before {
+  content: "\e90c";
+}
 .icon-passagem:before {
   content: "\e906";
 }
@@ -44,6 +50,18 @@
 }
 .icon-telegram:before {
   content: "\e900";
+}
+.icon-share:before {
+  content: "\e905";
+}
+.icon-google-with-circle:before {
+  content: "\e901";
+}
+.icon-twitter-with-circle:before {
+  content: "\e902";
+}
+.icon-facebook-with-circle:before {
+  content: "\e903";
 }
 .icon-share-alternitive:before {
   content: "\e904";

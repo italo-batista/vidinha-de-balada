@@ -207,6 +207,12 @@ h4 > .glyphicon {
   opacity: 0.5;
 }
 
+@media only screen and (min-width : 321px) {
+  .card-text-align {
+    padding-top: 67px;
+  }
+}
+
 .card-row {
   margin-bottom: 20px;
 }
@@ -398,6 +404,7 @@ footer {
   font-size: 12px;
   text-align: center;
   margin-bottom: 6px;
+  background-color: #61397B;
 }
 
 .selo-lg > strong {
@@ -410,7 +417,11 @@ footer {
 }
 
 .selo-primary {
-  background-color: #61397B;
+  background-color: #FFFFFF;
+}
+
+.selo-primary > .icone-lg {
+  color: #61397B;
 }
 
 a.icone {
@@ -436,13 +447,14 @@ a.icone {
   -ms-transition: height 0.25s linear;
   transition: height 0.25s linear;
 
-  height: 180px;
+  height: 200px;
   overflow: hidden;
+  margin-top: 35px;
 }
 
 @media only screen and (max-width : 320px) {
   .transformable {
-    height: 380px;
+    height: 450px;
   }
 }
 
