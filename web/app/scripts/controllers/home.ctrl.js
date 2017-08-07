@@ -46,7 +46,6 @@
 
                         vm.deputados.push(d);
                     });
-                    console.log(vm.deputados);
                     vm.showTop10++;
                 });
                 $http.get(RESTAPI + "dadosData").then(function(res) {

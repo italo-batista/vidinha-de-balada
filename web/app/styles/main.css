@@ -187,7 +187,11 @@ h4 > .glyphicon {
 }
 
 .card-body {
-  padding: 20px;
+  padding-bottom: 20px;
+}
+
+.card-row {
+  padding: 15px;
 }
 
 .card-exp {
@@ -462,7 +466,7 @@ a.icone {
   margin-top: 35px;
 }
 
-@media only screen and (max-width : 320px) {
+@media only screen and (max-width : 996px) {
   .transformable {
     height: 450px;
   }
