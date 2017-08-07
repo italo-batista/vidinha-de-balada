@@ -1,23 +1,24 @@
-## [Vidinha de Balada](https://italo-batista.github.io/vidinha-de-balada/#!/)
+## [Vidinha de Balada](http://vidinhadebalada.com/#!/)
 
-Vidinha de Balada surgiu no [Hackfest Contra a Corrupção](http://hackfest.com.br/).
+Você sabia que, além do salário, os deputados federais recebem outras verbas para exercer seus cargos? Dentre elas: auxílio para contratar funcionários, auxílio moradia, despesas com saúde, entre outras. No Vidinha de Balada, vamos falar em especial da CEAP (Cota para Exercício da Atividade Parlamentar). Para saber mais sobre a CEAP acesse [este link](http://vidinhadebalada.com).
 
-O projeto propõe analisar os gastos da CEAP (Cota para o Exercício da Atividade Parlamentar), possibilitando ao cidadão comum:
+Na plataforma você pode conferir:
 
-- verificar se o gasto do deputado é proporcional a sua presença e/ou participação nas sessões da câmara;
-- comparar facilmente os valores gastos pelos deputados com parâmetros conhecidos.
+- Valor gasto com a CEAP no atual mandato (e valores comparativos)
+- Os TOP10 deputados reis do camarote mais gastadores do Brasil (e também por estado ou partido)
+- Presença dos deputados nas sessões e gastos ao longo dos meses/anos
+- Valor gasto por categoria (alimentação, locação de veículos, etc)
 
-Com os gestores (deputados) em foco, é possível acompanhar:
+E várias outras informações do seu representante. Acesse o [Vidinha de Balada](http://vidinhadebalada.com/#!/) e acompanhe de perto o trabalho de quem você escolheu pra te representar!
 
-- Gastômetro (o que foi gastado com a CEAP no presente ano);
-- Top deputados gastadores;
-- Presença nas sessões e gastos ao longo dos meses;
-- Gastos por categoria;
-- Timeline de presenças e gastos.
+
+O Vidinha de Balada surgiu no [Hackfest Contra a Corrupção](http://hackfest.com.br/) e pode ser acessado em [VidinhaDeBalada.com](https://vidinhadebalada.com).
+
 
 ----
 
-O projeto está em fase de desenvolvimento. Melhorias são muito bem-vindas! :))
+Deseja contribuir com o Vidinha de Balada?! Melhorias são muito bem-vindas! :))
+
 
 ### Requisitos
 
@@ -28,21 +29,12 @@ Este projeto é dividido em duas partes, _frontend_ e _backend_ e necessita da i
 - NodeJS >= 4.0
 - Grunt-cli >= 1.2
 - Bower >= 1.8
+- Mysql >= 5.7.19
+- R version >= 3.4.0
 
 ### Desenvolvimento
 
-Para rodar o backend, estando no diretório raiz do projeto, use os comandos:
-
-Para instalar as dependências:
-```
-  pip install -r requirements.txt
-```
-Para rodar:
-```
-  python app.py
-```
-
-Para rodar o frontend em modo de desenvolvimento, entre no diretório _web_ do projeto e use os comandos:
+- Para rodar o **frontend** em modo de desenvolvimento, entre no diretório _web_ do projeto e use os comandos:
 
 Para instalar as dependências:
 ```
@@ -57,7 +49,43 @@ grunt serve
 
 O navegador padrão abrirá automaticamente em [localhost:9000](http://localhost:9000).
 
+
+- Para rodar o **backend**, existem 2 opções: utilizar nosso banco de dados e API rest (configurados e disponíveis), ou montar sua própria infraestrutura localmente.
+
+Para a primeira opção, basta clonar o projeto e se divertir! :D
+
+Para a segunda opção é necessário i) gerar os arquivos de dados, ii) popular o banco de dados e iii) levantar a APIrest.  
+
+i) Para gerar os arquivos necessários, utilizando o R, execute o arquivo **/script/gera_csvs.R**
+
+Após instalado o MySQL, execute o seguinte comando para gerar o esquema relacional do BD :
+
+```
+> source /~path_local/vidinha-de-balada/script/banco/vidinha-banco.sql
+```
+
+ii) Preenchimento do banco de dados com os arquivos gerados (é necessário editar este script e adicionar seu path ):
+
+```
+> source /~path_local/vidinha-de-balada/script/banco/populabanco.sql.
+```
+
+iii) Estando no diretório raiz do projeto, use os comandos:
+
+Para instalar as dependências da API:
+```
+  pip install -r requirements.txt
+```
+Para rodar a API:
+```
+  python app.py
+```
+
 ### Deployment
+
+## Backend
+
+Para o deploy do backend é necessário repetir os passos de montagem e preenchimento do banco e levantamento da API no servidor desejado.
 
 ## Frontend
 
@@ -79,3 +107,4 @@ grunt ssh_deploy:prod
 ```
 
 Este comando utiliza o arquivo _secret.json_ para enviar os arquivos em _dist/_ para o servidor via SSH.
+
