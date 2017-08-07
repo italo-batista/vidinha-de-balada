@@ -271,7 +271,7 @@ def getGasto(ano):
 
 @app.route('/deputados', methods=['GET'])
 def getDeputados():
-	
+
 	deputados = Deputado.query.all()
 
 	data_all = []
@@ -279,7 +279,7 @@ def getDeputados():
 		data_all.append({'id': deputado.id, 'nome' : deputado.nome, 'uf': deputado.uf, 'partido': deputado.partidoAtual, 'twitter': deputado.twitter, 'telefone': deputado.telefone, 'email': deputado.email})
 
 	return jsonify(data_all)
-	
+
 
 def getDeputadoSelos(query_selos):
 	json = []
@@ -299,13 +299,17 @@ def getSelos(id):
 	selos = getDeputadoSelos(q_selos)
 	return jsonify(selos)
 
-@app.route('/selosCotaPresenca/<id>', methods=['GET'])
-def getSelosCotaPresenca(id):
+@app.route('/selosCota/<id>', methods=['GET'])
+def getSelosCota(id):
 	q_selos_cota = SelosCota.query.filter_by(idDeputado = id).all()
 	selos_cota = getDeputadoSelosCotaPresenca(q_selos_cota)
+	return jsonify(selos_cota)
+
+@app.route('/selosPresenca/<id>', methods=['GET'])
+def getSelosPresenca(id):
 	q_selos_presenca = SelosPresenca.query.filter_by(idDeputado = id).all()
 	selos_presenca = getDeputadoSelosCotaPresenca(q_selos_presenca)
-	return jsonify(selos_cota + selos_presenca)
+	return jsonify(selos_presenca)
 
 @app.route('/buscaDeputado', methods=['GET'])
 def buscaDeputado():

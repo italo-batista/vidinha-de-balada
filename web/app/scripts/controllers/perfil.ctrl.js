@@ -55,9 +55,14 @@
           contaSelos(vm.selos);
         });
 
-        $http.get(RESTAPI+"selosCotaPresenca/"+vm.id).then(function(res) {
-          vm.selosCotaPresenca = res.data;
-          contaSelos(vm.selosCotaPresenca);
+        $http.get(RESTAPI+"selosCota/"+vm.id).then(function(res) {
+          vm.selosCota = res.data;
+          contaSelos(vm.selosCota);
+        });
+
+        $http.get(RESTAPI+"selosPresenca/"+vm.id).then(function(res) {
+          vm.selosPresenca = res.data;
+          contaSelos(vm.selosPresenca);
         });
       }
       init();
