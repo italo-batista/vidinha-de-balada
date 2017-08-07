@@ -7,76 +7,92 @@
         <div class="card-lg">
           <div class="card-lg-head">
             <div class="row">
-              <div class="col-sm-4 col-md-3 text-center">
+              <div class="col-sm-4 col-md-2 text-center">
                 <div class="card-lg-img">
                   <a ui-sref="perfil({id: ctrl.deputado.Id})">
                     <img ng-src="{{ ctrl.deputado.urlfoto }}" alt="{{ ctrl.deputado.Nome }}" width="100%">
                   </a>
                 </div>
               </div>
-              <div class="col-sm-8 col-md-9">
+              <div class="col-sm-8 col-md-10">
                 <h1>{{ ctrl.deputado.nome }}</h1>
-                <p>{{ ctrl.deputado.UF }}</p>
+                <p>{{ ctrl.deputado.UF }} / {{ ctrl.deputado.Partido }}</p>
+                <div class="row">
+                  <div class="col-md-3" ng-if="ctrl.deputado.Twitter != 'NA'">
+                    <span class="icone-sm icon-twitter-with-circle"></span> <span>{{ ctrl.deputado.Twitter }}</span>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="icone-sm icon-mail"></span> <a ng-href="mailto:{{ ctrl.deputado.Email }}" class="link-inverse" target="_blank">{{ ctrl.deputado.Email }}</a>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="icone-sm icon-phone"></span> {{ ctrl.deputado.Fone }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="card-lg-body">
-
             <div class="row">
-              <div class="col-md-6">
-                <span class="font-c">Cota mensal</span> <br>
-                <span class="font-d">{{ ctrl.deputado.Cota | currency:'R$ ' }}</span> <br>
-                <span class="font-c">Valor gasto durante o mandato</span> <br>
-                <span class="font-b">{{ ctrl.deputado['Total gastos'] | currency:'R$ ' }}</span>
-              </div>
-              <div class="col-md-3 text-center">
-                <!-- <div class="selo-primary selo-lg">
-                  <span class="icone-lg icon-alimento" ng-if="ctrl.maiorGasto('alimento')"></span>
-                  <span class="icone-lg icon-combustivel" ng-if="ctrl.maiorGasto('combustivel')"></span>
-                  <span class="icone-lg icon-locacao" ng-if="ctrl.maiorGasto('locacao')"></span>
-                  <span class="icone-lg icon-passagem" ng-if="ctrl.maiorGasto('passagem')"></span>
-                  <span class="icone-lg icon-escritorio" ng-if="ctrl.maiorGasto('escritorio')"></span>
-                  <span class="icone-lg icon-divulgacao" ng-if="ctrl.maiorGasto('divulgacao')"></span>
-                </div>
-                <p class="font-b">{{ctrl.deputado.Maior_gasto_valor | currency:'R$ '}}</p> -->
-              </div>
-              <div class="col-md-3 text-center">
-                <!-- <div class="selo-primary selo-lg">
-                  <strong>{{ctrl.deputado.presencas}}</strong>/{{ctrl.deputado.total_sessoes}}
-                </div>
-                <p>Presenças / sessões</p> -->
+              <div class="col-xs-12 text-center card-text-align">
+                <div class="font-c card-text-label">Valor gasto durante o atual mandato</div>
+                <div class="font-g">{{ ctrl.deputado['Total gastos'] | currency:'R$ ' }}</div>
               </div>
             </div>
 
-            <h4 class="text-center">Como usou a cota:</h4>
-            <div class="row">
-              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-alimento"></span>
-                <p class="font-e">{{ctrl.deputado['Alimentação'] | currency:'R$ '}}</p>
-                <p>Alimentação</p>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-combustivel"></span>
-                <p class="font-e">{{ctrl.deputado['Combustível'] | currency:'R$ '}}</p>
-                <p>Combustível</p>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-locacao"></span>
-                <p class="font-e">{{ctrl.deputado['Locação de veículos'] | currency:'R$ '}}</p>
-                <p>Locação de veículos</p>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-passagem"></span>
-                <p class="font-e">{{ctrl.deputado['Passagens aéreas'] | currency:'R$ '}}</p>
-                <p>Passagens aéreas</p>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-escritorio"></span>
-                <p class="font-e">{{ctrl.deputado['Escritório'] | currency:'R$ '}}</p>
-                <p>Escritório</p>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center"><span class="icone-lg icon-divulgacao"></span>
-                <p class="font-e">{{ctrl.deputado['Divulgação de atividade parlamentar'] | currency:'R$ '}}</p>
-                <p>Divulgação</p>
+            <br><br>
+
+            <div class="text-center">
+              <span class="font-d">Como usou a cota?</span><br>
+              <span>Limite mensal de {{ ctrl.deputado.Cota | currency:'R$ ' }}</span>
+            </div>
+            <div class="card-row">
+              <div class="row">
+                <div class="col-xs-6 col-md-4 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('alimento')}">
+                    <span class="icone-lg icon-alimento"></span>
+                  </div>
+                  <div class="font-l">{{ctrl.deputado['Alimentação'] | currency:'R$ '}}</div>
+                  <div class="font-m">Alimentação</div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('combustivel')}">
+                    <span class="icone-lg icon-combustivel"></span>
+                  </div>
+                  <div class="font-l">{{ctrl.deputado['Combustível'] | currency:'R$ '}}</div>
+                  <div class="font-m">Combustíveis</div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('locacao')}">
+                    <span class="icone-lg icon-locacao"></span>
+                  </div>
+                  <div class="font-l">{{ctrl.deputado['Locação de veículos'] | currency:'R$ '}}</div>
+                  <div class="font-m">Locação de veículos</div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('passagem')}">
+                    <span class="icone-lg icon-passagem"></span>
+                  </div>
+                  <div class="font-l">{{ctrl.deputado['Passagens aéreas'] | currency:'R$ '}}</div>
+                  <div class="font-m">Passagens aéreas</div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('alimento')}">
+                    <span class="icone-lg icon-escritorio"></span>
+                  </div>
+                  <div class="font-l">{{ctrl.deputado['Escritório'] | currency:'R$ '}}</div>
+                  <div class="font-m">Escritório</div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('divulgacao')}">
+                    <span class="icone-lg icon-divulgacao"></span>
+                  </div>
+                  <div class="font-l">{{ctrl.deputado['Divulgação de atividade parlamentar'] | currency:'R$ '}}</div>
+                  <div class="font-m">Divulgação</div>
+                </div>
               </div>
             </div>
 
-          </div>
+          </div> <!-- fim do card body -->
         </div>
 
         <div class="card-lg">
@@ -125,48 +141,49 @@
             <h2 class="text-center">Coleção de selos</h2>
             <p class="text-center">Os selos acumulados ao longo do mandato</p>
             <div class="row selos">
-              <div class="col-xs-6 col-sm-6 col-md-2">
-                <img src="images/selos/guloso.png" height="100" width="100" title="Alimentação">
+              <div class="col-xs-4 col-sm-2">
+                <img src="images/selos/guloso.png" width="100%" title="Alimentação">
                 <p class="font-e">{{ ctrl.contagemSelos['Alimentação'] }}</p>
               </div>
-              <div class="col-xs-6 col-sm-6 col-md-2">
-                <img src="images/selos/tanque.png" height="100" width="100" title="Combustíveis">
+              <div class="col-xs-4 col-sm-2">
+                <img src="images/selos/tanque.png" width="100%" title="Combustíveis">
                 <p class="font-e">{{ ctrl.contagemSelos['Combustíveis'] }}</p>
               </div>
-              <div class="col-xs-6 col-sm-6 col-md-2">
-                <img src="images/selos/taxi.png" height="100" width="100" title="Locação de veículos">
+              <div class="col-xs-4 col-sm-2">
+                <img src="images/selos/taxi.png" width="100%" title="Locação de veículos">
                 <p class="font-e">{{ ctrl.contagemSelos['Locação de veículos'] }}</p>
               </div>
-              <div class="col-xs-6 col-sm-6 col-md-2">
-                <img src="images/selos/turista.png" height="100" width="100" title="Passagens aéreas">
+              <div class="col-xs-4 col-sm-2">
+                <img src="images/selos/turista.png" width="100%" title="Passagens aéreas">
                 <p class="font-e">{{ ctrl.contagemSelos['Passagens aéreas'] }}</p>
               </div>
-              <div class="col-xs-6 col-sm-6 col-md-2">
-                <img src="images/selos/panfleto.png" height="100" width="100" title="Divulgação de atividade parlamentar">
+              <div class="col-xs-4 col-sm-2">
+                <img src="images/selos/panfleto.png" width="100%" title="Divulgação de atividade parlamentar">
                 <p class="font-e">{{ ctrl.contagemSelos['Divulgação de atividade parlamentar'] }}</p>
               </div>
-              <div class="col-xs-6 col-sm-6 col-md-2">
-                <img src="images/selos/gaveta.png" height="100" width="100" title="Escritório">
+              <div class="col-xs-4 col-sm-2">
+                <img src="images/selos/gaveta.png" width="100%" title="Escritório">
                 <p class="font-e">{{ ctrl.contagemSelos['Escritório'] }}</p>
               </div>
-              <div class="row selos">
-                <div class="col-xs-6 col-sm-6 col-md-3">
-                  <img src="images/selos/gaspar.png" height="120" width="120">
-                  <p class="font-e">{{ ctrl.contagemSelos['gaspar'] }}</p>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-3">
-                  <img src="images/selos/ponto.png" height="120" width="120">
-                  <p class="font-e">{{ ctrl.contagemSelos['batedor'] }}</p>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-3">
-                  <img src="images/selos/camarote.png" height="120" width="120">
-                  <p class="font-e">{{ ctrl.contagemSelos['camarote'] }}</p>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-3">
-                  <img src="images/selos/moderado.png" height="120" width="120">
-                  <p class="font-e">{{ ctrl.contagemSelos['moderado'] }}</p>
-                </div>
+            </div>
+            <div class="row selos">
+              <div class="col-xs-6 col-sm-3 col-md-2 col-sm-offset-0 col-md-offset-2">
+                <img src="images/selos/gaspar.png" width="100%">
+                <p class="font-e">{{ ctrl.contagemSelos['gaspar'] }}</p>
               </div>
+              <div class="col-xs-6 col-sm-3 col-md-2">
+                <img src="images/selos/ponto.png" width="100%">
+                <p class="font-e">{{ ctrl.contagemSelos['batedor'] }}</p>
+              </div>
+              <div class="col-xs-6 col-sm-3 col-md-2">
+                <img src="images/selos/camarote.png" width="100%">
+                <p class="font-e">{{ ctrl.contagemSelos['camarote'] }}</p>
+              </div>
+              <div class="col-xs-6 col-sm-3 col-md-2">
+                <img src="images/selos/moderado.png" width="100%">
+                <p class="font-e">{{ ctrl.contagemSelos['moderado'] }}</p>
+              </div>
+            </div>
             </div>
           </div>
         </div>

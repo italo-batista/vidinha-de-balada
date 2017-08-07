@@ -55,8 +55,7 @@
             </div>
           </form>
           <ul class="nav navbar-nav navbar-right nav-text">
-            <li><a ui-sref="home" data-toggle="collapse" data-target="#menu-principal">HOME</a></li>
-            <li><a ui-sref="ceap">CEAP</a></li>
+            <li><a ui-sref="ceap" data-toggle="collapse" data-target="#menu-principal">CEAP</a></li>
             <li><a ui-sref="sobre" data-toggle="collapse" data-target="#menu-principal">SOBRE</a></li>
             <li><a ui-sref="contato" data-toggle="collapse" data-target="#menu-principal">CONTATO</a></li>
           </ul>
@@ -64,7 +63,7 @@
       </div>
     </nav>
 
-    <ui-view></ui-view>
+    <ui-view autoscroll="true"></ui-view>
 
     <footer>
       <div class="container">
