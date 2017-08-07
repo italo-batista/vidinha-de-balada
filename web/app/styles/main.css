@@ -7,6 +7,7 @@ body {
 a,
 .btn-link {
   color: #fff;
+  font-weight: bold;
 }
 
 a:active,
@@ -98,6 +99,10 @@ h4 > .glyphicon {
 .toolTip span {
   font-weight: 500;
   color: #081F2C;
+}
+
+.main-title {
+  margin-bottom: 50px;
 }
 
 .rank-filter {
