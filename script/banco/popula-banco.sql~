@@ -58,5 +58,4 @@ load data local infile 'xxx' into table emendasPropostasDeputado fields terminat
   enclosed by '"'
   lines terminated by '\n'
     (mes, ano, idDeputado, quantidade);
-
 */

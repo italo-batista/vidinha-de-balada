@@ -45,7 +45,7 @@ load data local infile '/home/ubuntu/vidinha-de-balada/data/dados_gerados/ganhad
 load data local infile '/home/ubuntu/vidinha-de-balada/data/dados_gerados/tabela_selos_cota.csv' into table selosCota fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
-    (id, idDeputado, ano, mes, selo);
+    (idDeputado, ano, mes, selo);
 
 
 load data local infile '/home/ubuntu/vidinha-de-balada/data/dados_gerados/tabela_selos_presencas.csv' into table selosPresenca fields terminated by ','

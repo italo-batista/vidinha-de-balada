@@ -413,10 +413,10 @@ cria_tabela_selos_presencas = function(tabela_final_gastos, tabela_final_votacoe
   tabela_selos_votacoes$selo[(tabela_selos_votacoes$total_deputado/tabela_selos_votacoes$total_mes) < 0.25] = "gaspar"
   tabela_selos_votacoes$selo[is.na(tabela_selos_votacoes$selo)] = "-"
   
-  tabela_selos_votacoes$id = 0
+  #tabela_selos_votacoes$id = 0
   
   tabela_selos_votacoes = tabela_selos_votacoes %>%
-    select(id_dep, anov, mesv, selo, id)
+    select(id_dep, anov, mesv, selo)
   
   return(tabela_selos_votacoes)
 }
@@ -429,10 +429,10 @@ cria_tabela_selos_cota = function(tabela_final_gastos) {
   tabela_selos_cota$selo[tabela_selos_cota$coef > 1] = "camarote"
   tabela_selos_cota$selo[tabela_selos_cota$coef <= 1] = "moderado"
   
-  tabela_selos_cota$id = 0
+  #tabela_selos_cota$id = 0
   
   tabela_selos_cota = tabela_selos_cota %>%
-    select(idecadastro, numAno, numMes, selo, id)
+    select(idecadastro, numAno, numMes, selo)
   
   return(tabela_selos_cota)
 }
