@@ -35,7 +35,7 @@ a.link-inverse:active {
 .sessao {
   padding-bottom: 40px;
   padding-top: 40px;
-  background-color: #573C82;
+  background-color: #61397B;
   margin-bottom: 20px;
 }
 
@@ -116,7 +116,7 @@ h4 > .glyphicon {
 }
 
 .card {
-  background-color: #463066;
+  background-color: #522E61;
   margin-bottom: 40px;
 }
 
@@ -161,7 +161,7 @@ h4 > .glyphicon {
   overflow: hidden;
   border-radius: 50%;
   margin-top: -52px;
-  border: solid 4px #573C82;
+  border: solid 4px #61397B;
 }
 
 .card-subtitle {
@@ -175,7 +175,7 @@ h4 > .glyphicon {
   border-radius: 50%;
   margin-top: 25px;
   margin-left: -25px;
-  border: solid 4px #573C82;
+  border: solid 4px #61397B;
 }
 
 .card-body {
@@ -215,7 +215,7 @@ h4 > .glyphicon {
 }
 
 .card-lg-body {
-  background-color: #463066;
+  background-color: #522E61;
   padding: 20px;
 }
 
@@ -387,7 +387,7 @@ footer {
 }
 
 .selo-primary {
-  background-color: #573C82;
+  background-color: #61397B;
 }
 
 a.icone {
