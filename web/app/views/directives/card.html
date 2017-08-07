@@ -5,78 +5,114 @@
     </div>
     <div class="col-md-11">
 
-      <div ng-class="'card'">
+      <div class="card">
         <div class="card-head">
-          <a class="link-inverse" ui-sref="perfil({id: deputado.Id})">{{ deputado.nome }}</a>
-        </div>
-        <div class="card-body">
           <div class="row">
-            <div class="col-md-3 card-subhead">
+            <div class="col-xs-12 col-sm-2 text-center">
               <div class="card-img">
                 <a ui-sref="perfil({id: deputado.Id})">
                   <img ng-src="{{ deputado.urlfoto }}" alt="{{ deputado.nome }}" width="100%">
                 </a>
               </div>
-              <div class="card-subtitle">
-                {{ deputado.uf }}
-              </div>
             </div>
-            <div class="col-md-3 card-text">
-              <!-- <dl class="dl-horizontal">
-                <dt class="font-c">Cota mensal</dt>
-                <dd class="font-b text-right">{{ deputado.Cota_UF| currency:'R$ ' }}</dd>
-                <dt class="font-c">Valor gasto</dt>
-                <dd class="font-b text-right">{{ deputado.Total | currency:'R$ ' }}</dd>
-              </dl> -->
-              <span class="font-c">Cota mensal</span> <br>
-              <span class="font-d">{{ deputado.Cota_UF| currency:'R$ ' }}</span> <br>
-              <span class="font-c">Valor gasto</span> <br>
-              <span class="font-b">{{ deputado.Total | currency:'R$ ' }}</span>
+            <div class="col-xs-10 col-sm-6">
+              <div class="font-b"><a class="link-inverse" ui-sref="perfil({id: deputado.Id})">{{ deputado.nome }}</a></div>
             </div>
-            <div class="col-md-3 text-center">
-              <div class="selo-primary selo-lg">
+            <div class="col-xs-1 col-sm-3">
+              <!-- selos -->
+            </div>
+          </div>
+        </div>
+        <div class="card-subhead">
+          <div class="row">
+            <div class="col-xs-10 col-sm-6 col-sm-offset-2">
+              {{ deputado.uf }} / {{ deputado.Partido }}
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 text-center card-text-align">
+              <div class="font-c card-text-label">Valor gasto no mês</div>
+              <div class="font-b">{{ deputado.Total | currency:'R$ ' }}</div>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="selo-lg selo-primary">
                 <span class="icone-lg icon-alimento" ng-if="maiorGasto('alimento')"></span>
                 <span class="icone-lg icon-combustivel" ng-if="maiorGasto('combustivel')"></span>
                 <span class="icone-lg icon-locacao" ng-if="maiorGasto('locacao')"></span>
                 <span class="icone-lg icon-passagem" ng-if="maiorGasto('passagem')"></span>
                 <span class="icone-lg icon-escritorio" ng-if="maiorGasto('escritorio')"></span>
                 <span class="icone-lg icon-divulgacao" ng-if="maiorGasto('divulgacao')"></span>
-                <span class="outros" ng-if="maiorGasto('outros')" title="Outros">...</span>
+                <span class="icone-lg icon-outro" ng-if="maiorGasto('outros')"></span>
               </div>
-              <p class="font-b">{{deputado.Maior_gasto_valor | currency:'R$ '}}</p>
+              <div class="font-c card-text-label" ng-if="maiorGasto('alimento')">Gastou mais em Alimento</div>
+              <div class="font-c card-text-label" ng-if="maiorGasto('combustivel')">Gastou mais em Combustível</div>
+              <div class="font-c card-text-label" ng-if="maiorGasto('locacao')">Gastou mais em Locação</div>
+              <div class="font-c card-text-label" ng-if="maiorGasto('passagem')">Gastou mais em Passagem</div>
+              <div class="font-c card-text-label" ng-if="maiorGasto('escritorio')">Gastou mais em Escritório</div>
+              <div class="font-c card-text-label" ng-if="maiorGasto('divulgacao')">Gastou mais em Divulgação</div>
+              <div class="font-c card-text-label" ng-if="maiorGasto('outros')">Gastou mais em Outros serviços</div>
+              <div class="font-b">{{deputado.Maior_gasto_valor | currency:'R$ '}}</div>
             </div>
-            <div class="col-md-3 text-center">
-              <div class="selo-primary selo-lg">
-                <strong>{{deputado.presencas}}</strong>/{{deputado.total_sessoes}}
-              </div>
-              <p>Presenças / sessões</p>
+            <div class="col-md-4 text-center card-text-align">
+              <div class="font-c card-text-label">Presenças/ Sessões</div>
+              <div class="font-b">{{deputado.presencas}}</strong>/{{deputado.total_sessoes}}</div>
             </div>
           </div>
+
           <div class="transformable" ng-class="{'small':isVisible, 'big':!isVisible}">
-            <h4 class="text-center" >Como usou a cota:</h4>
-            <div class="row">
-              <div class="col-xs-4 col-md-2 text-center" title="Alimentação"><span class="icone-lg icon-alimento"></span>
-                <p class="font-l">{{deputado.Gastos['Alimentação'] | currency:'R$ '}}</p>
+            <div class="text-center card-row">
+              <span class="font-d">Como usou a cota?</span><br>
+              <span>Limite mensal de {{ deputado.Cota_UF| currency:'R$ ' }}</span>
+            </div>
+            <div class="row card-row">
+              <div class="col-xs-6 col-md-2 text-center">
+                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('alimento')}">
+                  <span class="icone-lg icon-alimento"></span>
+                </div>
+                <div class="font-l">{{deputado.Gastos['Alimentação'] | currency:'R$ '}}</div>
+                <div class="font-m">Alimentação</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center" title="Combustíveis"><span class="icone-lg icon-combustivel"></span>
-                <p class="font-l">{{deputado.Gastos['Combustíveis'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center">
+                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('combustivel')}">
+                  <span class="icone-lg icon-combustivel"></span>
+                </div>
+                <div class="font-l">{{deputado.Gastos['Combustíveis'] | currency:'R$ '}}</div>
+                <div class="font-m">Combustíveis</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center" title="Locação de veículos"><span class="icone-lg icon-locacao"></span>
-                <p class="font-l">{{deputado.Gastos['Locação de veículos'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center">
+                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('locacao')}">
+                  <span class="icone-lg icon-locacao"></span>
+                </div>
+                <div class="font-l">{{deputado.Gastos['Locação de veículos'] | currency:'R$ '}}</div>
+                <div class="font-m">Locação de veículos</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center" title="Passagens aéreas"><span class="icone-lg icon-passagem"></span>
-                <p class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center">
+                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('passagem')}">
+                  <span class="icone-lg icon-passagem"></span>
+                </div>
+                <div class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</div>
+                <div class="font-m">Passagens aéreas</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center" title="Escritório"><span class="icone-lg icon-escritorio"></span>
-                <p class="font-l">{{deputado.Gastos['Escritório'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center">
+                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('alimento')}">
+                  <span class="icone-lg icon-escritorio"></span>
+                </div>
+                <div class="font-l">{{deputado.Gastos['Escritório'] | currency:'R$ '}}</div>
+                <div class="font-m">Escritório</div>
               </div>
-              <div class="col-xs-4 col-md-2 text-center" title="Divulgação de atividade parlamentar"><span class="icone-lg icon-divulgacao"></span>
-                <p class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</p>
+              <div class="col-xs-6 col-md-2 text-center">
+                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('divulgacao')}">
+                  <span class="icone-lg icon-divulgacao"></span>
+                </div>
+                <div class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</div>
+                <div class="font-m">Divulgação</div>
               </div>
             </div>
           </div>
           <div  ng-click="hide()" class="card-exp">
-            <span ng-show="isVisible"> + </span> <span ng-show="!isVisible"> - </span>  DETALHES <br/>
+            DETALHES
             <span class="glyphicon glyphicon-chevron-up" ng-show="!isVisible"></span>
             <span class="glyphicon glyphicon-chevron-down" ng-show="isVisible"></span>
           </div>

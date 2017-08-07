@@ -31,7 +31,7 @@
 
               function scheduleNext() {
                 timeoutId = $timeout(function () {
-                  elem.fadeOut(scope.interval/10, function () {
+                  elem.fadeOut(scope.interval/50, function () {
                     $(this).html('<strong>'+scope.carouselItems[index].valor+'<strong> '+scope.carouselItems[index].texto).fadeIn(scope.interval/10);
                     updateCarousel();
                   });

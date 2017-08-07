@@ -7,6 +7,7 @@ body {
 a,
 .btn-link {
   color: #fff;
+  font-weight: bold;
 }
 
 a:active,
@@ -34,7 +35,7 @@ a.link-inverse:active {
 .sessao {
   padding-bottom: 40px;
   padding-top: 40px;
-  background-color: #573C82;
+  background-color: #61397B;
   margin-bottom: 20px;
 }
 
@@ -104,13 +105,20 @@ h4 > .glyphicon {
   margin-bottom: 50px;
 }
 
+.rank-filter {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 20px;
+  background-color: #522E61;
+}
+
 .perfil-card {
   background-color: #463066;
   margin-top: 20px;
 }
 
 .card {
-  background-color: #463066;
+  background-color: #522E61;
   margin-bottom: 40px;
 }
 
@@ -140,22 +148,28 @@ h4 > .glyphicon {
 
 .card-head {
   background-color: #ff4e81;
-  padding: 20px;
-  padding-left: 151px;
-  font-size: 1.5em;
+  padding: 10px;
 }
 
 .card-subhead {
-  display: flex;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 .card-img {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   overflow: hidden;
   border-radius: 50%;
-  margin-top: -52px;
-  border: solid 4px #573C82;
+  border: none;
+  display: inline-block;
+  margin-bottom: -68px;
+}
+
+@media only screen and (max-width : 768px) {
+  .card-img {
+    margin-bottom: 10px;
+  }
 }
 
 .card-subtitle {
@@ -169,7 +183,7 @@ h4 > .glyphicon {
   border-radius: 50%;
   margin-top: 25px;
   margin-left: -25px;
-  border: solid 4px #573C82;
+  border: solid 4px #61397B;
 }
 
 .card-body {
@@ -187,6 +201,20 @@ h4 > .glyphicon {
   .card-text {
     text-align: center;
   }
+}
+
+.card-text-label {
+  opacity: 0.5;
+}
+
+@media only screen and (min-width : 321px) {
+  .card-text-align {
+    padding-top: 67px;
+  }
+}
+
+.card-row {
+  margin-bottom: 20px;
 }
 
 .card-lg {
@@ -209,7 +237,7 @@ h4 > .glyphicon {
 }
 
 .card-lg-body {
-  background-color: #463066;
+  background-color: #522E61;
   padding: 20px;
 }
 
@@ -336,6 +364,13 @@ h4 > .glyphicon {
   font-weight: bold;
 }
 
+.font-m {
+  font-size: 12px;
+  font-weight: normal;
+  opacity: 0.5;
+  height: 34px;
+}
+
 .title-grafico {
   text-align: center;
   padding-bottom: 15px;
@@ -379,6 +414,7 @@ footer {
   font-size: 12px;
   text-align: center;
   margin-bottom: 6px;
+  background-color: #61397B;
 }
 
 .selo-lg > strong {
@@ -391,7 +427,11 @@ footer {
 }
 
 .selo-primary {
-  background-color: #573C82;
+  background-color: #FFFFFF;
+}
+
+.selo-primary > .icone-lg {
+  color: #61397B;
 }
 
 a.icone {
@@ -417,13 +457,14 @@ a.icone {
   -ms-transition: height 0.25s linear;
   transition: height 0.25s linear;
 
-  height: 150px;
+  height: 200px;
   overflow: hidden;
+  margin-top: 35px;
 }
 
 @media only screen and (max-width : 320px) {
   .transformable {
-    height: 250px;
+    height: 450px;
   }
 }
 
@@ -506,13 +547,31 @@ div.tooltip_presenca {
 .fab {
   position: fixed;
   width: 56px;
-  right: 15px;
   bottom: 15px;
+  right: 15px;
   margin-left: -28px;
   z-index: 999;
 }
 
-@media only screen and (min-width : 990px) {
+@media only screen and (min-width : 769px) {
+  .fab {
+    right: -moz-calc(50% - 390px);
+    right: -webkit-calc(50% - 390px);
+    right: -o-calc(50% - 390px);
+    right: calc(50% - 390px);
+  }
+}
+
+@media only screen and (min-width : 991px) {
+  .fab {
+    right: -moz-calc(50% - 500px);
+    right: -webkit-calc(50% - 500px);
+    right: -o-calc(50% - 500px);
+    right: calc(50% - 500px);
+  }
+}
+
+@media only screen and (min-width : 1199px) {
   .fab {
     right: -moz-calc(50% - 600px);
     right: -webkit-calc(50% - 600px);
