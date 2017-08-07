@@ -29,10 +29,17 @@
         var x = d3.scaleTime().range([0, width]),
             y = d3.scaleLinear().range([height, 0]);
 
+        var yp = d3.scaleLinear().range([height, 0]);
+
         var line = d3.line()
           .curve(d3.curveLinear)
           .x(function (d) { return x(d.date); })
           .y(function (d) { return y(+d.valor); });
+
+        var linePresenca = d3.line()
+          .curve(d3.curveLinear)
+          .x(function (d) { return x(d.date); })
+          .y(function (d) { return yp(+d.presenca); });
 
         var gasto = d3.select("body").append("div")
           .attr("class", "tooltip_gasto")
@@ -74,7 +81,6 @@
             })
           ]);
 
-          var yp = d3.scaleLinear().range([height, 0]);
           yp.domain([0, 1]);
 
           var dataMin = d3.min(data, function (c) {return +c.date});
@@ -128,6 +134,15 @@
             .attr("fill", "None")
             .attr("stroke-width", 0.8)
             .attr("stroke", "#FF9B27")
+
+          g.append("path")
+            .datum(data.filter(function(d) {return d.presenca}))
+            .attr("fill", "None")
+            .attr("stroke", "#FF9B27")
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("stroke-width", 0.4)
+            .attr("d", linePresenca)
 
           g.selectAll("presenca")
             .data(data.filter(function(d) {return d.presenca}))
