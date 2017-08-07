@@ -32,6 +32,10 @@ angular
       .state('contato', {
         url: '/contato',
         templateUrl: 'views/contato.html'
+      })
+      .state('ceap', {
+        url: '/ceap',
+        templateUrl: 'views/detalhes.html'
       });
     $urlRouterProvider.otherwise('/');
   });

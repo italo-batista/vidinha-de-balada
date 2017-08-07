@@ -47,7 +47,7 @@ a:focus {
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   color: #ffffff;
-  background-color: #573C82;
+  background-color: #61397B;
 }
 
 .font-j {
@@ -60,7 +60,7 @@ a:focus {
 
 .table-bordered {
   border: solid 4px #463066;
-  background-color: #573C82;
+  background-color: #61397B;
 }
 
 .table-bordered > thead > tr > th,

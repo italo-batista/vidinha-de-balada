@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = ''
+password = 'pass'
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -54,12 +54,16 @@ sys.setdefaultencoding('utf8')
 
 # Define ultimo mes/ano
 
+
 connection = engine.connect()
 
 mGastos = connection.execute('select max(mesEmissao) from gastos where anoEmissao = (select max(anoEmissao) from gastos)').first()[0]
 aGastos = connection.execute('select max(anoEmissao) from gastos').first()[0]
 mSessoes = connection.execute('select max(mes) from sessoesMesDeputado where ano = (select max(ano) from sessoesMesDeputado);').first()[0]
 aSessoes = connection.execute('select max(ano) from sessoesMesDeputado').first()[0]
+
+ano = datetime.date.today().year
+mesPassado = datetime.date.today().month - 1
 
 if (aGastos == aSessoes):
 	mesPassado = min([mGastos, mSessoes])
@@ -72,8 +76,12 @@ else:
 	else:
 		mesPassado = mGastos
 		ano = aGastos
+		
+if (ano == datetime.date.today().year and mesPassado == datetime.date.today().month):
+	mesPassado = mesPassado - 1
 
 connection.close()
+
 
 # Variáveis
 
@@ -83,6 +91,29 @@ categoria_divulgacao = 'Divulgação de atividade parlamentar'
 categoria_locacao = 'Locação de veículos'
 categoria_combustivel = 'Combustíveis'
 categoria_passagens = 'Passagens aéreas'
+
+categoria_alimentacao_id = 1
+categoria_escritorio_id = 2
+categoria_divulgacao_id = 3
+categoria_locacao_id = 4
+categoria_combustivel_id = 5
+categoria_passagens_id = 6
+
+def getCategoriaName(idCategoria):
+	idCategoria = int(idCategoria)
+	ids_categoria = {1: categoria_alimentacao,
+	2: categoria_escritorio,
+	3: categoria_divulgacao,
+	4: categoria_locacao,
+	5: categoria_combustivel,
+	6: categoria_passagens}
+
+	print '\n\n\n\n'
+	print idCategoria
+	print ids_categoria[idCategoria]
+	print '\n\n\n\n'
+
+	return ids_categoria[idCategoria]
 
 
 # Models --------------------------------------------------------------
@@ -173,6 +204,29 @@ class SelosDeputado(mysql.Model):
     def __repr__(self):
         return '<SelosDeputado (%s, %s, %s, %s) >' % (self.idDeputado, self.mes, self.ano, self.idCategoria)
 
+class SelosCota(mysql.Model):
+    __tablename__ = 'selosCota'
+
+    id = mysql.Column(mysql.Integer, primary_key=True)
+    idDeputado = mysql.Column(mysql.String(7))
+    mes = mysql.Column(mysql.Integer)
+    ano = mysql.Column(mysql.Integer)
+    selo = mysql.Column(mysql.String(10))
+
+    def __repr__(self):
+        return '<SelosCota (%s,%s, %s, %s, %s) >' % (self.id, self.idDeputado, self.mes, self.ano, self.selo)
+
+class SelosPresenca(mysql.Model):
+    __tablename__ = 'selosPresenca'
+
+    idDeputado = mysql.Column(mysql.String(7), primary_key=True)
+    mes = mysql.Column(mysql.Integer, primary_key=True)
+    ano = mysql.Column(mysql.Integer, primary_key=True)
+    selo = mysql.Column(mysql.String(40), primary_key=True)
+
+    def __repr__(self):
+        return '<SelosPresenca (%s, %s, %s, %s) >' % (self.idDeputado, self.mes, self.ano, self.selo)
+
 class Empresa(mysql.Model):
     __tablename__ = 'empresas'
 
@@ -215,10 +269,28 @@ def getGasto(ano):
 
 # Perfil
 
+@app.route('/deputados', methods=['GET'])
+def getDeputados():
+	
+	deputados = Deputado.query.all()
+
+	data_all = []
+	for deputado in deputados:
+		data_all.append({'id': deputado.id, 'nome' : deputado.nome, 'uf': deputado.uf, 'partido': deputado.partidoAtual, deputado.twitter, deputado.telefone, deputado.email})
+
+	return jsonify(data_all)
+	
+
 def getDeputadoSelos(query_selos):
 	json = []
 	for selo in query_selos:
 		json.append([selo.idDeputado, selo.mes, selo.ano, selo.idCategoria])
+	return json
+
+def getDeputadoSelosCotaPresenca(query_selos):
+	json = []
+	for selo in query_selos:
+		json.append([selo.idDeputado, selo.mes, selo.ano, selo.selo])
 	return json
 
 @app.route('/selosDeputado/<id>', methods=['GET'])
@@ -226,6 +298,14 @@ def getSelos(id):
 	q_selos = SelosDeputado.query.filter_by(idDeputado = id).all()
 	selos = getDeputadoSelos(q_selos)
 	return jsonify(selos)
+
+@app.route('/selosCotaPresenca/<id>', methods=['GET'])
+def getSelosCotaPresenca(id):
+	q_selos_cota = SelosCota.query.filter_by(idDeputado = id).all()
+	selos_cota = getDeputadoSelosCotaPresenca(q_selos_cota)
+	q_selos_presenca = SelosPresenca.query.filter_by(idDeputado = id).all()
+	selos_presenca = getDeputadoSelosCotaPresenca(q_selos_presenca)
+	return jsonify(selos_cota + selos_presenca)
 
 @app.route('/buscaDeputado', methods=['GET'])
 def buscaDeputado():
@@ -236,7 +316,7 @@ def buscaDeputado():
 
 	for deputado in data:
 		if(unidecode(nome.upper()) in unidecode(deputado.nome.upper())):
-			data_all.append({'nome' : deputado.nome, 'id': deputado.id})
+			data_all.append({'nome' : deputado.nome, 'id': deputado.id, 'uf': deputado.uf, 'partido': deputado.partidoAtual})
 
 	return jsonify(deputadosId=data_all)
 
@@ -268,26 +348,6 @@ def getEmpresasParceiras(id):
 		n += 1
 
 	return jsonify(parceiras)
-
-
-@app.route('/gastosDetalhes/<id>/<categoria>', methods=['GET'])
-def getDetalhesGastos(id, categoria):
-	query_gasto = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria).all()
-
-	gastoscat = []
-	for gasto in query_gasto:
-		gasto.mesemissao
-		json = {
-		'Ano' : gastos.anoEmissao,
-		'Mês' : gastos.mesEmissao,
-		'Fornecedor' : gastos.nomeFornecedor,
-		'Categoria' : gastos.nomeCategoria,
-		'Valor' : gastos.valor
-		}
-		retorno.append(gasto)
-
-	return jsonify(gastoscat)
-
 
 @app.route('/timelineDeputado/<id>', methods=['GET'])
 def getTimelineDeputado(id):
@@ -362,12 +422,13 @@ def somaPresencas(query_presencas):
 def getPerfilDeputado(id):
 
 	deputado = Deputado.query.filter_by(id=id).first()
-	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel, mesEmissao=mesPassado, anoEmissao=ano).all()
-	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens, mesEmissao=mesPassado, anoEmissao=ano).all()
+	query_gasto_total = Gasto.query.filter_by(idDeputado=id).all()
+	query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_alimentacao).all()
+	query_gasto_escritorio = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_escritorio).all()
+	query_gasto_divulgacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_divulgacao).all()
+	query_gasto_locacao = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_locacao).all()
+	query_gasto_combustivel = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_combustivel).all()
+	query_gasto_passagens = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria_passagens).all()
 	query_presencas_deputado = SessoesMesDeputado.query.filter_by(idDeputado=id).all()
 	query_sessoes_total = SessoesMes.query.all()
 
@@ -381,7 +442,7 @@ def getPerfilDeputado(id):
 	sessoes_total = somaPresencas(query_sessoes_total)
 
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
-	total_gastos = gasto_alimentacao + gasto_escritorio + gasto_divulgacao + gasto_locacao + gasto_combustivel + gasto_passagens
+	total_gastos = somaGastosTotais(query_gasto_total)
 
 	cota_uf = Cota.query.get(deputado.uf).cota
 
@@ -389,6 +450,9 @@ def getPerfilDeputado(id):
 	'Nome' : deputado.nome,
 	'urlfoto' : deputado.foto,
 	'Id' : deputado.id,
+	'Twitter' : deputado.twitter, 
+	'Fone' : deputado.telefone, 
+	'Email' : deputado.email,
 	'Partido' : deputado.partidoAtual,
 	'UF' : deputado.uf,
 	'Cota' : cota_uf,
@@ -403,6 +467,28 @@ def getPerfilDeputado(id):
 
 	return jsonify(json)
 
+@app.route('/gastosDetalhes/<id>/<idCategoria>', methods=['GET'])
+def getDetalhesGastos(id, idCategoria):
+
+	categoria = getCategoriaName(idCategoria)
+
+	query_gasto = Gasto.query.filter_by(idDeputado=id, nomeCategoria=categoria).all()
+
+	gastoscat = []
+	for gasto in query_gasto:
+
+		json = {
+		'Ano' : gasto.anoEmissao,
+		'Mês' : gasto.mesEmissao,
+		'Fornecedor' : gasto.nomeFornecedor,
+		'Categoria' : gasto.nomeCategoria,
+		'Valor' : gasto.valor
+		}
+
+		gastoscat.append(json)
+
+	return jsonify(gastoscat)
+
 
 # TOP 10
 
@@ -412,47 +498,96 @@ def somaGastosCategoria(query_gasto_categoria):
 		gastoTotal = gastoTotal + gasto.valor
 	return gastoTotal
 
-def maisGastadores10(query_gastos):
-	deputados_id = []
-	gastos = []
+def maisGastadores10Id(filterType, value, rankeado):
 
-	for gasto in query_gastos:
+	queryFiltroUF = "gastos.idDeputado in (SELECT id FROM deputado where (uf = \'" + str(value) +"\')) AND " if filterType == "uf" else ""
+	queryFiltroPartido = "gastos.idDeputado in (SELECT id FROM deputado where ( partidoAtual = \'" + str(value) + "\')) AND " if filterType == "partido" else ""
 
-		if (gasto.idDeputado in deputados_id):
-			index = deputados_id.index(gasto.idDeputado)
-			gastos[index] = gastos[index] + gasto.valor
-		else:
-			deputados_id.append(gasto.idDeputado)
-			gastos.append(gasto.valor)
+	ID = 1
+	
+	if rankeado == True:
+		consulta = ("SELECT (SUM(valor) / "
+						"(SELECT cotas.cota FROM cotas WHERE cotas.uf = "
+						"(SELECT deputado.uf FROM deputado WHERE deputado.id = gastos.idDeputado))) "
+						"AS ranking, "
+						"gastos.idDeputado "
+					"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
+					"GROUP BY (gastos.idDeputado) "
+					"ORDER BY ranking DESC limit 10")
+	else:
+		consulta = ("SELECT SUM(valor) AS ranking, gastos.idDeputado "
+					"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
+					"GROUP BY (gastos.idDeputado) "
+					"ORDER BY ranking DESC limit 10")		
 
-	tam = len(deputados_id)
-	deputadoGasto = []
+	connection = engine.connect()
+	result = connection.execute(consulta)
 
-	for i in xrange(tam):
-		tupla = (gastos[i], deputados_id[i])
-		deputadoGasto.append(tupla)
+	top_ids = []
+	for row in result:
+		top_ids.append(row[ID])
 
-	tops = sorted(deputadoGasto, key=lambda x: x[0], reverse=True)
-	top10 = []
-	for i in range(10):
-		top10.append(tops[i])
+	connection.close()
 
-	return top10
+	return top_ids
+
+def get10MaisGastadores(filterType, value, rankeado):
+
+	deputados = []
+	ids = maisGastadores10Id(filterType, value, rankeado)
+
+	i = 1
+	for idDeputado in ids:
+		if i <= 10:
+			deputado = Deputado.query.filter_by(id=idDeputado).first()
+			deputados.append(deputado)
+			i += 1
+
+	return deputados
+
+def getGastoMesTotalDeputado(idDeputado):
+	consulta = 'SELECT SUM(valor) FROM gastos WHERE (mesEmissao='+str(mesPassado)+' AND anoEmissao='+str(ano)+' AND idDeputado ='+idDeputado+')'
+	connection = engine.connect()
+	result = connection.execute(consulta)
+	connection.close()
+
+	for gasto in result: gastoTotal = gasto[0]
+	return gastoTotal
 
 @app.route("/top10", methods=['GET'])
-def top10():
-	query_gastos = Gasto.query.filter_by(mesEmissao=mesPassado, anoEmissao=ano).all()
-	top10 = maisGastadores10(query_gastos)
+def top10Default():
+	NO_FILTER = ""
+	rankeado = False
+	return top10(NO_FILTER, NO_FILTER, rankeado)
+
+@app.route("/top10/rankeado", methods=['GET'])
+def top10DefaultRankeado():
+	NO_FILTER = ""
+	rankeado = True
+	return top10(NO_FILTER, NO_FILTER, rankeado)	
+
+@app.route("/top10/rankeado/<filterType>/<value>", methods=['GET'])
+def top10FilterRankeado(filterType, value):
+	rankeado = True
+	return top10(filterType, value, rankeado)
+
+@app.route("/top10/<filterType>/<value>", methods=['GET'])
+def top10FilterNaoRankeado(filterType, value):
+	rankeado = False
+	return top10(filterType, value, rankeado)
+
+def top10(filterType, value, rankeado):
+	
+	top10 = get10MaisGastadores(filterType, value, rankeado)
 
 	json = []
-
 	for i in range(len(top10)):
 		deputado = top10[i]
 
 		# info deputado
 
-		deputado_id = deputado[1]
-		deputado_gasto_total = deputado[0]
+		deputado_id = deputado.id
+		deputado_gasto_total = getGastoMesTotalDeputado(deputado_id)
 		deputado_posicao = i + 1
 
 		deputado_obj = Deputado.query.get(deputado_id)
@@ -463,7 +598,11 @@ def top10():
 		deputado_uf = deputado_obj.uf
 		deputado_cota_uf = Cota.query.get(deputado_uf).cota
 
-		deputado_presencas = SessoesMesDeputado.query.filter_by(idDeputado=deputado_id, mes=mesPassado, ano=ano).first().quantidadeParticipacoes
+		try:
+			deputado_presencas = SessoesMesDeputado.query.filter_by(idDeputado=deputado_id, mes=mesPassado, ano=ano).first().quantidadeParticipacoes
+		except:
+			deputado_presencas = 0
+
 		sessoes_totais = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first().quantidadeSessoes
 
 		# gastos categorias
@@ -491,13 +630,15 @@ def top10():
 		categoria_passagens : gasto_passagens
 		}
 
+		gasto_outros = deputado_gasto_total - gasto_alimentacao - gasto_combustivel - gasto_divulgacao - gasto_escritorio - gasto_locacao
 		meus_gastos = [
 		(categoria_alimentacao, gasto_alimentacao),
 		(categoria_combustivel, gasto_combustivel),
 		(categoria_divulgacao, gasto_divulgacao),
 		(categoria_escritorio, gasto_escritorio),
 		(categoria_locacao, gasto_locacao),
-		(categoria_passagens, gasto_passagens)
+		(categoria_passagens, gasto_passagens),
+		("Outros", gasto_outros)
 		]
 
 		maior_gasto = sorted(meus_gastos, key=lambda x: x[1], reverse=True)[0]
@@ -521,6 +662,7 @@ def top10():
 		json.append(deputado_json)
 
 	return jsonify(json)
+
 
 # Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":
