@@ -265,6 +265,19 @@ def getGasto(ano):
 	return jsonify(json)
 
 
+
+@app.route('/deputados', methods=['GET'])
+def getDeputados():
+	
+	deputados = Deputado.query.all()
+
+	data_all = []
+	for deputado in deputados:
+		data_all.append({'id': deputado.id, 'nome' : deputado.nome, 'uf': deputado.uf, 'partido': deputado.partidoAtual})
+
+	return jsonify(data_all)
+	
+
 # Perfil
 
 def getDeputadoSelos(query_selos):
@@ -471,6 +484,7 @@ def getDetalhesGastos(id, idCategoria):
 		gastoscat.append(json)
 
 	return jsonify(gastoscat)
+
 
 # TOP 10
 
