@@ -302,7 +302,7 @@ def buscaDeputado():
 
 	for deputado in data:
 		if(unidecode(nome.upper()) in unidecode(deputado.nome.upper())):
-			data_all.append({'nome' : deputado.nome, 'id': deputado.id})
+			data_all.append({'nome' : deputado.nome, 'id': deputado.id, 'uf': deputado.uf, 'partido': deputado.partidoAtual})
 
 	return jsonify(deputadosId=data_all)
 
