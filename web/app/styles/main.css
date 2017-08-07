@@ -227,22 +227,26 @@ h4 > .glyphicon {
 
 .card-lg-head {
   background-color: #ff4e81;
-  padding: 30px 20px;
-  font-size: 1.5em;
+  padding: 15px 10px;
 }
 
 .card-lg-img {
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
   border-radius: 50%;
   border: none;
-  overflow: hidden;
   display: inline-block;
 }
 
 .card-lg-body {
   background-color: #522E61;
   padding: 20px;
+}
+
+.card-contact-info {
+  display: flex;
+  justify-content: space-around;
 }
 
 .tick > line,

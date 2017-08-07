@@ -44,6 +44,8 @@
           vm.socialshare.url = "http://vidinhadebalada.com/#!/perfil/"+vm.deputado.Id;
           vm.socialshare.media = "http://vidinhadebalada.com/images/mediashare.png";
           vm.socialshare.hashtags = "VidinhaDeBalada";
+
+          console.log(vm.deputado);
         });
 
         $http.get(RESTAPI+"empresasParceiras/"+vm.id).then(function(res) {
