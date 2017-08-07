@@ -234,6 +234,16 @@ h4 > .glyphicon {
   stroke: #ff4e81;
 }
 
+.presenca > text,
+.presenca .tick > text {
+  stroke: none;
+  fill: #FF9B27;
+}
+
+.presenca > path {
+  stroke: #FF9B27;
+}
+
 .estouro {
   font-size: 2em;
 }
@@ -487,8 +497,8 @@ div.tooltip_presenca {
   padding: 2px;
   font-size: 10px;
   font-family: 'Montserrat', sans-serif;
-  background: #fff;
-  color: #ff4e81;
+  background: #FF9B27;
+  color: #fff;
   border: 0px;
   pointer-events: none;
 }

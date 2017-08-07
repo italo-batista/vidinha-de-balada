@@ -127,7 +127,7 @@
             .attr("cy", function(d) { return yp(+d.presenca); })
             .attr("fill", "None")
             .attr("stroke-width", 0.8)
-            .attr("stroke", "#fff")
+            .attr("stroke", "#FF9B27")
 
           g.selectAll("presenca")
             .data(data.filter(function(d) {return d.presenca}))
@@ -136,7 +136,7 @@
             .attr("y", function(d) { return yp(+d.presenca); })
             .attr("text-anchor", "middle")
             .attr("dy", ".3em")
-            .attr("fill", "#fff")
+            .attr("fill", "#FF9B27")
             .style("font-size", "11px")
             .style("font-family", "'Montserrat', sans-serif")
             .style("cursor", "default")
@@ -185,7 +185,7 @@
             .style("font-family", "'Montserrat', sans-serif");
 
           g.append("g")
-            .attr("class", "axis axis--y")
+            .attr("class", "axis axis--y presenca")
             .style("font", "14px sans-serif")
             .attr("transform", "translate( " + width + ", 0 )")
             .call(d3.axisRight(yp).tickSize(0).tickFormat(""))
@@ -196,7 +196,7 @@
             .attr("y", -20)
             .attr("x", -135)
             .attr("dy", "0.71em")
-            .attr("fill", "#ff4e81")
+            .attr("fill", "#FF9B27")
             .text("Presença mensal")
             .style("font-family", "'Montserrat', sans-serif");
           });
