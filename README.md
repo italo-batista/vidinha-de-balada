@@ -47,6 +47,8 @@ Para rodar:
 grunt serve
 ```
 
+Outros detalhes no [site do Grunt](https://www.google.com/url?q=https://gruntjs.com/installing-grunt&sa=D&ust=1502125274751000&usg=AFQjCNFaCEpgzdgre-8-m1kg5y9nQ5D3MQ).
+
 O navegador padrão abrirá automaticamente em [localhost:9000](http://localhost:9000).
 
 
