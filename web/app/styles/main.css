@@ -108,6 +108,8 @@ h4 > .glyphicon {
 .rank-filter {
   margin-top: 50px;
   margin-bottom: 50px;
+  padding: 20px;
+  background-color: #522E61;
 }
 
 .perfil-card {
