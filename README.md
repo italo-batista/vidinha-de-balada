@@ -80,7 +80,7 @@ Para instalar as dependências da API:
 ```
 Para rodar a API:
 ```
-  python app.py
+  python api.py
 ```
 
 ### Deployment
