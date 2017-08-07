@@ -12,7 +12,7 @@ Na plataforma você pode conferir:
 E várias outras informações do seu representante. Acesse o [Vidinha de Balada](http://vidinhadebalada.com/#!/) e acompanhe de perto o trabalho de quem você escolheu pra te representar!
 
 
-O Vidinha de Balada surgiu no [Hackfest Contra a Corrupção](http://hackfest.com.br/) e pode ser acessado em [VidinhaDeBalada.com](https://vidinhadebalada.com).
+O [Vidinha de Balada](http://vidinhadebalada.com/#!/) surgiu no [Hackfest Contra a Corrupção](http://hackfest.com.br/).
 
 
 ----
