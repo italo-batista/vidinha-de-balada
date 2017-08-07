@@ -76,7 +76,7 @@ else:
 	else:
 		mesPassado = mGastos
 		ano = aGastos
-		
+
 if (ano == datetime.date.today().year and mesPassado == datetime.date.today().month):
 	mesPassado = mesPassado - 1
 
@@ -214,18 +214,19 @@ class SelosCota(mysql.Model):
     selo = mysql.Column(mysql.String(10))
 
     def __repr__(self):
-        return '<SelosCota (%s,%s, %s, %s, %s) >' % (self.id, self.idDeputado, self.mes, self.ano, self.selo)
+        return '<SelosCota (%s, %s, %s, %s, %s) >' % (self.id, self.idDeputado, self.mes, self.ano, self.selo)
 
 class SelosPresenca(mysql.Model):
     __tablename__ = 'selosPresenca'
 
-    idDeputado = mysql.Column(mysql.String(7), primary_key=True)
-    mes = mysql.Column(mysql.Integer, primary_key=True)
-    ano = mysql.Column(mysql.Integer, primary_key=True)
-    selo = mysql.Column(mysql.String(40), primary_key=True)
+	id = mysql.Column(mysql.Integer, primary_key=True)
+    idDeputado = mysql.Column(mysql.String(7))
+    mes = mysql.Column(mysql.Integer)
+    ano = mysql.Column(mysql.Integer)
+    selo = mysql.Column(mysql.String(40))
 
     def __repr__(self):
-        return '<SelosPresenca (%s, %s, %s, %s) >' % (self.idDeputado, self.mes, self.ano, self.selo)
+        return '<SelosPresenca (%s, %s, %s, %s, %s) >' % (self.id, self.idDeputado, self.mes, self.ano, self.selo)
 
 class Empresa(mysql.Model):
     __tablename__ = 'empresas'
@@ -454,8 +455,8 @@ def getPerfilDeputado(id):
 	'Nome' : deputado.nome,
 	'urlfoto' : deputado.foto,
 	'Id' : deputado.id,
-	'Twitter' : deputado.twitter, 
-	'Fone' : deputado.telefone, 
+	'Twitter' : deputado.twitter,
+	'Fone' : deputado.telefone,
 	'Email' : deputado.email,
 	'Partido' : deputado.partidoAtual,
 	'UF' : deputado.uf,
@@ -508,7 +509,7 @@ def maisGastadores10Id(filterType, value, rankeado):
 	queryFiltroPartido = "gastos.idDeputado in (SELECT id FROM deputado where ( partidoAtual = \'" + str(value) + "\')) AND " if filterType == "partido" else ""
 
 	ID = 1
-	
+
 	if rankeado == True:
 		consulta = ("SELECT (SUM(valor) / "
 						"(SELECT cotas.cota FROM cotas WHERE cotas.uf = "
@@ -522,7 +523,7 @@ def maisGastadores10Id(filterType, value, rankeado):
 		consulta = ("SELECT SUM(valor) AS ranking, gastos.idDeputado "
 					"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
 					"GROUP BY (gastos.idDeputado) "
-					"ORDER BY ranking DESC limit 10")		
+					"ORDER BY ranking DESC limit 10")
 
 	connection = engine.connect()
 	result = connection.execute(consulta)
@@ -568,7 +569,7 @@ def top10Default():
 def top10DefaultRankeado():
 	NO_FILTER = ""
 	rankeado = True
-	return top10(NO_FILTER, NO_FILTER, rankeado)	
+	return top10(NO_FILTER, NO_FILTER, rankeado)
 
 @app.route("/top10/rankeado/<filterType>/<value>", methods=['GET'])
 def top10FilterRankeado(filterType, value):
@@ -581,7 +582,7 @@ def top10FilterNaoRankeado(filterType, value):
 	return top10(filterType, value, rankeado)
 
 def top10(filterType, value, rankeado):
-	
+
 	top10 = get10MaisGastadores(filterType, value, rankeado)
 
 	json = []
