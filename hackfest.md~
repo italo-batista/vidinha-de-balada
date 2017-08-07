@@ -33,7 +33,7 @@ Caso o projeto seja hospedado por algum órgão (MP, CGU, etc), estes custos nã
 
 Em relação a facilidade obtenção dos dados: 
 
-- Os dados de gastos utilizados na plataforma são baixados automaticamente através do script gera_csvs.R (/script/gera_csvs.R). 
+- Os dados de gastos utilizados na plataforma são baixados automaticamente através do script gera_csvs.R (/script/gera_csvs.R) - atualização mensal dos gastos é feita automaticamente. 
 - Os dados de presença são provenientes das sessões de votação realizadas na câmara.
 
 Entretanto a Câmara lançou recentemente uma API aberta com os dados da câmara (https://dadosabertos.camara.leg.br/) e é possível, num futuro próximo, que todos os dados que utilizamos sejam provenientes desta. Para a entrega da Segunda Fase do Hackfest optamos por montar nossa própria estrutura por temer que o serviço da Cãmara (ainda em fase de testes) saísse do ar.
