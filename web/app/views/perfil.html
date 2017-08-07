@@ -17,14 +17,14 @@
               <div class="col-sm-8 col-md-10">
                 <h1>{{ ctrl.deputado.nome }}</h1>
                 <p>{{ ctrl.deputado.UF }} / {{ ctrl.deputado.Partido }}</p>
-                <div class="card-contact-info">
-                  <div ng-if="ctrl.deputado.Twitter != 'NA'">
+                <div class="row">
+                  <div class="col-md-3" ng-if="ctrl.deputado.Twitter != 'NA'">
                     <span class="icone-sm icon-twitter-with-circle"></span> <span>{{ ctrl.deputado.Twitter }}</span>
                   </div>
-                  <div>
+                  <div class="col-md-6">
                     <span class="icone-sm icon-mail"></span> <a ng-href="mailto:{{ ctrl.deputado.Email }}" class="link-inverse" target="_blank">{{ ctrl.deputado.Email }}</a>
                   </div>
-                  <div>
+                  <div class="col-md-3">
                     <span class="icone-sm icon-phone"></span> {{ ctrl.deputado.Fone }}
                   </div>
                 </div>
