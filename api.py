@@ -54,8 +54,6 @@ sys.setdefaultencoding('utf8')
 
 # Define ultimo mes/ano
 
-ano = datetime.date.today().year
-mesPassado = datetime.date.today().month - 1
 
 connection = engine.connect()
 
@@ -63,6 +61,9 @@ mGastos = connection.execute('select max(mesEmissao) from gastos where anoEmissa
 aGastos = connection.execute('select max(anoEmissao) from gastos').first()[0]
 mSessoes = connection.execute('select max(mes) from sessoesMesDeputado where ano = (select max(ano) from sessoesMesDeputado);').first()[0]
 aSessoes = connection.execute('select max(ano) from sessoesMesDeputado').first()[0]
+
+ano = datetime.date.today().year
+mesPassado = datetime.date.today().month - 1
 
 if (aGastos == aSessoes):
 	mesPassado = min([mGastos, mSessoes])
@@ -75,6 +76,7 @@ else:
 	else:
 		mesPassado = mGastos
 		ano = aGastos
+		
 if (ano == datetime.date.today().year and mesPassado == datetime.date.today().month):
 	mesPassado = mesPassado - 1
 
@@ -265,6 +267,7 @@ def getGasto(ano):
 	return jsonify(json)
 
 
+# Perfil
 
 @app.route('/deputados', methods=['GET'])
 def getDeputados():
@@ -277,8 +280,6 @@ def getDeputados():
 
 	return jsonify(data_all)
 	
-
-# Perfil
 
 def getDeputadoSelos(query_selos):
 	json = []
@@ -494,20 +495,27 @@ def somaGastosCategoria(query_gasto_categoria):
 		gastoTotal = gastoTotal + gasto.valor
 	return gastoTotal
 
-def maisGastadores10Id(filterType, value):
+def maisGastadores10Id(filterType, value, rankeado):
 
 	queryFiltroUF = "gastos.idDeputado in (SELECT id FROM deputado where (uf = \'" + str(value) +"\')) AND " if filterType == "uf" else ""
 	queryFiltroPartido = "gastos.idDeputado in (SELECT id FROM deputado where ( partidoAtual = \'" + str(value) + "\')) AND " if filterType == "partido" else ""
 
 	ID = 1
-	consulta = ("SELECT (SUM(valor) / "
-					"(SELECT cotas.cota FROM cotas WHERE cotas.uf = "
-					"(SELECT deputado.uf FROM deputado WHERE deputado.id = gastos.idDeputado))) "
-					"AS ranking, "
-					"gastos.idDeputado "
-				"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
-				"GROUP BY (gastos.idDeputado) "
-				"ORDER BY ranking DESC limit 10")
+	
+	if rankeado == True:
+		consulta = ("SELECT (SUM(valor) / "
+						"(SELECT cotas.cota FROM cotas WHERE cotas.uf = "
+						"(SELECT deputado.uf FROM deputado WHERE deputado.id = gastos.idDeputado))) "
+						"AS ranking, "
+						"gastos.idDeputado "
+					"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
+					"GROUP BY (gastos.idDeputado) "
+					"ORDER BY ranking DESC limit 10")
+	else:
+		consulta = ("SELECT SUM(valor) AS ranking, gastos.idDeputado "
+					"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
+					"GROUP BY (gastos.idDeputado) "
+					"ORDER BY ranking DESC limit 10")		
 
 	connection = engine.connect()
 	result = connection.execute(consulta)
@@ -520,10 +528,10 @@ def maisGastadores10Id(filterType, value):
 
 	return top_ids
 
-def get10MaisGastadores(filterType, value):
+def get10MaisGastadores(filterType, value, rankeado):
 
 	deputados = []
-	ids = maisGastadores10Id(filterType, value)
+	ids = maisGastadores10Id(filterType, value, rankeado)
 
 	i = 1
 	for idDeputado in ids:
@@ -546,12 +554,28 @@ def getGastoMesTotalDeputado(idDeputado):
 @app.route("/top10", methods=['GET'])
 def top10Default():
 	NO_FILTER = ""
-	return top10(NO_FILTER, NO_FILTER)
+	rankeado = False
+	return top10(NO_FILTER, NO_FILTER, rankeado)
+
+@app.route("/top10/rankeado", methods=['GET'])
+def top10DefaultRankeado():
+	NO_FILTER = ""
+	rankeado = True
+	return top10(NO_FILTER, NO_FILTER, rankeado)	
+
+@app.route("/top10/rankeado/<filterType>/<value>", methods=['GET'])
+def top10FilterRankeado(filterType, value):
+	rankeado = True
+	return top10(filterType, value, rankeado)
 
 @app.route("/top10/<filterType>/<value>", methods=['GET'])
-def top10(filterType, value):
+def top10FilterNaoRankeado(filterType, value):
+	rankeado = False
+	return top10(filterType, value, rankeado)
 
-	top10 = get10MaisGastadores(filterType, value)
+def top10(filterType, value, rankeado):
+	
+	top10 = get10MaisGastadores(filterType, value, rankeado)
 
 	json = []
 	for i in range(len(top10)):
