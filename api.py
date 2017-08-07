@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = 'pass'
+password = ''
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -277,7 +277,7 @@ def getDeputados():
 
 	data_all = []
 	for deputado in deputados:
-		data_all.append({'id': deputado.id, 'nome' : deputado.nome, 'uf': deputado.uf, 'partido': deputado.partidoAtual, deputado.twitter, deputado.telefone, deputado.email})
+		data_all.append({'id': deputado.id, 'nome' : deputado.nome, 'uf': deputado.uf, 'partido': deputado.partidoAtual, 'twitter': deputado.twitter, 'telefone': deputado.telefone, 'email': deputado.email})
 
 	return jsonify(data_all)
 
