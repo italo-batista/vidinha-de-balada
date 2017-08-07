@@ -148,22 +148,28 @@ h4 > .glyphicon {
 
 .card-head {
   background-color: #ff4e81;
-  padding: 20px;
-  padding-left: 151px;
-  font-size: 1.5em;
+  padding: 10px;
 }
 
 .card-subhead {
-  display: flex;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 .card-img {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   overflow: hidden;
   border-radius: 50%;
-  margin-top: -52px;
-  border: solid 4px #61397B;
+  border: none;
+  display: inline-block;
+  margin-bottom: -68px;
+}
+
+@media only screen and (max-width : 768px) {
+  .card-img {
+    margin-bottom: 10px;
+  }
 }
 
 .card-subtitle {
@@ -195,6 +201,14 @@ h4 > .glyphicon {
   .card-text {
     text-align: center;
   }
+}
+
+.card-text-label {
+  opacity: 0.5;
+}
+
+.card-row {
+  margin-bottom: 40px;
 }
 
 .card-lg {
