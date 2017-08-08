@@ -3,7 +3,7 @@
   <input id="busca" type="text" class="form-control form-control-inverse" placeholder="Pesquisar deputado..." aria-describedby="busca" ng-model="nome">
   <ul class="dropdown-menu resultado-busca" ng-show="nome">
     <li ng-repeat="deputado in resultado | filter:nome | orderBy:'nome' | limitTo:10">
-      <a ui-sref="perfil({id: deputado.id})" ng-click="limparNome()">{{deputado.nome}}</a>
+      <a ui-sref="perfil({id: deputado.id})" ng-click="limparNome()">{{deputado.nome}} ({{deputado.uf}} / {{deputado.partido}})</a>
     </li>
   </ul>
 </div>
