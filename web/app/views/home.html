@@ -4,9 +4,17 @@
     <div class="headline" ng-show="ctrl.total > 0">
       <h4 class="font-b">Gastômetro <a data-toggle="tooltip" title="Gasto total com atitivade parlamentar em {{ctrl.anoSelecionado}}"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
       <p class="seletor-ano">
-        <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()"><span class="glyphicon glyphicon-chevron-left font-c"></span></a>
+        <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()">
+          <span class="sr-only" ng-if="ctrl.isPossivelDescer()">Mudar para {{ctrl.anoSelecionado-1}}</span>
+          <span class="sr-only" ng-if="!ctrl.isPossivelDescer()">Desabilitado</span>
+          <span class="glyphicon glyphicon-chevron-left font-c"></span>
+        </a>
         <span class="font-c">{{ctrl.anoSelecionado}}</span>
-        <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()"><span class="glyphicon glyphicon-chevron-right font-c"></span></a>
+        <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()">
+          <span class="sr-only" ng-if="ctrl.isPossivelSubir()">Mudar para {{ctrl.anoSelecionado+1}}</span>
+          <span class="sr-only" ng-if="!ctrl.isPossivelSubir()">Desabilitado</span>
+          <span class="glyphicon glyphicon-chevron-right font-c"></span>
+        </a>
       </p>
       <p class="headline-title">
         <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
@@ -34,8 +42,8 @@
         <div class="rank-filter">
           <form class="form-inline">
             <div class="form-group">
-              <label for="exampleInputName2" class="font-a">Ranking: &nbsp;</label>
-              <select class="form-control" ng-model="ctrl.rankingSelecionado" ng-change="ctrl.pesquisarGeral()">
+              <label for="ranking" class="font-a">Ranking: &nbsp;</label>
+              <select id="ranking" class="form-control" ng-model="ctrl.rankingSelecionado" ng-change="ctrl.pesquisarGeral()">
                 <option value="geral">Geral</option>
                 <option value="porEstado">Por Estado</option>
                 <option value="porPartido">Por Partido</option>

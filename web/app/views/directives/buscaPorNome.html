@@ -1,5 +1,5 @@
 <div class="input-group input-group-inverse">
-  <span class="input-group-addon" id="busca"><span class="glyphicon glyphicon-search"></span></span>
+  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
   <input id="busca" type="text" class="form-control form-control-inverse" placeholder="Pesquisar deputado..." aria-describedby="busca" ng-model="nome">
   <ul class="dropdown-menu resultado-busca" ng-show="nome">
     <li ng-repeat="deputado in resultado | filter:nome | orderBy:'nome' | limitTo:10">
