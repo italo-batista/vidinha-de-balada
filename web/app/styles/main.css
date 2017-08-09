@@ -233,6 +233,7 @@ h4 > .glyphicon {
 .card-lg-img {
   width: 120px;
   height: 120px;
+  margin-top: 27px;
   overflow: hidden;
   border-radius: 50%;
   border: none;
