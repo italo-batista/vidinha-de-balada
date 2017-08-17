@@ -1,24 +1,32 @@
 <div class="container">
 
   <div class="sessao">
-    <div class="headline" ng-show="ctrl.total > 0">
-      <h4 class="font-b">Gastômetro <a data-toggle="tooltip" title="Gasto total com atitivade parlamentar em {{ctrl.anoSelecionado}}"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
-      <p class="seletor-ano">
-        <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()">
-          <span class="sr-only" ng-if="ctrl.isPossivelDescer()">Mudar para {{ctrl.anoSelecionado-1}}</span>
-          <span class="sr-only" ng-if="!ctrl.isPossivelDescer()">Desabilitado</span>
-          <span class="glyphicon glyphicon-chevron-left font-c"></span>
-        </a>
-        <span class="font-c">{{ctrl.anoSelecionado}}</span>
-        <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()">
-          <span class="sr-only" ng-if="ctrl.isPossivelSubir()">Mudar para {{ctrl.anoSelecionado+1}}</span>
-          <span class="sr-only" ng-if="!ctrl.isPossivelSubir()">Desabilitado</span>
-          <span class="glyphicon glyphicon-chevron-right font-c"></span>
-        </a>
-      </p>
-      <p class="headline-title">
-        <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
-      </p>
+    <div class="headline">
+      <h4 class="font-b">Gastômetro</h4>
+      <p>Gasto total com atitivade parlamentar</p>
+      <div class="" ng-show="ctrl.total > 0">
+
+        <p class="seletor-ano">
+          <a href="" class="btn btn-link" ng-click="ctrl.descerAno()" ng-disabled="ctrl.isPossivelDescer()">
+            <span class="sr-only" ng-if="ctrl.isPossivelDescer()">Mudar para {{ctrl.anoSelecionado-1}}</span>
+            <span class="sr-only" ng-if="!ctrl.isPossivelDescer()">Desabilitado</span>
+            <span class="glyphicon glyphicon-chevron-left font-c"></span>
+          </a>
+          <span class="font-c">{{ctrl.anoSelecionado}}</span>
+          <a href="" class="btn btn-link" ng-click="ctrl.subirAno()" ng-disabled="ctrl.isPossivelSubir()">
+            <span class="sr-only" ng-if="ctrl.isPossivelSubir()">Mudar para {{ctrl.anoSelecionado+1}}</span>
+            <span class="sr-only" ng-if="!ctrl.isPossivelSubir()">Desabilitado</span>
+            <span class="glyphicon glyphicon-chevron-right font-c"></span>
+          </a>
+        </p>
+        <p class="headline-title">
+          <span vb-count-to count-to="{{ctrl.total}}" value="{{ctrl.total*0.999999}}" duration="1"></span>
+        </p>
+
+      </div>
+    </div>
+    <div class="text-center" ng-hide="ctrl.total > 0">
+      <span class="glyphicon glyphicon-refresh animated infinite rotateIn refresh-icon"></span>
     </div>
     <div class="text-carousel text-center font-a" ng-show="ctrl.total > 0">
       Isso equivale à cerca de
@@ -33,43 +41,52 @@
     </div>
   </div>
 
-  <div class="sessao" ng-show="ctrl.exibirTop10()">
+  <div class="sessao">
     <h1 class="text-center font-i">Top 10 gastadores</h1>
-    <h4 class="text-center">{{ ctrl.mesTop10 | mesPorExtenso }} de {{ ctrl.anoTop10 }}</h4>
 
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="rank-filter">
-          <form class="form-inline">
-            <div class="form-group">
-              <label for="ranking" class="font-a">Ranking: &nbsp;</label>
-              <select id="ranking" class="form-control" ng-model="ctrl.rankingSelecionado" ng-change="ctrl.pesquisarGeral()">
-                <option value="geral">Geral</option>
-                <option value="porEstado">Por Estado</option>
-                <option value="porPartido">Por Partido</option>
-              </select>
-            </div>
-            <div class="form-group" ng-show="ctrl.rankingSelecionado == 'porEstado'">
-              <select class="form-control" ng-model="ctrl.ufSelecionada" ng-change="ctrl.pesquisarPorEstado()">
-                <option value="--" disabled>-- selecione --</option>
-                <option value="{{ uf.sigla }}" ng-repeat="uf in ctrl.ufs.ufs">{{ uf.nome }}</option>
-              </select>
-            </div>
-            <div class="form-group" ng-show="ctrl.rankingSelecionado == 'porPartido'">
-              <select class="form-control" ng-model="ctrl.partidoSelecionado" ng-change="ctrl.pesquisarPorPartido()">
-                <option value="--" disabled>-- selecione --</option>
-                <option value="{{ partido }}" ng-repeat="partido in ctrl.ufs.partidos | orderBy:'partido'">{{ partido }}</option>
-              </select>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div class="refresh-wrapper text-center" ng-hide="ctrl.exibirTop10()">
+      <span class="glyphicon glyphicon-refresh animated infinite rotateIn refresh-icon"></span>
     </div>
 
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1" ng-repeat="deputado in ctrl.deputados">
-        <card-deputado deputado="deputado"></card-deputado>
+    <div class="" ng-show="ctrl.exibirTop10()">
+
+      <h4 class="text-center">{{ ctrl.mesTop10 | mesPorExtenso }} de {{ ctrl.anoTop10 }}</h4>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="rank-filter">
+            <form class="form-inline">
+              <div class="form-group">
+                <label for="ranking" class="font-a">Ranking: &nbsp;</label>
+                <select id="ranking" class="form-control" ng-model="ctrl.rankingSelecionado" ng-change="ctrl.pesquisarGeral()">
+                  <option value="geral">Geral</option>
+                  <option value="porEstado">Por Estado</option>
+                  <option value="porPartido">Por Partido</option>
+                </select>
+              </div>
+              <div class="form-group" ng-show="ctrl.rankingSelecionado == 'porEstado'">
+                <select class="form-control" ng-model="ctrl.ufSelecionada" ng-change="ctrl.pesquisarPorEstado()">
+                  <option value="--" disabled>-- selecione --</option>
+                  <option value="{{ uf.sigla }}" ng-repeat="uf in ctrl.ufs.ufs">{{ uf.nome }}</option>
+                </select>
+              </div>
+              <div class="form-group" ng-show="ctrl.rankingSelecionado == 'porPartido'">
+                <select class="form-control" ng-model="ctrl.partidoSelecionado" ng-change="ctrl.pesquisarPorPartido()">
+                  <option value="--" disabled>-- selecione --</option>
+                  <option value="{{ partido }}" ng-repeat="partido in ctrl.ufs.partidos | orderBy:'partido'">{{ partido }}</option>
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1" ng-repeat="deputado in ctrl.deputados">
+          <card-deputado deputado="deputado"></card-deputado>
+        </div>
+      </div>
+
     </div>
   </div>
 
