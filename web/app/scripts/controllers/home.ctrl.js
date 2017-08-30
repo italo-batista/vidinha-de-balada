@@ -93,15 +93,15 @@
             function setTextosEquivalentes(salariosMinimos, casasPopulares, cestasBasicas) {
               vm.textosEquivalentes = [
                 {
-                  texto: "milhões de salários mínimos",
+                  texto: "mil de salários mínimos",
                   valor: salariosMinimos
                 },
                 {
-                  texto: "mil casas populares",
+                  texto: "casas populares",
                   valor: casasPopulares
                 },
                 {
-                  texto: "milhões de cestas básicas",
+                  texto: "mil de cestas básicas",
                   valor: cestasBasicas
                 }
               ];
