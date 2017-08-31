@@ -233,6 +233,7 @@ h4 > .glyphicon {
 .card-lg-img {
   width: 120px;
   height: 120px;
+  margin-top: 27px;
   overflow: hidden;
   border-radius: 50%;
   border: none;
@@ -703,4 +704,50 @@ div.tooltip_presenca {
 .outros {
   vertical-align: top;
   font-size: 40px;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  animation-iteration-count: infinite;
+}
+
+.animated.hinge {
+  animation-duration: 2s;
+}
+
+.animated.flipOutX,
+.animated.flipOutY,
+.animated.bounceIn,
+.animated.bounceOut {
+  animation-duration: .75s;
+}
+
+@keyframes rotateIn {
+  from {
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, -360deg);
+  }
+
+  to {
+    transform-origin: center;
+    transform: none;
+  }
+}
+
+.rotateIn {
+  animation-name: rotateIn;
+}
+
+.refresh-icon {
+  font-size: 3em;
+  opacity: 0.5;
+}
+
+.refresh-wrapper {
+  margin-top: 80px;
+  margin-bottom: 2000px;
 }

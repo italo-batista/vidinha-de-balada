@@ -114,6 +114,7 @@
             function pesquisarGeral() {
               if (vm.rankingSelecionado === 'geral') {
                 vm.deputados = [];
+                vm.showTop10 = 0;
                 $http.get(RESTAPI + "top10").then(function (res) {
                   res.data.forEach(function (d) {
                     d.nome = d.Nome.replace('"', '').replace('\"', '');
@@ -129,12 +130,14 @@
                   });
                   vm.ufSelecionada = '--';
                   vm.partidoSelecionado = '--';
+                  vm.showTop10 = 2;
                 });
               }
             }
 
             function pesquisarPorEstado() {
               vm.deputados = [];
+              vm.showTop10 = 0;
               $http.get(RESTAPI + "top10/uf/"+vm.ufSelecionada).then(function(res) {
                   res.data.forEach(function (d) {
                       d.nome = d.Nome.replace('"', '').replace('\"', '');
@@ -146,11 +149,13 @@
                       }
                       vm.deputados.push(d);
                   });
+                  vm.showTop10 = 2;
               });
             }
 
             function pesquisarPorPartido() {
               vm.deputados = [];
+              vm.showTop10 = 0;
               $http.get(RESTAPI + "top10/partido/"+vm.partidoSelecionado).then(function(res) {
                   res.data.forEach(function (d) {
                       d.nome = d.Nome.replace('"', '').replace('\"', '');
@@ -162,6 +167,7 @@
                       }
                       vm.deputados.push(d);
                   });
+                  vm.showTop10 = 2;
               });
             }
 
