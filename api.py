@@ -7,13 +7,11 @@ import datetime
 import sys, os
 import operator
 from unidecode import unidecode
-#from flask.ext.sqlalchemy import SQLAlchemy
 import flask_sqlalchemy._compat
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-#from sqlalchemy.ext.declarative import declarative_base
 
 from sqlalchemy import MetaData
 from flask_sqlalchemy import SQLAlchemy
@@ -33,7 +31,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = ''
+password = 'pass'
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -53,7 +51,6 @@ sys.setdefaultencoding('utf8')
 # Init ----------------------------------------------------------------
 
 # Define ultimo mes/ano
-
 
 connection = engine.connect()
 
@@ -149,12 +146,12 @@ class Gasto(mysql.Model):
     __tablename__ = 'gastos'
 
     idDeputado = mysql.Column(mysql.String(7), nullable=False)
-    mesEmissao = mysql.Column(mysql.Integer)
     anoEmissao = mysql.Column(mysql.Integer)
+    mesEmissao = mysql.Column(mysql.Integer)
+    idEmpresa = mysql.Column(mysql.String(10), nullable=False)
     cnpj = mysql.Column(mysql.String(15))
     nomeFornecedor = mysql.Column(mysql.String(15), nullable=False)
     nomeCategoria = mysql.Column(mysql.String(10), nullable=False)
-    idEmpresa = mysql.Column(mysql.String(10), nullable=False)
     valor = mysql.Column(mysql.Float)
     id = mysql.Column(mysql.String(10), primary_key=True)
 
@@ -209,8 +206,8 @@ class SelosCota(mysql.Model):
 
     id = mysql.Column(mysql.Integer, primary_key=True)
     idDeputado = mysql.Column(mysql.String(7))
-    mes = mysql.Column(mysql.Integer)
     ano = mysql.Column(mysql.Integer)
+    mes = mysql.Column(mysql.Integer)
     selo = mysql.Column(mysql.String(10))
 
     def __repr__(self):
@@ -219,7 +216,7 @@ class SelosCota(mysql.Model):
 class SelosPresenca(mysql.Model):
     __tablename__ = 'selosPresenca'
 
-	id = mysql.Column(mysql.Integer, primary_key=True)
+    id = mysql.Column(mysql.Integer, primary_key=True)
     idDeputado = mysql.Column(mysql.String(7))
     mes = mysql.Column(mysql.Integer)
     ano = mysql.Column(mysql.Integer)
