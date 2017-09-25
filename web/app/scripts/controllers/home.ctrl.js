@@ -46,7 +46,6 @@
 
                         vm.deputados.push(d);
                     });
-                    console.log(vm.deputados);
                     vm.showTop10++;
                 });
                 $http.get(RESTAPI + "dadosData").then(function(res) {
@@ -94,15 +93,15 @@
             function setTextosEquivalentes(salariosMinimos, casasPopulares, cestasBasicas) {
               vm.textosEquivalentes = [
                 {
-                  texto: "milhões de salários mínimos",
+                  texto: "mil de salários mínimos",
                   valor: salariosMinimos
                 },
                 {
-                  texto: "mil casas populares",
+                  texto: "casas populares",
                   valor: casasPopulares
                 },
                 {
-                  texto: "milhões de cestas básicas",
+                  texto: "mil de cestas básicas",
                   valor: cestasBasicas
                 }
               ];
@@ -115,6 +114,7 @@
             function pesquisarGeral() {
               if (vm.rankingSelecionado === 'geral') {
                 vm.deputados = [];
+                vm.showTop10 = 0;
                 $http.get(RESTAPI + "top10").then(function (res) {
                   res.data.forEach(function (d) {
                     d.nome = d.Nome.replace('"', '').replace('\"', '');
@@ -130,12 +130,14 @@
                   });
                   vm.ufSelecionada = '--';
                   vm.partidoSelecionado = '--';
+                  vm.showTop10 = 2;
                 });
               }
             }
 
             function pesquisarPorEstado() {
               vm.deputados = [];
+              vm.showTop10 = 0;
               $http.get(RESTAPI + "top10/uf/"+vm.ufSelecionada).then(function(res) {
                   res.data.forEach(function (d) {
                       d.nome = d.Nome.replace('"', '').replace('\"', '');
@@ -147,11 +149,13 @@
                       }
                       vm.deputados.push(d);
                   });
+                  vm.showTop10 = 2;
               });
             }
 
             function pesquisarPorPartido() {
               vm.deputados = [];
+              vm.showTop10 = 0;
               $http.get(RESTAPI + "top10/partido/"+vm.partidoSelecionado).then(function(res) {
                   res.data.forEach(function (d) {
                       d.nome = d.Nome.replace('"', '').replace('\"', '');
@@ -163,6 +167,7 @@
                       }
                       vm.deputados.push(d);
                   });
+                  vm.showTop10 = 2;
               });
             }
 

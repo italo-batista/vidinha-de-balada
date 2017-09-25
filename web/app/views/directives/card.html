@@ -62,52 +62,54 @@
           </div>
 
           <div class="transformable" ng-class="{'small':isVisible, 'big':!isVisible}">
-            <div class="text-center card-row">
+            <div class="text-center">
               <span class="font-d">Como usou a cota?</span><br>
               <span>Limite mensal de {{ deputado.Cota_UF| currency:'R$ ' }}</span>
             </div>
-            <div class="row card-row">
-              <div class="col-xs-6 col-md-2 text-center">
-                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('alimento')}">
-                  <span class="icone-lg icon-alimento"></span>
+            <div class="card-row">
+              <div class="row">
+                <div class="col-xs-6 col-md-2 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('alimento')}">
+                    <span class="icone-lg icon-alimento"></span>
+                  </div>
+                  <div class="font-l">{{deputado.Gastos['Alimentação'] | currency:'R$ '}}</div>
+                  <div class="font-m">Alimentação</div>
                 </div>
-                <div class="font-l">{{deputado.Gastos['Alimentação'] | currency:'R$ '}}</div>
-                <div class="font-m">Alimentação</div>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center">
-                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('combustivel')}">
-                  <span class="icone-lg icon-combustivel"></span>
+                <div class="col-xs-6 col-md-2 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('combustivel')}">
+                    <span class="icone-lg icon-combustivel"></span>
+                  </div>
+                  <div class="font-l">{{deputado.Gastos['Combustíveis'] | currency:'R$ '}}</div>
+                  <div class="font-m">Combustíveis</div>
                 </div>
-                <div class="font-l">{{deputado.Gastos['Combustíveis'] | currency:'R$ '}}</div>
-                <div class="font-m">Combustíveis</div>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center">
-                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('locacao')}">
-                  <span class="icone-lg icon-locacao"></span>
+                <div class="col-xs-6 col-md-2 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('locacao')}">
+                    <span class="icone-lg icon-locacao"></span>
+                  </div>
+                  <div class="font-l">{{deputado.Gastos['Locação de veículos'] | currency:'R$ '}}</div>
+                  <div class="font-m">Locação de veículos</div>
                 </div>
-                <div class="font-l">{{deputado.Gastos['Locação de veículos'] | currency:'R$ '}}</div>
-                <div class="font-m">Locação de veículos</div>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center">
-                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('passagem')}">
-                  <span class="icone-lg icon-passagem"></span>
+                <div class="col-xs-6 col-md-2 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('passagem')}">
+                    <span class="icone-lg icon-passagem"></span>
+                  </div>
+                  <div class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</div>
+                  <div class="font-m">Passagens aéreas</div>
                 </div>
-                <div class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</div>
-                <div class="font-m">Passagens aéreas</div>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center">
-                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('alimento')}">
-                  <span class="icone-lg icon-escritorio"></span>
+                <div class="col-xs-6 col-md-2 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('alimento')}">
+                    <span class="icone-lg icon-escritorio"></span>
+                  </div>
+                  <div class="font-l">{{deputado.Gastos['Escritório'] | currency:'R$ '}}</div>
+                  <div class="font-m">Escritório</div>
                 </div>
-                <div class="font-l">{{deputado.Gastos['Escritório'] | currency:'R$ '}}</div>
-                <div class="font-m">Escritório</div>
-              </div>
-              <div class="col-xs-6 col-md-2 text-center">
-                <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('divulgacao')}">
-                  <span class="icone-lg icon-divulgacao"></span>
+                <div class="col-xs-6 col-md-2 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('divulgacao')}">
+                    <span class="icone-lg icon-divulgacao"></span>
+                  </div>
+                  <div class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</div>
+                  <div class="font-m">Divulgação</div>
                 </div>
-                <div class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</div>
-                <div class="font-m">Divulgação</div>
               </div>
             </div>
           </div>

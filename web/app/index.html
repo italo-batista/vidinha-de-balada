@@ -1,8 +1,8 @@
 <!doctype html>
-<html>
+<html lang="pt-br">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Vidinha de Balada</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -29,7 +29,7 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-4 col-sm-offset-4 logo">
-            <a ui-sref="home"><img src="images/logo.png" height="106" width="186"></img></a>
+            <a ui-sref="home"><img src="images/logo.png" height="106" width="186" alt="Página inicial"></img></a>
           </div>
         </div>
       </div>
@@ -45,7 +45,8 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" ui-sref="home">
-            <img alt="Brand" src="images/logo-h.png" width="167" height="20">
+            <span class="sr-only">Página inicial</span>
+            <img alt="Brand" src="images/logo-h.png" width="167" height="20" alt="Página inicial">
           </a>
         </div>
         <div class="collapse navbar-collapse" id="menu-principal">
@@ -55,8 +56,7 @@
             </div>
           </form>
           <ul class="nav navbar-nav navbar-right nav-text">
-            <li><a ui-sref="home" data-toggle="collapse" data-target="#menu-principal">HOME</a></li>
-            <li><a ui-sref="ceap">CEAP</a></li>
+            <li><a ui-sref="ceap" data-toggle="collapse" data-target="#menu-principal">CEAP</a></li>
             <li><a ui-sref="sobre" data-toggle="collapse" data-target="#menu-principal">SOBRE</a></li>
             <li><a ui-sref="contato" data-toggle="collapse" data-target="#menu-principal">CONTATO</a></li>
           </ul>
@@ -64,21 +64,24 @@
       </div>
     </nav>
 
-    <ui-view></ui-view>
+    <ui-view autoscroll="true"></ui-view>
 
     <footer>
       <div class="container">
         <div class="footer-line">
           <div class="row">
             <div class="col-xs-2">
-              <a ui-sref="home"><img src="images/branca.png" height="60" width="95" class="footer-logo"></img></a>
+              <a ui-sref="home"><span class="sr-only">Página inicial</span><img src="images/branca.png" height="60" width="95" class="footer-logo" alt="Página inicial"></img></a>
             </div>
           </div>
         </div>
         <div class="row text-right">
           <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
               <p>Nos siga e acompanhe essa balada:</p>
-              <a class="icone" href="https://www.facebook.com/Vidinha-de-Balada-1785003711829354/"><span class="icone-sm icon-facebook-with-circle"></span></a>
+              <a class="icone" href="https://www.facebook.com/Vidinha-de-Balada-1785003711829354/">
+                <span class="sr-only">Nossa página no facebook</span>
+                <span class="icone-sm icon-facebook-with-circle"></span>
+              </a>
           </div>
         </div>
       </div>
@@ -93,6 +96,9 @@
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/angular-locale-pt-br/angular-locale_pt-br.js"></script>
     <script src="bower_components/angular-socialshare/dist/angular-socialshare.min.js"></script>
+    <script src="bower_components/SHA-1/sha1.js"></script>
+    <script src="bower_components/angulartics/src/angulartics.js"></script>
+    <script src="bower_components/angulartics-google-analytics/lib/angulartics-ga.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -115,6 +121,13 @@
       $(document).ready(function(){
           $('[data-toggle="tooltip"]').tooltip();
       });
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-104332887-1', 'auto');
     </script>
 </body>
 </html>

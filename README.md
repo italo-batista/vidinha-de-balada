@@ -1,6 +1,6 @@
 ## [Vidinha de Balada](http://vidinhadebalada.com/#!/)
 
-Você sabia que, além do salário, os deputados federais recebem outras verbas para exercer seus cargos? Dentre elas: auxílio para contratar funcionários, auxílio moradia, despesas com saúde, entre outras. No Vidinha de Balada, vamos falar em especial da CEAP (Cota para Exercício da Atividade Parlamentar). Para saber mais sobre a CEAP acesse [este link](http://vidinhadebalada.com).
+Você sabia que, além do salário, os deputados federais recebem outras verbas para exercer seus cargos? Dentre elas: auxílio para contratar funcionários, auxílio moradia, despesas com saúde, entre outras. No Vidinha de Balada, vamos falar em especial da CEAP (Cota para Exercício da Atividade Parlamentar). Para saber mais sobre a CEAP acesse [este link](http://vidinhadebalada.com/#!/ceap).
 
 Na plataforma você pode conferir:
 

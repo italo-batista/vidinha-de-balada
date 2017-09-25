@@ -13,11 +13,11 @@ Para facilitar o entendimento desses valores gastos, os colocamos em termos ente
 Acreditamos que nosso projeto possui grande potencial de impacto principalmente entre a parcela mais leiga (em relação a dados/gastos públicos) da população, pela facilidade no entendimento da utilização do dinheiro que sai do bolso do contribuinte.
 
 
-### Design
+### Design e Usabilidade
 
-a) _Design do produto e experiência do usuário_: compreendendo a apresentação visual, usabilidade do produto e a experiência proposta em seu uso; Falar do conceito
-c) _Inovação e Criatividade_, compreendendo o quanto o produto traz de novidade e agrega conceitos novos ao domínio do problema considerado; 
+A partir do nome do projeto, buscamos trazer para o ambiente da aplicação elementos que remetessem a uma balada (festa), como por exemplo: as cores identificadas em jogos de luzes de casas noturnas, linguagem descontraída e comparações com elementos do cotidiano de um trabalhador brasileiro, como por exemplo salário mínimo.
 
+Após entendermos os dados fornecidos pela câmara, definimos quais informações seriam apresentadas ao usuário. Hierarquizamos informações e as subdividimos em áreas, para que o usuário ao visitar as páginas identificasse as sessões de seu interesse.
 
 ### Infraestrutura
 

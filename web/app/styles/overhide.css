@@ -55,11 +55,11 @@ a:focus {
 }
 
 .table-inverse {
-  background-color: #463066;
+  background-color: #522E61;
 }
 
 .table-bordered {
-  border: solid 4px #463066;
+  border: solid 4px #522E61;
   background-color: #61397B;
 }
 
@@ -69,7 +69,7 @@ a:focus {
 .table-bordered > thead > tr > td,
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
-  border: solid 4px #463066;
+  border: solid 4px #522E61;
 }
 .table-bordered > thead > tr > th,
 .table-bordered > thead > tr > td {

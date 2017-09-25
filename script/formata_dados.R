@@ -416,7 +416,7 @@ cria_tabela_selos_presencas = function(tabela_final_gastos, tabela_final_votacoe
   tabela_selos_votacoes$id = 0
   
   tabela_selos_votacoes = tabela_selos_votacoes %>%
-    select(id, id_dep, anov, mesv, selo)
+    select(id_dep, anov, mesv, selo)
   
   return(tabela_selos_votacoes)
 }
