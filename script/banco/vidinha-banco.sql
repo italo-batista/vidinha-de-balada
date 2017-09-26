@@ -73,10 +73,10 @@ CREATE TABLE gastos (
 	idDeputado VARCHAR(7) NOT NULL,
 	anoEmissao INT,
 	mesEmissao INT,
+	idEmpresa VARCHAR(10),
 	cnpj VARCHAR(20),
 	nomeFornecedor VARCHAR(60) NOT NULL,
 	nomeCategoria VARCHAR(40) NOT NULL,
-	idEmpresa VARCHAR(10),
 	valor FLOAT,
 	id VARCHAR(10),
 
@@ -123,8 +123,8 @@ CREATE TABLE selosPresenca (
 
 	id INT(4) NOT NULL AUTO_INCREMENT,
 	idDeputado VARCHAR(7) NOT NULL,
+	mes VARCHAR(4) NOT NULL,	
 	ano VARCHAR(4) NOT NULL,
-	mes VARCHAR(4) NOT NULL,
 	selo VARCHAR(10) NOT NULL,
 
 	PRIMARY KEY (id)

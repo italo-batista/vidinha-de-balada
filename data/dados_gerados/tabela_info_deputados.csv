@@ -111,7 +111,7 @@
 141439,"CHICO D'ANGELO","PT","RJ","http://www.camara.gov.br/internet/deputado/bandep/141439.jpg","chico_dangelo","3215-5542","dep.chicodangelo@camara.gov.br"
 141440,"CHICO LOPES","PCdoB","CE","http://www.camara.gov.br/internet/deputado/bandep/141440.jpg","Chico_Lopes","3215-5310","dep.chicolopes@camara.gov.br"
 178928,"CHRISTIANE DE SOUZA YARED","PR","PR","http://www.camara.gov.br/internet/deputado/bandep/178928.jpg","christianeyared","3215-5201","dep.christianedesouzayared@camara.gov.br"
-178841,"CÍCERO ALMEIDA","PMDB","AL","http://www.camara.gov.br/internet/deputado/bandep/178841.jpg","Cicero2800","3215-5760","dep.ciceroalmeida@camara.gov.br"
+178841,"CÍCERO ALMEIDA","PODE","AL","http://www.camara.gov.br/internet/deputado/bandep/178841.jpg","Cicero2800","3215-5760","dep.ciceroalmeida@camara.gov.br"
 178939,"CLARISSA GAROTINHO","PRB","RJ",NA,NA,NA,NA
 74537,"CLAUDIO CAJADO","DEM","BA","http://www.camara.gov.br/internet/deputado/bandep/74537.jpg","claudio_cajado","3215-5630","dep.claudiocajado@camara.gov.br"
 141408,"CLEBER VERDE","PRB","MA","http://www.camara.gov.br/internet/deputado/bandep/141408.jpg",NA,"3215-5710","dep.cleberverde@camara.gov.br"
@@ -499,7 +499,7 @@
 178991,"SÉRGIO REIS","PRB","SP","http://www.camara.gov.br/internet/deputado/bandep/178991.jpg","sergioreis","3215-5213","dep.sergioreis@camara.gov.br"
 178933,"SERGIO SOUZA","PMDB","PR","http://www.camara.gov.br/internet/deputado/bandep/178933.jpg","_sergiosouza","3215-5702","dep.sergiosouza@camara.gov.br"
 178874,"SERGIO VIDIGAL","PDT","ES","http://www.camara.gov.br/internet/deputado/bandep/178874.jpg",NA,"3215-5812","dep.sergiovidigal@camara.gov.br"
-160612,"SERGIO ZVEITER","PMDB","RJ","http://www.camara.gov.br/internet/deputado/bandep/160612.jpg","zveitersergio","3215-5437","dep.sergiozveiter@camara.gov.br"
+160612,"SERGIO ZVEITER","PODE","RJ","http://www.camara.gov.br/internet/deputado/bandep/160612.jpg","zveitersergio","3215-5437","dep.sergiozveiter@camara.gov.br"
 167614,"SEVERINO NINHO","PSB","PE","http://www.camara.gov.br/internet/deputado/bandep/167614.jpg",NA,"3215-5314","dep.severinoninho@camara.gov.br"
 178961,"SHÉRIDAN","PSDB","RR","http://www.camara.gov.br/internet/deputado/bandep/178961.jpg","depsheridan","3215-5246","dep.sheridan@camara.gov.br"
 160613,"SIBÁ MACHADO","PT","AC",NA,"sibamachado13",NA,NA
@@ -544,12 +544,12 @@
 189593,"WADIH DAMOUS","PT","RJ","http://www.camara.gov.br/internet/deputado/bandep/189593.jpg","wadih_damous","3215-5413","dep.wadihdamous@camara.gov.br"
 137853,"WADSON RIBEIRO","PCdoB","MG",NA,NA,NA,NA
 160569,"WALDENOR PEREIRA","PT","BA","http://www.camara.gov.br/internet/deputado/bandep/160569.jpg","waldenorpereira","3215-5954","dep.waldenorpereira@camara.gov.br"
-141558,"WALDIR MARANHÃO","PP","MA","http://www.camara.gov.br/internet/deputado/bandep/141558.jpg","WaldirMaranhao","3215-5975","dep.waldirmaranhao@camara.gov.br"
+141558,"WALDIR MARANHÃO","PTdoB","MA","http://www.camara.gov.br/internet/deputado/bandep/141558.jpg","WaldirMaranhao","3215-5975","dep.waldirmaranhao@camara.gov.br"
 160631,"WALNEY ROCHA","PEN","RJ","http://www.camara.gov.br/internet/deputado/bandep/160631.jpg","walneyrocha","3215-5575","dep.walneyrocha@camara.gov.br"
 178952,"WALTER ALVES","PMDB","RN","http://www.camara.gov.br/internet/deputado/bandep/178952.jpg","WalterAlvesRN","3215-5435","dep.walteralves@camara.gov.br"
 141560,"WALTER IHOSHI","PSD","SP","http://www.camara.gov.br/internet/deputado/bandep/141560.jpg","walterihoshi","3215-5372","dep.walterihoshi@camara.gov.br"
 160620,"WASHINGTON REIS","PMDB","RJ",NA,NA,NA,NA
-160518,"WELITON PRADO","PMB","MG","http://www.camara.gov.br/internet/deputado/bandep/160518.jpg","pradoweliton","3215-5862","dep.welitonprado@camara.gov.br"
+160518,"WELITON PRADO","PROS","MG","http://www.camara.gov.br/internet/deputado/bandep/160518.jpg","pradoweliton","3215-5862","dep.welitonprado@camara.gov.br"
 74043,"WELLINGTON ROBERTO","PR","PB","http://www.camara.gov.br/internet/deputado/bandep/74043.jpg","wr22","3215-5514","dep.wellingtonroberto@camara.gov.br"
 167493,"WEVERTON ROCHA","PDT","MA","http://www.camara.gov.br/internet/deputado/bandep/167493.jpg","wevertonrocha","3215-5405","dep.wevertonrocha@camara.gov.br"
 141563,"WILLIAM WOO","PP","SP",NA,NA,NA,NA
@@ -585,6 +585,7 @@
 73831,"TAMPINHA","PSD","MT",NA,NA,NA,NA
 194340,"VAL AMÉLIO","PRTB","AL",NA,NA,NA,NA
 196359,"ADÉRMIS MARINI","PSDB","SP",NA,"AdermisMarini",NA,NA
+73934,"CARLOS SOUZA","PSD","AM",NA,"CarlosSouza1111",NA,NA
 196357,"DEJORGE PATRÍCIO","PRB","RJ","http://www.camara.gov.br/internet/deputado/bandep/196357.jpg",NA,"3215-5714","dep.dejorgepatricio@camara.gov.br"
 72442,"FELIPE CARRERAS","PSB","PE",NA,NA,NA,NA
 196378,"IZAQUE SILVA","PSDB","SP","http://www.camara.gov.br/internet/deputado/bandep/196378.jpg","NAO ENCONTRADO","3215-5915","dep.izaquesilva@camara.gov.br"
@@ -597,5 +598,5 @@
 91208,"ROBINSON ALMEIDA","PT","BA","http://www.camara.gov.br/internet/deputado/bandep/91208.jpg","robinson1350","3215-5576","dep.robinsonalmeida@camara.gov.br"
 141532,"ROCHA LOURES","PMDB","PR",NA,"rodrochaloures",NA,NA
 198963,"ROGÉRIO SILVA","PMDB","MT",NA,NA,NA,NA
-195866,"VAIDON OLIVEIRA","DEM","CE","http://www.camara.gov.br/internet/deputado/bandep/195866.jpg","NAO ENCONTRADO","3215-5570","dep.vaidonoliveira@camara.gov.br"
+195866,"VAIDON OLIVEIRA","PROS","CE","http://www.camara.gov.br/internet/deputado/bandep/195866.jpg","NAO ENCONTRADO","3215-5570","dep.vaidonoliveira@camara.gov.br"
 73992,"YEDA CRUSIUS","PSDB","RS","http://www.camara.gov.br/internet/deputado/bandep/73992.jpg","Yeda_Crusius45","3215-5445","dep.yedacrusius@camara.gov.br"
