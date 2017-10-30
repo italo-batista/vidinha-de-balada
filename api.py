@@ -504,6 +504,7 @@ def maisGastadores10Id(filterType, value, rankeado):
 
 	queryFiltroUF = "gastos.idDeputado in (SELECT id FROM deputado where (uf = \'" + str(value) +"\')) AND " if filterType == "uf" else ""
 	queryFiltroPartido = "gastos.idDeputado in (SELECT id FROM deputado where ( partidoAtual = \'" + str(value) + "\')) AND " if filterType == "partido" else ""
+	queryFiltroCategoria = "nomeCategoria = \'" + str(value) + "\' AND " if filterType == "categoria" else ""
 
 	ID = 1
 
@@ -513,12 +514,12 @@ def maisGastadores10Id(filterType, value, rankeado):
 						"(SELECT deputado.uf FROM deputado WHERE deputado.id = gastos.idDeputado))) "
 						"AS ranking, "
 						"gastos.idDeputado "
-					"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
+					"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + queryFiltroCategoria + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
 					"GROUP BY (gastos.idDeputado) "
 					"ORDER BY ranking DESC limit 10")
 	else:
 		consulta = ("SELECT SUM(valor) AS ranking, gastos.idDeputado "
-					"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
+					"FROM gastos WHERE ("+ queryFiltroPartido + queryFiltroUF + queryFiltroCategoria + " mesEmissao="+str(mesPassado)+" AND anoEmissao="+str(ano)+") "
 					"GROUP BY (gastos.idDeputado) "
 					"ORDER BY ranking DESC limit 10")
 
