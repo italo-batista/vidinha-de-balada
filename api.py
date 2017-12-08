@@ -668,7 +668,7 @@ def top10(filterType, value, rankeado):
 	return jsonify(json)
 
 @app.route("/pull_command", methods=['POST'])
-def pull_command(data):
+def pull_command():
 		
 	git_dir = '/home/ubuntu/vidinha-de-balada/'
 	g = git.cmd.Git(git_dir)
