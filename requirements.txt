@@ -5,3 +5,4 @@ flask_limiter
 Flask-SQLAlchemy==2.2
 unidecode
 mysql-python
+GitPython
