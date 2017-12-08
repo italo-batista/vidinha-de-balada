@@ -634,11 +634,7 @@ def top10(filterType, value, rankeado):
 		gasto_combustivel = somaGastosCategoria(query_gasto_combustivel)
 		gasto_passagens = somaGastosCategoria(query_gasto_passagens)
 		gasto_outros = deputado_gasto_total - gasto_passagens - gasto_alimentacao - gasto_combustivel - gasto_divulgacao - gasto_escritorio - gasto_locacao
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> aab912ff8ddb5397dde9c63c77f499b7a99a7385
 		gastos_categorias = {
 		categoria_alimentacao : gasto_alimentacao,
 		categoria_combustivel : gasto_combustivel,
