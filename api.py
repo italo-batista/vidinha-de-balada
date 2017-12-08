@@ -450,7 +450,11 @@ def getPerfilDeputado(id):
 
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
 	total_gastos = somaGastosTotais(query_gasto_total)
-	gasto_outros = total_gastos - gasto_passagens - gasto_alimentacao - gasto_combustivel - gasto_divulgacao - gasto_escritorio - gasto_locacao
+
+
+
+	gasto_outros = total_gastos - gasto_alimentacao - gasto_escritorio - gasto_divulgacao - gasto_locacao - gasto_combustivel - gasto_passagens
+
 
 	cota_uf = Cota.query.get(deputado.uf).cota
 
@@ -630,7 +634,11 @@ def top10(filterType, value, rankeado):
 		gasto_combustivel = somaGastosCategoria(query_gasto_combustivel)
 		gasto_passagens = somaGastosCategoria(query_gasto_passagens)
 		gasto_outros = deputado_gasto_total - gasto_passagens - gasto_alimentacao - gasto_combustivel - gasto_divulgacao - gasto_escritorio - gasto_locacao
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> aab912ff8ddb5397dde9c63c77f499b7a99a7385
 		gastos_categorias = {
 		categoria_alimentacao : gasto_alimentacao,
 		categoria_combustivel : gasto_combustivel,

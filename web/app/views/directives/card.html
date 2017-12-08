@@ -68,7 +68,7 @@
             </div>
             <div class="card-row">
               <div class="row">
-                <div class="col-xs-6 col-md-2 text-center">
+                <div class="col-xs-6 col-md-2 col-md-offset-2 text-center">
                   <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('alimento')}">
                     <span class="icone-lg icon-alimento"></span>
                   </div>
@@ -96,7 +96,9 @@
                   <div class="font-l">{{deputado.Gastos['Passagens aéreas'] | currency:'R$ '}}</div>
                   <div class="font-m">Passagens aéreas</div>
                 </div>
-                <div class="col-xs-6 col-md-2 text-center">
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-md-2 col-md-offset-3 text-center">
                   <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('alimento')}">
                     <span class="icone-lg icon-escritorio"></span>
                   </div>
@@ -109,6 +111,13 @@
                   </div>
                   <div class="font-l">{{deputado.Gastos['Divulgação de atividade parlamentar'] | currency:'R$ '}}</div>
                   <div class="font-m">Divulgação</div>
+                </div>
+                <div class="col-xs-6 col-md-2 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': maiorGasto('outros')}">
+                    <span class="icone-lg icon-outro"></span>
+                  </div>
+                  <div class="font-l">{{deputado.Gastos['Outros'] | currency:'R$ '}}</div>
+                  <div class="font-m">Outros</div>
                 </div>
               </div>
             </div>
