@@ -90,6 +90,7 @@ categoria_divulgacao = 'Divulgação de atividade parlamentar'
 categoria_locacao = 'Locação de veículos'
 categoria_combustivel = 'Combustíveis'
 categoria_passagens = 'Passagens aéreas'
+categoria_outros = 'Outros'
 
 categoria_alimentacao_id = 1
 categoria_escritorio_id = 2
@@ -97,6 +98,7 @@ categoria_divulgacao_id = 3
 categoria_locacao_id = 4
 categoria_combustivel_id = 5
 categoria_passagens_id = 6
+categoria_outros_id = 7
 
 def getCategoriaName(idCategoria):
 	idCategoria = int(idCategoria)
@@ -105,7 +107,8 @@ def getCategoriaName(idCategoria):
 	3: categoria_divulgacao,
 	4: categoria_locacao,
 	5: categoria_combustivel,
-	6: categoria_passagens}
+	6: categoria_passagens,
+	7: categoria_outros}
 
 	print '\n\n\n\n'
 	print idCategoria
@@ -447,6 +450,7 @@ def getPerfilDeputado(id):
 
 	## o total dos gastos é a soma dos gastos das categorias anteriores ou envolvem outros gastos?
 	total_gastos = somaGastosTotais(query_gasto_total)
+	gasto_outros = total_gastos - gasto_alimentacao - gasto_escritorio - gasto_divulgacao - gasto_locacao - gasto_combustivel - gasto_passagens
 
 	cota_uf = Cota.query.get(deputado.uf).cota
 
@@ -466,7 +470,8 @@ def getPerfilDeputado(id):
 	'Divulgação de atividade parlamentar' : gasto_divulgacao,
 	'Locação de veículos' : gasto_locacao,
 	'Combustível' : gasto_combustivel,
-	'Passagens aéreas' : gasto_passagens
+	'Passagens aéreas' : gasto_passagens,
+	'Outros': gasto_outros
 	}
 
 	return jsonify(json)
@@ -624,6 +629,7 @@ def top10(filterType, value, rankeado):
 		gasto_locacao = somaGastosCategoria(query_gasto_locacao)
 		gasto_combustivel = somaGastosCategoria(query_gasto_combustivel)
 		gasto_passagens = somaGastosCategoria(query_gasto_passagens)
+		gasto_outros = deputado_gasto_total - gasto_passagens - gasto_alimentacao - gasto_combustivel - gasto_divulgacao - gasto_escritorio - gasto_locacao
 
 		gastos_categorias = {
 		categoria_alimentacao : gasto_alimentacao,
@@ -631,10 +637,10 @@ def top10(filterType, value, rankeado):
 		categoria_divulgacao : gasto_divulgacao,
 		categoria_escritorio : gasto_escritorio,
 		categoria_locacao : gasto_locacao,
-		categoria_passagens : gasto_passagens
+		categoria_passagens : gasto_passagens,
+		categoria_outros : gasto_outros
 		}
 
-		gasto_outros = deputado_gasto_total - gasto_alimentacao - gasto_combustivel - gasto_divulgacao - gasto_escritorio - gasto_locacao
 		meus_gastos = [
 		(categoria_alimentacao, gasto_alimentacao),
 		(categoria_combustivel, gasto_combustivel),
@@ -642,7 +648,7 @@ def top10(filterType, value, rankeado):
 		(categoria_escritorio, gasto_escritorio),
 		(categoria_locacao, gasto_locacao),
 		(categoria_passagens, gasto_passagens),
-		("Outros", gasto_outros)
+		(categoria_outros, gasto_outros)
 		]
 
 		maior_gasto = sorted(meus_gastos, key=lambda x: x[1], reverse=True)[0]
