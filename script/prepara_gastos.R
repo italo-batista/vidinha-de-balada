@@ -1,3 +1,10 @@
+# --------
+#     Este script é responsável pelo download dos arquivos do site da cãmara. 
+#     Os arquivos sao baixados um a um e renomeados de acordo com seus anos.
+#     A saída deste script é um dataframe contando com os gastos dos deputados nos anos baixados.
+# --------
+
+
 library(readr)
 library(dplyr)
 options(scipen = 50)
@@ -10,6 +17,7 @@ le_csv_zip = function(link, nome){
   return(data)
 }
 
+
 prepara_tabela_final = function(dados){
   
   dados$ano = as.numeric(format(as.Date(dados$datEmissao), "%Y"))
@@ -20,6 +28,10 @@ prepara_tabela_final = function(dados){
   return(dados)
 }
 
+# Download dos dados do site da Camara dos Deputados.
+# Cria/unifica as categorias de gastos semelhantes afim de diminuir
+#   a quantidade de categorias e facilitar o entendimento.
+# Leitura e organizacao em um unico objeto dos dados baixados
 cria_data_frame_2015_2017 = function(){
   ano_2015 = le_csv_zip("http://www.camara.leg.br/cotas/Ano-2015.csv.zip", "Ano-2015.csv")
   ano_2016 = le_csv_zip("http://www.camara.leg.br/cotas/Ano-2016.csv.zip", "Ano-2016.csv")
@@ -52,3 +64,6 @@ cria_data_frame_2015_2017 = function(){
   
   return(dados_completos)
 }
+
+
+# write.csv(dados_completos, file = "gastosGerais", row.names = FALSE)

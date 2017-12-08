@@ -18,7 +18,7 @@ load data local infile '../../data/dados_gerados/sessoes_mensal.csv' into table 
     (mes, ano, quantidadeSessoes);
 
 
-load data local infile '../../data/dados_gerados/cota_por_estado.csv' into table cotas fields terminated by ','
+load data local infile '../../data/final/cota_por_estado.csv' into table cotas fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
     (uf, cota);

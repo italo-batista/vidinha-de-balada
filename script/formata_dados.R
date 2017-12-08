@@ -429,7 +429,7 @@ cria_tabela_selos_cota = function(tabela_final_gastos) {
   tabela_selos_cota$selo[tabela_selos_cota$coef > 1] = "camarote"
   tabela_selos_cota$selo[tabela_selos_cota$coef <= 1] = "moderado"
   
-  #tabela_selos_cota$id = 0
+  tabela_selos_cota$id = 1
   
   tabela_selos_cota = tabela_selos_cota %>%
     select(id, idecadastro, numAno, numMes, selo)
