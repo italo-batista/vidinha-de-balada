@@ -3,7 +3,7 @@
 
     angular
         .module('baladaApp')
-        .controller('HomeCtrl', function ($http, RESTAPI, UFs) {
+        .controller('HomeCtrl', function ($http, RESTAPI, UFs, Categorias) {
             var vm = this;
             vm.total = 0;
             vm.salariosMinimos = 0;
@@ -20,7 +20,9 @@
             vm.rankingSelecionado = 'geral';
             vm.ufSelecionada = '--';
             vm.partidoSelecionado = '--';
+            vm.categoriaSelecionada = '--';
             vm.ufs = UFs;
+            vm.categorias = Categorias;
             vm.exibirTop10 = exibirTop10;
             vm.setAno = setAno;
             vm.subirAno = subirAno;
@@ -30,6 +32,7 @@
             vm.pesquisarGeral = pesquisarGeral;
             vm.pesquisarPorEstado = pesquisarPorEstado;
             vm.pesquisarPorPartido = pesquisarPorPartido;
+            vm.pesquisarPorCategoria = pesquisarPorCategoria;
 
             function init() {
                 setAno(vm.anoMaximo);
@@ -93,7 +96,7 @@
             function setTextosEquivalentes(salariosMinimos, casasPopulares, cestasBasicas) {
               vm.textosEquivalentes = [
                 {
-                  texto: "mil de salários mínimos",
+                  texto: "mil salários mínimos",
                   valor: salariosMinimos
                 },
                 {
@@ -101,7 +104,7 @@
                   valor: casasPopulares
                 },
                 {
-                  texto: "mil de cestas básicas",
+                  texto: "mil cestas básicas",
                   valor: cestasBasicas
                 }
               ];
@@ -170,6 +173,24 @@
                   vm.showTop10 = 2;
               });
             }
+
+            function pesquisarPorCategoria() {
+                vm.deputados = [];
+                vm.showTop10 = 0;
+                $http.get(RESTAPI + "top10/categoria/"+vm.categoriaSelecionada).then(function(res) {
+                    res.data.forEach(function (d) {
+                        d.nome = d.Nome.replace('"', '').replace('\"', '');
+                        d.uf = d.UF.replace('"', '').replace('\"', '');
+                        if (d.urlfoto === "NA") {
+                            d.urlfoto = "http://www.camara.leg.br/internet/deputado/bandep/" + d.id + ".jpg";
+                        } else {
+                            d.urlfoto = d.urlfoto.replace('"', '').replace('\"', '');
+                        }
+                        vm.deputados.push(d);
+                    });
+                    vm.showTop10 = 2;
+                });
+              }
 
             $(document).ready(function () {
               var menu = $('.menu');

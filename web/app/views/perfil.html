@@ -19,8 +19,8 @@
                 <p>{{ ctrl.deputado.UF }} / {{ ctrl.deputado.Partido }}</p>
 
                 <div class="row">
-                  <div class="col-md-6" ng-if="ctrl.deputado.Twitter != 'NA'">
-                    <span class="icone-sm icon-twitter-with-circle"></span> <span>{{ ctrl.deputado.Twitter }}</span>
+                  <div class="col-md-12" ng-if="ctrl.deputado.Twitter != 'NA'">
+                    <span class="icone-sm icon-twitter-with-circle"></span> <a ng-href="https://www.twitter.com/{{ctrl.deputado.Twitter}}" class="link-inverse" target="_blank">{{ ctrl.deputado.Twitter }}</a>
                   </div>
 
                   <div class="col-md-6">
