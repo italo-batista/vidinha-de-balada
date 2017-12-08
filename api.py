@@ -12,6 +12,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+import git 
+
 
 from sqlalchemy import MetaData
 from flask_sqlalchemy import SQLAlchemy
@@ -671,6 +673,21 @@ def top10(filterType, value, rankeado):
 
 	return jsonify(json)
 
+@app.route("/pull_command", methods=['POST'])
+def pull_command(data):
+		
+	git_dir = '/home/ubuntu/vidinha-de-balada/'
+	g = git.cmd.Git(git_dir)
+	msg = g.pull()
+
+	json = []
+	deputado_json = {
+		'msg' : msg,
+		'time': str(datetime.datetime.time(datetime.datetime.now()))
+	}
+	json.append(deputado_json)
+
+	return jsonify(json)
 
 # Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":
