@@ -51,6 +51,7 @@
               <span>Limite mensal de {{ ctrl.deputado.Cota | currency:'R$ ' }}</span>
             </div>
             <div class="card-row">
+              
               <div class="row">
                 <div class="col-xs-6 col-md-3 text-center">
                   <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('alimento')}">
@@ -154,6 +155,9 @@
           <div class="card-lg-body">
             <h2 class="text-center">Coleção de selos</h2>
             <p class="text-center">Os selos acumulados ao longo do mandato</p>
+            <p>No decorrer dos meses do mandato o deputado ganhou os seguintes selos. O critério para ganhar um selo
+                é gastar mais, naquela categoria, que o gasto mediano dos deputados.
+            </p>
             <div class="row selos">
               <div class="col-xs-4 col-sm-2">
                 <img src="images/selos/guloso.png" width="100%" title="Alimentação" alt="Alimentação">

@@ -751,3 +751,11 @@ div.tooltip_presenca {
   margin-top: 80px;
   margin-bottom: 2000px;
 }
+
+.justificado p {
+  text-align: justify;
+}
+
+.ceap-selos p {
+  text-align: center;
+}
