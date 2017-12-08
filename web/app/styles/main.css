@@ -466,14 +466,14 @@ a.icone {
   -ms-transition: height 0.25s linear;
   transition: height 0.25s linear;
 
-  height: 200px;
+  height: 300px;
   overflow: hidden;
   margin-top: 35px;
 }
 
 @media only screen and (max-width : 996px) {
   .transformable {
-    height: 450px;
+    height: 550px;
   }
 }
 

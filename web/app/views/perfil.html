@@ -17,17 +17,22 @@
               <div class="col-sm-8 col-md-10">
                 <h1>{{ ctrl.deputado.nome }}</h1>
                 <p>{{ ctrl.deputado.UF }} / {{ ctrl.deputado.Partido }}</p>
+
                 <div class="row">
                   <div class="col-md-12" ng-if="ctrl.deputado.Twitter != 'NA'">
                     <span class="icone-sm icon-twitter-with-circle"></span> <a ng-href="https://www.twitter.com/{{ctrl.deputado.Twitter}}" class="link-inverse" target="_blank">{{ ctrl.deputado.Twitter }}</a>
                   </div>
+
+                  <div class="col-md-6">
+                    <span class="icone-sm icon-phone"></span> (61) {{ ctrl.deputado.Fone }}
+                  </div>
+
                   <div class="col-md-12">
                     <span class="icone-sm icon-mail"></span> <a ng-href="mailto:{{ ctrl.deputado.Email }}" class="link-inverse" target="_blank">{{ ctrl.deputado.Email }}</a>
                   </div>
-                  <div class="col-md-12">
-                    <span class="icone-sm icon-phone"></span> {{ ctrl.deputado.Fone }}
-                  </div>
+
                 </div>
+
               </div>
             </div>
           </div>
@@ -47,36 +52,38 @@
             </div>
             <div class="card-row">
               <div class="row">
-                <div class="col-xs-6 col-md-4 text-center">
+                <div class="col-xs-6 col-md-3 text-center">
                   <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('alimento')}">
                     <span class="icone-lg icon-alimento"></span>
                   </div>
                   <div class="font-l">{{ctrl.deputado['Alimentação'] | currency:'R$ '}}</div>
                   <div class="font-m">Alimentação</div>
                 </div>
-                <div class="col-xs-6 col-md-4 text-center">
+                <div class="col-xs-6 col-md-3 text-center">
                   <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('combustivel')}">
                     <span class="icone-lg icon-combustivel"></span>
                   </div>
                   <div class="font-l">{{ctrl.deputado['Combustível'] | currency:'R$ '}}</div>
                   <div class="font-m">Combustíveis</div>
                 </div>
-                <div class="col-xs-6 col-md-4 text-center">
+                <div class="col-xs-6 col-md-3 text-center">
                   <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('locacao')}">
                     <span class="icone-lg icon-locacao"></span>
                   </div>
                   <div class="font-l">{{ctrl.deputado['Locação de veículos'] | currency:'R$ '}}</div>
                   <div class="font-m">Locação de veículos</div>
                 </div>
-                <div class="col-xs-6 col-md-4 text-center">
+                <div class="col-xs-6 col-md-3 text-center">
                   <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('passagem')}">
                     <span class="icone-lg icon-passagem"></span>
                   </div>
                   <div class="font-l">{{ctrl.deputado['Passagens aéreas'] | currency:'R$ '}}</div>
                   <div class="font-m">Passagens aéreas</div>
                 </div>
+              </div>
+              <div class="row">
                 <div class="col-xs-6 col-md-4 text-center">
-                  <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('alimento')}">
+                  <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('escritorio')}">
                     <span class="icone-lg icon-escritorio"></span>
                   </div>
                   <div class="font-l">{{ctrl.deputado['Escritório'] | currency:'R$ '}}</div>
@@ -88,6 +95,13 @@
                   </div>
                   <div class="font-l">{{ctrl.deputado['Divulgação de atividade parlamentar'] | currency:'R$ '}}</div>
                   <div class="font-m">Divulgação</div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                  <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('outros')}">
+                    <span class="icone-lg icon-outro"></span>
+                  </div>
+                  <div class="font-l">{{ctrl.deputado['Outros'] | currency:'R$ '}}</div>
+                  <div class="font-m">Outros</div>
                 </div>
               </div>
             </div>
