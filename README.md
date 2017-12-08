@@ -5,7 +5,7 @@ Você sabia que, além do salário, os deputados federais recebem outras verbas 
 Na plataforma você pode conferir:
 
 - Valor gasto com a CEAP no atual mandato (e valores comparativos)
-- Os TOP10 deputados reis do camarote mais gastadores do Brasil (e também por estado ou partido)
+- Os Top 10 deputados reis do camarote mais gastadores do Brasil (e também por estado ou partido)
 - Presença dos deputados nas sessões e gastos ao longo dos meses/anos
 - Valor gasto por categoria (alimentação, locação de veículos, etc)
 
