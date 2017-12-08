@@ -1,3 +1,8 @@
+# --------
+#     Realiza os tratamentos necessários na tebela de gastos para gerar as infosmações necessárias
+# --------
+
+
 library(readr)
 library(dplyr)
 library(tidyr)

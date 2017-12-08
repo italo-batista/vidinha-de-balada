@@ -402,8 +402,13 @@ def getTimelineDeputado(id):
 
 	timelineDeputado = []
 
+	ano_str = str(datetime.date.today().year)
+	mes_str = str(datetime.date.today().month)
+	data_atual = ano_str + "/" + mes_str
+
 	for i in timeline:
-		timelineDeputado.append({"data": i, "total_gasto": timeline[i][0], "total_presenca": timeline[i][1], "sessoes_total": timeline[i][2], "cota": timeline[i][3]})
+		if i != data_atual:
+			timelineDeputado.append({"data": i, "total_gasto": timeline[i][0], "total_presenca": timeline[i][1], "sessoes_total": timeline[i][2], "cota": timeline[i][3]})
 
 	return jsonify(timelineDeputado)
 
