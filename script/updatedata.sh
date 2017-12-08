@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # geracao dos arquivos para o banco
-Rscript gera_csvs.R
+Rscript gera_csvs.R > "log/geracao.log"
 
-mysql -u root -p vidasofrida vidinha_balada < /banco/vidinha-banco.sql
-mysql -u root -p vidasofrida vidinha_balada < /banco/popula-banco.sql
+mysql "vidinha_balada" < "banco/vidinha-banco.sql" > "log/criacaobanco.log"
+mysql "vidinha_balada" < "banco/popula-banco.sql" > "log/popula.log"
