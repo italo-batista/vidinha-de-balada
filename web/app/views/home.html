@@ -3,7 +3,7 @@
   <div class="sessao">
     <div class="headline">
       <h4 class="font-b">Gastômetro</h4>
-      <p>Gasto total com atitivade parlamentar</p>
+      <p>Gasto total com atividade parlamentar</p>
       <div class="" ng-show="ctrl.total > 0">
 
         <p class="seletor-ano">
@@ -55,6 +55,7 @@
                 <option value="geral">Geral</option>
                 <option value="porEstado">Por Estado</option>
                 <option value="porPartido">Por Partido</option>
+                <option value="porCategoria">Por Categoria</option>
               </select>
             </div>
             <div class="form-group" ng-show="ctrl.rankingSelecionado == 'porEstado'">
@@ -67,6 +68,12 @@
               <select class="form-control" ng-model="ctrl.partidoSelecionado" ng-change="ctrl.pesquisarPorPartido()">
                 <option value="--" disabled>-- selecione --</option>
                 <option value="{{ partido }}" ng-repeat="partido in ctrl.ufs.partidos | orderBy:'partido'">{{ partido }}</option>
+              </select>
+            </div>
+            <div class="form-group" ng-show="ctrl.rankingSelecionado == 'porCategoria'">
+              <select class="form-control" ng-model="ctrl.categoriaSelecionada" ng-change="ctrl.pesquisarPorCategoria()">
+                <option value="--" disabled>-- selecione --</option>
+                <option value="{{ categoria }}" ng-repeat="categoria in ctrl.categorias">{{ categoria }}</option>
               </select>
             </div>
           </form>
