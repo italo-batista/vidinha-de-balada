@@ -46,17 +46,40 @@ get_all_votacoes = function(ids_proposicoes) {
   for (id in ids_proposicoes) {
     query = paste(paste("https://dadosabertos.camara.leg.br/api/v2/proposicoes/", id, sep=""), "/votacoes", sep="")
     votacao = fromJSON(query)
+    print(id)
+    print(votacao$id)
     all_votacoes = rbind(all_votacoes, votacao$dados$id, row.names=NULL)
   }
   
   return(all_votacoes)
 }
 
+get_all_votos = function(ids_votacoes) {
+  require(jsonlite)
+  
+  all_votos = data.frame()
+  
+  for (id in ids_votacoes) {
+    query = paste("https://dadosabertos.camara.leg.br/api/v2/votacoes/", id, "/votos?itens=513", sep="")
+    votos = fromJSON(query)
+
+    votos$id = votos$dados$parlamentar$id
+    votos$nome = votos$dados$parlamentar$nome
+    votos$siglaPartido = votos$dados$parlamentar$siglaPartido
+    votos = as.data.frame(votos)
+    votos = votos %>% select(dados.voto, id, nome, siglaPartido) %>%
+      mutate(votos = dados.voto) %>%
+      select(-dados.voto)
+
+    all_votos = rbind(all_votos, votos, row.names = NULL)
+    print(head(all_votos$id))
+  }
+  
+  return(all_votos)
+}
+
+
 proposicoes = get_all_proposicoes()
-
 m_votacoes = get_all_votacoes(proposicoes$id)
-m_votacoes = m_votacoes %>%
-  mutate(id = X100000367L) %>%
-  select(id)
-
-
+colnames(m_votacoes) = c('id')
+m_votos = get_all_votos(m_votacoes$id)
