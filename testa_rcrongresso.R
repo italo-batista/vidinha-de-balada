@@ -22,10 +22,7 @@ get_all_proposicoes = function() {
   while (next_link != last_link) {
     temp = fromJSON(next_link)
     df = rbind(df, temp$dados)
-    last_link = temp$links[4, 2]
     next_link = temp$links[2, 2]
-    last_link = "https://dadosabertos.camara.leg.br/api/v2/proposicoes?dataInicio=2015-01-01&pagina=10&itens=100"
-    
   }
   
   temp = fromJSON(next_link)
