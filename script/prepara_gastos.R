@@ -36,10 +36,11 @@ cria_data_frame_2015_2017 = function(){
   ano_2015 = le_csv_zip("http://www.camara.leg.br/cotas/Ano-2015.csv.zip", "Ano-2015.csv")
   ano_2016 = le_csv_zip("http://www.camara.leg.br/cotas/Ano-2016.csv.zip", "Ano-2016.csv")
   ano_2017 = le_csv_zip("http://www.camara.leg.br/cotas/Ano-2017.csv.zip", "Ano-2017.csv")
-  
+  ano_2018 = le_csv_zip("http://www.camara.leg.br/cotas/Ano-2018.csv.zip", "Ano-2018.csv")
   dados_completos = ano_2015 %>%
     rbind(ano_2016,
-          ano_2017)
+          ano_2017,
+          ano_2018)
   
   dados_completos$nossas_categorias = NA
   
