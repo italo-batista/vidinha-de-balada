@@ -7,24 +7,23 @@
 # install.packages("dplyr")
 # --------
 
-source("formata_dados.R")
-source("prepara_gastos.R")
-options(scipen = 50)
-
 library(readr)
-library(here)
+
+source(here("formata_dados.R"))
+source(here("prepara_gastos.R"))
+options(scipen = 50)
 
 dados_gastos = cria_data_frame_2015_2017() %>% filter(nuLegislatura > 2014, !is.na(numMes), !is.na(numAno))
 
-cotas = read_csv(here("data/final/cota_por_estado.csv"))
+cotas = read_csv("../data/final/cota_por_estado.csv")
 
 votacoes = read_csv("https://raw.githubusercontent.com/nazareno/dados-da-camara-federal/master/dados/votacoes.csv") %>%
   formata_data_votacoes()
 
 #emendas = le_csv_zip("http://portal.convenios.gov.br/images/docs/CGSIS/csv/siconv_emenda.csv.zip", "siconv_emenda.csv")
 
-twitter_profiles = read_csv("data/final/twitter_profiles.csv")
-info_deputados = read_csv("data/final/infodeputados.csv")
+twitter_profiles = read_csv("../data/final/twitter_profiles.csv")
+info_deputados = read_csv("../data/final/infodeputados.csv")
 
 
 # Essas tabelas não geram nenhuma tabela no bd
