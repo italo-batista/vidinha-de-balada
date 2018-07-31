@@ -6,6 +6,7 @@
         .controller('HomeCtrl', function ($http, RESTAPI, UFs, Categorias) {
             var vm = this;
             vm.total = 0;
+            vm.totalPorEscrito = '';
             vm.salariosMinimos = 0;
             vm.casasPopulares = 0;
             vm.cestasBasicas = 0;
@@ -69,6 +70,7 @@
                     vm.salariosMinimos = Math.round(vm.total / 937000);
                     vm.casasPopulares = Math.round(vm.total / 152500);
                     vm.cestasBasicas = Math.round(vm.total / 390600);
+                    vm.totalPorEscrito = valorPorEscrito()
                     setTextosEquivalentes(vm.salariosMinimos, vm.casasPopulares, vm.cestasBasicas);
                 });
             };
@@ -108,6 +110,25 @@
                   valor: cestasBasicas
                 }
               ];
+            }
+
+            function valorPorEscrito() {
+                let texto = ''
+                let total = vm.total
+                let mod = Math.floor(total/1000000)
+                total = total - mod*1000000
+                if (mod > 1) {
+                    texto += mod + ' milhões '
+                } else if (mod === 1) {
+                    texto += mod + ' milhão '
+                }
+                mod = Math.floor(total/1000)
+                if (mod >= 1) {
+                    texto += mod + ' mil reais'
+                } else {
+                    texto += 'de reais'
+                }
+                return texto
             }
 
             function exibirTop10() {
