@@ -6,7 +6,7 @@ load data local infile '/home/ubuntu/vidinha-de-balada/data/final/cota_por_estad
     (uf, cota);
 
 
-load data local infile '/home/ubuntu/vidinha-de-balada/data/1-tabela_final_votacoes.csv' into table sessoesMesDeputado fields terminated by ','
+load data local infile '/home/ubuntu/vidinha-de-balada/data/dados_gerados/1-tabela_final_votacoes.csv' into table sessoesMesDeputado fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
     (mes, ano, idDeputado, quantidadeParticipacoes);
