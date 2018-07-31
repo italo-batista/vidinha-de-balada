@@ -1,6 +1,6 @@
 USE vidinha_balada;
 
-load data local infile '/home/ubuntu/vidinha-de-balada/data/final/cota_por_estado.csv' into table cotas fields terminated by ','
+load data local infile '/home/ubuntu/vidinha-de-balada/data/cota_por_estado.csv' into table cotas fields terminated by ','
   enclosed by '"'
   lines terminated by '\n'
     (uf, cota);
