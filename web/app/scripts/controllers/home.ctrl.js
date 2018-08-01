@@ -115,16 +115,16 @@
             function valorPorEscrito() {
                 let texto = ''
                 let total = vm.total
-                let mod = Math.floor(total/1000000)
+                let milhoes = Math.floor(total/1000000)
                 total = total - mod*1000000
-                if (mod > 1) {
-                    texto += mod + ' milhões '
-                } else if (mod === 1) {
-                    texto += mod + ' milhão '
+                let milhares = Math.floor(total/1000)
+                if (milhoes > 1) {
+                    texto += milhoes + ' milhões '
+                } else if (milhoes === 1) {
+                    texto += milhoes + ' milhão '
                 }
-                mod = Math.floor(total/1000)
-                if (mod >= 1) {
-                    texto += mod + ' mil reais'
+                if (milhares >= 1) {
+                    texto += + (milhoes >= 1 && 'e ') + milhares + ' mil reais'
                 } else {
                     texto += 'de reais'
                 }

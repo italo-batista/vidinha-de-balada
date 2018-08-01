@@ -28,7 +28,7 @@
     <div class="text-center" ng-hide="ctrl.total > 0">
       <span class="glyphicon glyphicon-refresh animated infinite rotateIn refresh-icon"></span>
     </div>
-    <p class="text-center font-n">{{ctrl.totalPorEscrito}}</p>
+    <p class="text-center font-a" ng-show="ctrl.total > 0">({{ctrl.totalPorEscrito}})</p>
     <div class="text-carousel text-center font-a" ng-show="ctrl.total > 0">
       Isso equivale à cerca de
       <p>
