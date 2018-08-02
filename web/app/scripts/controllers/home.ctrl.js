@@ -116,7 +116,7 @@
                 let texto = ''
                 let total = vm.total
                 let milhoes = Math.floor(total/1000000)
-                total = total - mod*1000000
+                total = total - milhoes*1000000
                 let milhares = Math.floor(total/1000)
                 if (milhoes > 1) {
                     texto += milhoes + ' milhões '
@@ -124,7 +124,7 @@
                     texto += milhoes + ' milhão '
                 }
                 if (milhares >= 1) {
-                    texto += + (milhoes >= 1 && 'e ') + milhares + ' mil reais'
+                    texto += (milhoes >= 1 && 'e ') + milhares + ' mil reais'
                 } else {
                     texto += 'de reais'
                 }
