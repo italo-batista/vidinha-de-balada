@@ -380,6 +380,18 @@ h4 > .glyphicon {
   height: 34px;
 }
 
+.font-n {
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 26px;
+}
+@media (min-width: 970px) {
+  .font-n {
+    font-size: 42px;
+    line-height: 42px;
+    }
+}
+
 .title-grafico {
   text-align: center;
   padding-bottom: 15px;
@@ -766,4 +778,27 @@ div.tooltip_presenca {
 
 .ceap-selos p {
   text-align: center;
+}
+
+.capes {
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.capes-valores {
+  display: flex;
+  height: 100px;
+  align-items: center;
+}
+
+.link-capes:link,
+.link-capes:visited {
+  color: #ff4e81;
 }

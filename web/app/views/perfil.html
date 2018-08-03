@@ -24,11 +24,11 @@
                   </div>
 
                   <div class="col-md-12">
-                    <span class="icone-sm icon-phone"></span> (61) {{ ctrl.deputado.Fone }}
+                    (61) {{ ctrl.deputado.Fone }}
                   </div>
 
                   <div class="col-md-12">
-                    <span class="icone-sm icon-mail"></span> <a ng-href="mailto:{{ ctrl.deputado.Email }}" class="link-inverse" target="_blank">{{ ctrl.deputado.Email }}</a>
+                    <a ng-href="mailto:{{ ctrl.deputado.Email }}" class="link-inverse" target="_blank">{{ ctrl.deputado.Email }}</a>
                   </div>
 
                 </div>
@@ -51,7 +51,7 @@
               <span>Limite mensal de {{ ctrl.deputado.Cota | currency:'R$ ' }}</span>
             </div>
             <div class="card-row">
-              
+
               <div class="row">
                 <div class="col-xs-6 col-md-3 text-center">
                   <div class="selo-lg" ng-class="{'selo-primary': ctrl.maiorGasto('alimento')}">

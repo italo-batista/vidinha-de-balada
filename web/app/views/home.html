@@ -28,10 +28,9 @@
     <div class="text-center" ng-hide="ctrl.total > 0">
       <span class="glyphicon glyphicon-refresh animated infinite rotateIn refresh-icon"></span>
     </div>
-    
+
     <div class="text-carousel text-center font-a" ng-show="ctrl.total > 0">
-      <div class="font-l texto-gasto" ng-show="ctrl.total > 0">( {{ctrl.totalPorEscrito}} )</div>
-      Isso equivale à cerca de
+      <div class="font-l texto-gasto" ng-show="ctrl.total > 0">{{ctrl.totalPorEscrito}} equivalem à</div>
       <p>
         <span vb-text-carousel carousel-items="ctrl.textosEquivalentes" interval="3000" class="font-e"></span>
       </p>
@@ -40,6 +39,25 @@
         <li></li>
         <li></li>
       </ol> -->
+    </div>
+  </div>
+
+  <div class="sessao">
+    <div class="capes" style="border: solid 2px #FF9B27">
+      <div class="capes-valores">
+
+        <h4 class="font-n">E se esse dinheiro <br> fosse pra <a href="#" class="link-capes">Ciência</a>?</h4>
+
+      </div>
+      <div class="capes-valores text-center" style="width: 360px;" ng-show="ctrl.total > 0">
+        <div class="font-a" style="width: 100%">
+          <div class="font-l texto-gasto" ng-show="ctrl.total > 0">Poderia pagar até</div>
+          <p>
+            <span vb-text-carousel carousel-items="ctrl.textosEquivalentes2" interval="3000" class="font-e"></span>
+          </p>
+        </div>
+
+      </div>
     </div>
   </div>
 

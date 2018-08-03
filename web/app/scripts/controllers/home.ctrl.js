@@ -12,6 +12,7 @@
             vm.cestasBasicas = 0;
             vm.deputados = [];
             vm.textosEquivalentes = [];
+            vm.textosEquivalentes2 = [];
             vm.anoSelecionado = 0;
             vm.anoMaximo = new Date().getFullYear();
             vm.anoMinimo = 2015;
@@ -34,6 +35,11 @@
             vm.pesquisarPorEstado = pesquisarPorEstado;
             vm.pesquisarPorPartido = pesquisarPorPartido;
             vm.pesquisarPorCategoria = pesquisarPorCategoria;
+
+            vm.pibics = 0;
+            vm.mestrandos = 0;
+            vm.doutorandos = 0;
+            vm.posdoutorandos = 0;
 
             function init() {
                 setAno(vm.anoMaximo);
@@ -63,15 +69,23 @@
             // Os valores medianos de casasPopulares e cestasBasicas foram calculados com base em
             // http://g1.globo.com/economia/noticia/governo-amplia-minha-casa-minha-vida-para-familias-com-renda-de-ate-r-9-mil.ghtml
             // e https://www.dieese.org.br/analisecestabasica/2017/201705cestabasica.pdf
+
+            //
             function setAno(ano) {
-                vm.anoSelecionado = ano;
+                vm.anoSelecionado = ano - 1;
                 $http.get(RESTAPI + "gastometro/" + vm.anoSelecionado).then(function (res) {
                     vm.total = res.data[0];
                     vm.salariosMinimos = Math.round(vm.total / 937000);
                     vm.casasPopulares = Math.round(vm.total / 152500);
                     vm.cestasBasicas = Math.round(vm.total / 390600);
+
+                    vm.pibics = Math.round(vm.total / 400000);
+                    vm.mestrandos = Math.round(vm.total / 1500000);
+                    vm.doutorandos = Math.round(vm.total / 2200000);
+                    vm.posdoutorandos = Math.round(vm.total / 4100000);
+
                     vm.totalPorEscrito = valorPorEscrito()
-                    setTextosEquivalentes(vm.salariosMinimos, vm.casasPopulares, vm.cestasBasicas);
+                    setTextosEquivalentes(vm.salariosMinimos, vm.casasPopulares, vm.cestasBasicas, vm.pibics, vm.mestrandos, vm.doutorandos, vm.posdoutorandos);
                 });
             };
 
@@ -95,7 +109,7 @@
                 return vm.anoSelecionado <= vm.anoMinimo;
             }
 
-            function setTextosEquivalentes(salariosMinimos, casasPopulares, cestasBasicas) {
+            function setTextosEquivalentes(salariosMinimos, casasPopulares, cestasBasicas, pibics, mestrandos, doutorandos, posdoutorandos) {
               vm.textosEquivalentes = [
                 {
                   texto: "mil salários mínimos",
@@ -108,6 +122,24 @@
                 {
                   texto: "mil cestas básicas",
                   valor: cestasBasicas
+                }
+              ];
+              vm.textosEquivalentes2 = [
+                {
+                  texto: "mil estudantes de Pibid por ano",
+                  valor: pibics
+                },
+                {
+                  texto: "mil mestrandos por ano",
+                  valor: mestrandos
+                },
+                {
+                  texto: "mil doutorandos por ano",
+                  valor: doutorandos
+                },
+                {
+                  texto: "mil pós doutorandos por ano",
+                  valor: posdoutorandos
                 }
               ];
             }

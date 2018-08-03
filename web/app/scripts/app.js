@@ -11,6 +11,7 @@
 angular
   .module('baladaApp', ['ui.router', '720kb.socialshare', 'angulartics', 'angulartics.google.analytics'])
   .constant('RESTAPI', 'http://vidinhadebalada.com/api/')
+  // .constant('RESTAPI', 'http://localhost:39007/')
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {

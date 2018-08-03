@@ -57,7 +57,12 @@
             </div>
             <div class="col-md-4 text-center card-text-align">
               <div class="font-c card-text-label">Presenças/ Sessões</div>
-              <div class="font-b">{{deputado.presencas}}</strong>/{{deputado.total_sessoes}}</div>
+              <div ng-show="deputado.total_sessoes > 0">
+                <div class="font-b">{{deputado.presencas}}/{{deputado.total_sessoes}}</div>
+              </div>
+              <div ng-hide="deputado.total_sessoes > 0">
+                <div class="font-b">-/-</div>
+              </div>
             </div>
           </div>
 
