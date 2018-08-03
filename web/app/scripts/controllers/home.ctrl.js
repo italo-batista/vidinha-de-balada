@@ -80,10 +80,10 @@
                     vm.casasPopulares = Math.round(vm.total / 152500);
                     vm.cestasBasicas = Math.round(vm.total / 390600);
 
-                    vm.pibics = Math.round(vm.total / 400000);
-                    vm.mestrandos = Math.round(vm.total / 1500000);
-                    vm.doutorandos = Math.round(vm.total / 2200000);
-                    vm.posdoutorandos = Math.round(vm.total / 4100000);
+                    vm.pibics = vm.total / 4800000;
+                    vm.mestrandos = vm.total / 18000000;
+                    vm.doutorandos = vm.total / 26400000;
+                    vm.posdoutorandos = vm.total / 49200000;
 
                     vm.totalPorEscrito = valorPorEscrito()
                     setTextosEquivalentes(vm.salariosMinimos, vm.casasPopulares, vm.cestasBasicas, vm.pibics, vm.mestrandos, vm.doutorandos, vm.posdoutorandos);
@@ -125,22 +125,28 @@
                   valor: cestasBasicas
                 }
               ];
+              if (posdoutorandos >= 0 && posdoutorandos <= 1) {
+                var textoPosdoutorandos = "pós doutorandos por ano";
+                posdoutorandos = posdoutorandos * 1000;
+              } else {
+                var textoPosdoutorandos = "mil pós doutorandos por ano";
+              }
               vm.textosEquivalentes2 = [
                 {
                   texto: "mil estudantes de Pibid por ano",
-                  valor: pibics
+                  valor: Math.round(pibics)
                 },
                 {
                   texto: "mil mestrandos por ano",
-                  valor: mestrandos
+                  valor: Math.round(mestrandos)
                 },
                 {
                   texto: "mil doutorandos por ano",
-                  valor: doutorandos
+                  valor: Math.round(doutorandos)
                 },
                 {
-                  texto: "mil pós doutorandos por ano",
-                  valor: posdoutorandos
+                  texto: textoPosdoutorandos,
+                  valor: Math.round(posdoutorandos)
                 }
               ];
             }
@@ -156,11 +162,11 @@
                 } else if (milhoes === 1) {
                     texto += milhoes + ' milhão ';
                 }
-                if (milhares >= 1) {
-                    texto += (milhoes >= 1 && 'e ') + milhares + ' mil reais';
-                } else {
-                    texto += 'de reais';
-                }
+                // if (milhares >= 1) {
+                //     texto += (milhoes >= 1 && 'e ') + milhares + ' mil reais';
+                // } else {
+                    texto += 'de reais para 513 deputados';
+                // }
                 return texto;
             }
 
