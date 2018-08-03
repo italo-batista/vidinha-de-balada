@@ -12,8 +12,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-import git 
-
+# import git
 
 from sqlalchemy import MetaData
 from flask_sqlalchemy import SQLAlchemy
@@ -64,20 +63,20 @@ aSessoes = connection.execute('select max(ano) from sessoesMesDeputado').first()
 ano = datetime.date.today().year
 mesPassado = datetime.date.today().month - 1
 
-if (aGastos == aSessoes):
-	mesPassado = min([mGastos, mSessoes])
-	ano = aGastos
-else:
-	anoMax = min([aGastos, aSessoes])
-	if (anoMax == aSessoes):
-		mesPassado = mSessoes
-		ano = aSessoes
-	else:
-		mesPassado = mGastos
-		ano = aGastos
-
-if (ano == datetime.date.today().year and mesPassado == datetime.date.today().month):
-	mesPassado = mesPassado - 1
+# if (aGastos == aSessoes):
+# 	mesPassado = min([mGastos, mSessoes])
+# 	ano = aGastos
+# else:
+# 	anoMax = min([aGastos, aSessoes])
+# 	if (anoMax == aSessoes):
+# 		mesPassado = mSessoes
+# 		ano = aSessoes
+# 	else:
+# 		mesPassado = mGastos
+# 		ano = aGastos
+#
+# if (ano == datetime.date.today().year and mesPassado == datetime.date.today().month):
+# 	mesPassado = mesPassado - 1
 
 connection.close()
 
@@ -621,9 +620,10 @@ def top10(filterType, value, rankeado):
 			deputado_presencas = SessoesMesDeputado.query.filter_by(idDeputado=deputado_id, mes=mesPassado, ano=ano).first().quantidadeParticipacoes
 		except:
 			deputado_presencas = 0
-
-		sessoes_totais = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first().quantidadeSessoes
-
+		try:
+			sessoes_totais = SessoesMes.query.filter_by(mes=mesPassado, ano=ano).first().quantidadeSessoes
+		except:
+			sessoes_totais = 0
 		# gastos categorias
 
 		query_gasto_alimentacao = Gasto.query.filter_by(idDeputado=deputado_id, nomeCategoria=categoria_alimentacao, mesEmissao=mesPassado, anoEmissao=ano).all()
@@ -683,21 +683,21 @@ def top10(filterType, value, rankeado):
 
 	return jsonify(json)
 
-@app.route("/pull_command", methods=['POST'])
-def pull_command():
-		
-	git_dir = '/home/ubuntu/vidinha-de-balada/'
-	g = git.cmd.Git(git_dir)
-	msg = g.pull()
+# @app.route("/pull_command", methods=['POST'])
+# def pull_command():
 
-	json = []
-	deputado_json = {
-		'msg' : msg,
-		'time': str(datetime.datetime.time(datetime.datetime.now()))
-	}
-	json.append(deputado_json)
-
-	return jsonify(json)
+# 	git_dir = '/home/ubuntu/vidinha-de-balada/'
+# 	g = git.cmd.Git(git_dir)
+# 	msg = g.pull()
+#
+# 	json = []
+# 	deputado_json = {
+# 		'msg' : msg,
+# 		'time': str(datetime.datetime.time(datetime.datetime.now()))
+# 	}
+# 	json.append(deputado_json)
+#
+# 	return jsonify(json)
 
 # Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":
