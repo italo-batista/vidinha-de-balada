@@ -42,7 +42,7 @@
             vm.posdoutorandos = 0;
 
             function init() {
-                setAno(vm.anoMaximo);
+                setAno(vm.anoMaximo - 1);
                 $http.get(RESTAPI + "top10").then(function (res) {
                     res.data.forEach(function (d) {
                         d.nome = d.Nome.replace('"', '').replace('\"', '');
@@ -70,9 +70,10 @@
             // http://g1.globo.com/economia/noticia/governo-amplia-minha-casa-minha-vida-para-familias-com-renda-de-ate-r-9-mil.ghtml
             // e https://www.dieese.org.br/analisecestabasica/2017/201705cestabasica.pdf
 
-            //
+            // Os valores de bolsas da CAPES foram calculados com base em
+            // http://www.capes.gov.br/acessoainformacao/perguntas-frequentes/bolsas-de-estudo/4914-posso-acumular-a-bolsa-da-capes-com-atividade-remunerada
             function setAno(ano) {
-                vm.anoSelecionado = ano - 1;
+                vm.anoSelecionado = ano;
                 $http.get(RESTAPI + "gastometro/" + vm.anoSelecionado).then(function (res) {
                     vm.total = res.data[0];
                     vm.salariosMinimos = Math.round(vm.total / 937000);
@@ -145,22 +146,22 @@
             }
 
             function valorPorEscrito() {
-                let texto = ''
-                let total = vm.total
-                let milhoes = Math.floor(total/1000000)
-                total = total - milhoes*1000000
-                let milhares = Math.floor(total/1000)
+                var texto = '';
+                var total = vm.total;
+                var milhoes = Math.floor(total/1000000);
+                total = total - milhoes*1000000;
+                var milhares = Math.floor(total/1000);
                 if (milhoes > 1) {
-                    texto += milhoes + ' milhões '
+                    texto += milhoes + ' milhões ';
                 } else if (milhoes === 1) {
-                    texto += milhoes + ' milhão '
+                    texto += milhoes + ' milhão ';
                 }
                 if (milhares >= 1) {
-                    texto += (milhoes >= 1 && 'e ') + milhares + ' mil reais'
+                    texto += (milhoes >= 1 && 'e ') + milhares + ' mil reais';
                 } else {
-                    texto += 'de reais'
+                    texto += 'de reais';
                 }
-                return texto
+                return texto;
             }
 
             function exibirTop10() {
