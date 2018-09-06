@@ -36,28 +36,28 @@ tabela_6_gastos_mensal = cria_tabela_6_gastos_mensal(dados_gastos, tabela_final_
 # Tabelas do banco de dados
 
 tabela_final_votacoes = cria_tabela_final_votacoes(votacoes)
-  write.table(tabela_final_votacoes, "../data/1-tabela_final_votacoes.csv", row.names = F, col.names = F, sep=",")
+  write.table(tabela_final_votacoes, "../data/1-tabela_final_votacoes.csv", row.names = F, col.names = F, sep=",", fileEncoding="UTF-8")
 
 sessoes_mensal = cria_sessoes_mensal(votacoes)
-  write.table(sessoes_mensal, "../data/2-sessoes_mensal.csv", row.names = F, col.names = F, sep=",")
+  write.table(sessoes_mensal, "../data/2-sessoes_mensal.csv", row.names = F, col.names = F, sep=",", fileEncoding="UTF-8")
 
 empresas = cria_empresas(dados_gastos)
-  write.table(empresas, "../data/3-empresas.csv", row.names = F, col.names = F, sep=",")
+  write.table(empresas, "../data/3-empresas.csv", row.names = F, col.names = F, sep=",", fileEncoding="UTF-8")
 
 tabela_gastos_empresas = cria_tabela_gastos_empresas(dados_gastos, empresas)
-  write.table(tabela_gastos_empresas, "../data/4-tabela_gastos_empresas.csv", row.names = F, col.names = F, sep=",")
+  write.table(tabela_gastos_empresas, "../data/4-tabela_gastos_empresas.csv", row.names = F, col.names = F, sep=",", fileEncoding="UTF-8")
 
 tabela_info_deputados = cria_tabela_info_deputados(info_deputados, twitter_profiles, dados_gastos)
-  write.table(tabela_info_deputados, "../data/5-tabela_info_deputados.csv", row.names = F, col.names = F, sep=",")
+  write.table(tabela_info_deputados, "../data/5-tabela_info_deputados.csv", row.names = F, col.names = F, sep=",", fileEncoding="UTF-8")
 
 ganhadores_selos = cria_ganhadores_selos(tabela_6_gastos_mensal, tabela_final_gastos)
-  write.table(ganhadores_selos, "../data/6-ganhadores_selos.csv", row.names = F, col.names = F, sep=",")
+  write.table(ganhadores_selos, "../data/6-ganhadores_selos.csv", row.names = F, col.names = F, sep=",", fileEncoding="UTF-8")
 
 tabela_selos_presencas = cria_tabela_selos_presencas(tabela_final_gastos, tabela_final_votacoes, sessoes_mensal)
-  write.table(tabela_selos_presencas, "../data/7-tabela_selos_presencas.csv", row.names = F, col.names = F, sep=",")
+  write.table(tabela_selos_presencas, "../data/7-tabela_selos_presencas.csv", row.names = F, col.names = F, sep=",", fileEncoding="UTF-8")
   
 tabela_selos_cota = cria_tabela_selos_cota(tabela_final_gastos)
-  write.table(tabela_selos_cota, "../data/8-tabela_selos_cota.csv", row.names = F, col.names = F, sep=",")
+  write.table(tabela_selos_cota, "../data/8-tabela_selos_cota.csv", row.names = F, col.names = F, sep=",", fileEncoding="UTF-8")
 
   
 #rm(tabela_info_deputados, tabela_gastos_empresas, empresas, sessoes_mensal,tabela_final_votacoes)

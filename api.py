@@ -32,7 +32,7 @@ app = Flask(__name__)
 CORS(app)
 
 user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = 'vidasofrida'
+password = 'password'
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -142,9 +142,10 @@ class Deputado(mysql.Model):
     twitter = mysql.Column(mysql.String(10))
     telefone = mysql.Column(mysql.String(15))
     email = mysql.Column(mysql.String(20))
+    sexo = mysql.Column(mysql.String(20))
 
     def __repr__(self):
-        return '<Deputado (%s, %s, %s, %s, %s, %s, %s, %s) >' % (self.id, self.nome, self.partidoAtual, self.uf, self.foto, self.twitter, self.telefone, self.email)
+        return '<Deputado (%s, %s, %s, %s, %s, %s, %s, %s, %s) >' % (self.id, self.nome, self.partidoAtual, self.uf, self.foto, self.twitter, self.telefone, self.email, self.sexo)
 
 class Gasto(mysql.Model):
     __tablename__ = 'gastos'
@@ -278,7 +279,7 @@ def getDeputados():
 
 	data_all = []
 	for deputado in deputados:
-		data_all.append({'id': deputado.id, 'nome' : deputado.nome, 'uf': deputado.uf, 'partido': deputado.partidoAtual, 'twitter': deputado.twitter, 'telefone': deputado.telefone, 'email': deputado.email})
+		data_all.append({'id': deputado.id, 'nome' : deputado.nome, 'uf': deputado.uf, 'partido': deputado.partidoAtual, 'twitter': deputado.twitter, 'telefone': deputado.telefone, 'email': deputado.email, 'sexo': deputado.sexo})
 
 	return jsonify(data_all)
 

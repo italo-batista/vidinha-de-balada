@@ -150,7 +150,7 @@ cria_tabela_6_gastos = function(dados){
   tabela_6_gastos = tabela_6_gastos %>%
     left_join(dados %>% filter(nossas_categorias == "Alimentação") %>%
                 group_by(idecadastro, txNomeParlamentar) %>%
-                summarise(Alimentação = sum(vlrLiquido)))
+                summarise("Alimentação" = sum(vlrLiquido)))
 
   tabela_6_gastos = tabela_6_gastos %>%
     left_join(dados %>% filter(nossas_categorias == "Combustíveis") %>%
@@ -170,7 +170,7 @@ cria_tabela_6_gastos = function(dados){
   tabela_6_gastos = tabela_6_gastos %>%
     left_join(dados %>% filter(nossas_categorias == "Escritório") %>%
                 group_by(idecadastro, txNomeParlamentar) %>%
-                summarise(Escritório = sum(vlrLiquido)))
+                summarise("Escritório" = sum(vlrLiquido)))
 
   tabela_6_gastos = tabela_6_gastos %>%
     left_join(dados %>% filter(nossas_categorias == "Divulgação de atividade parlamentar") %>%
@@ -199,7 +199,7 @@ cria_tabela_6_gastos_mensal = function(dados, tabela_final_mensal){
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Alimentação") %>%
                 group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
-                summarise(Alimentação = sum(vlrLiquido)))
+                summarise("Alimentação" = sum(vlrLiquido)))
 
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Combustíveis") %>%
@@ -219,7 +219,7 @@ cria_tabela_6_gastos_mensal = function(dados, tabela_final_mensal){
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Escritório") %>%
                 group_by(idecadastro, txNomeParlamentar, numAno, numMes) %>%
-                summarise(Escritório = sum(vlrLiquido)))
+                summarise("Escritório" = sum(vlrLiquido)))
 
   tabela_6_gastos_mensal = tabela_6_gastos_mensal %>%
     left_join(dados %>% filter(nossas_categorias == "Divulgação de atividade parlamentar") %>%
@@ -363,11 +363,11 @@ cria_tabela_info_deputados = function(info_deputados, twitter_profiles, dados){
 
   tabela_info_pessoais = dados %>% select(idecadastro, txNomeParlamentar, sgUF) %>% distinct() %>%
     left_join(ultimos_partidos) %>%
-    left_join(info_deputados %>% select(idecadastro, urlFoto, fone, email)) %>%
+    left_join(info_deputados %>% select(idecadastro, urlFoto, fone, email, sexo)) %>%
     left_join(twitter_profiles %>% select(idecadastro, twitter_profile))
 
   tabela_info_pessoais = tabela_info_pessoais %>%
-    select(idecadastro, txNomeParlamentar, sgPartido, sgUF, urlFoto, twitter_profile, fone, email)
+    select(idecadastro, txNomeParlamentar, sgPartido, sgUF, urlFoto, twitter_profile, fone, email, sexo)
 
   # (id, nome, partidoAtual, uf, foto, twitter, telefone, email, dataNasc);
   # "idecadastro","txNomeParlamentar","sgUF","sgPartido","urlFoto","fone","email","twitter_profile"

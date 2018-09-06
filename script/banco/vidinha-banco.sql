@@ -17,6 +17,7 @@ CREATE TABLE deputado (
 	twitter VARCHAR(20),
 	telefone VARCHAR(15),
 	email VARCHAR(50),
+	sexo VARCHAR(20),
 	PRIMARY KEY (id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
