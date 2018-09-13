@@ -17,15 +17,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import MetaData
 from flask_sqlalchemy import SQLAlchemy
 
-# Needed to install:
-# 	sudo apt-get install python-mysqldb
-#	sudo pip install mysql-python
-#
-# Use this material:
-# http://flask-sqlalchemy.pocoo.org/2.1/queries/#
-# http://flask.pocoo.org/docs/0.12/patterns/sqlalchemy/
-# http://blog.cloudoki.com/getting-started-with-restful-apis-using-the-flask-microframework-for-python/
-
 app = Flask(__name__)
 
 # Config --------------------------------------------------------------
@@ -580,9 +571,8 @@ def top10(filterType, value, rankeado):
 #
 # 	return jsonify(json)
 
-# Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":
-	default_port = 3000
+	default_port = 39007
 	default_debug_option = True
 
 	try:
