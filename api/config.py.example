@@ -1,0 +1,3 @@
+MYSQL_USERNAME = "username"
+MYSQL_PASSWORD = "password"
+PORT = "3000"

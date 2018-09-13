@@ -26,13 +26,15 @@ from flask_sqlalchemy import SQLAlchemy
 # http://flask.pocoo.org/docs/0.12/patterns/sqlalchemy/
 # http://blog.cloudoki.com/getting-started-with-restful-apis-using-the-flask-microframework-for-python/
 
-# Config --------------------------------------------------------------
-
 app = Flask(__name__)
+
+# Config --------------------------------------------------------------
 CORS(app)
 
-user = 'root' # SE NÃO FOR ROOT, ALTERE AQUI
-password = 'vidasofrida'
+app.config.from_object('config')
+
+user = app.config['MYSQL_USERNAME']
+password = app.config['MYSQL_PASSWORD']
 config_path = 'mysql://'+user+':'+password+'@localhost/vidinha_balada?charset=utf8'
 
 # MySQL configurations
@@ -701,7 +703,18 @@ def top10(filterType, value, rankeado):
 
 # Na VM, define altere o valor do host e da porta (39007).
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 39007))
-    app.debug = True
-    app.run(host='127.0.0.1', port=port)
-    app.run()
+	default_port = 3000
+	default_debug_option = True
+
+	try:
+		port = int(app.config['PORT']) 
+	except:
+		port = default_port
+	
+	try:
+		app.debug = app.config['DEBUG']
+	except:
+		port = default_debug_option
+
+	app.run(host='127.0.0.1', port=port)
+	app.run()
